@@ -1,0 +1,29 @@
+{
+  "name": "jb-select",
+  "description": "select web component",
+  "type": "module",
+  "author": {
+		"name": "mohammad javad bathaei",
+		"email": "javadbat@gmail.com"
+	},
+  "keywords": [
+    "jb",
+    "jb-select",
+    "select",
+    "web component"
+  ],
+  "version": "2.0.1",
+  "bugs": "https://github.com/javadbat/jb-select/issues",
+  "license": "MIT",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "lib/",
+    "dist/"
+  ],
+  "main": "index.js",
+  "repository": {
+		"type": "git",
+		"url": "git@github.com:javadbat/jb-select.git"
+  }
+}
