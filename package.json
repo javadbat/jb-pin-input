@@ -1,6 +1,6 @@
 {
-  "name": "jb-select",
-  "description": "select web component",
+  "name": "jb-pin-input",
+  "description": "pin input web component",
   "type": "module",
   "author": {
 		"name": "mohammad javad bathaei",
@@ -8,12 +8,17 @@
 	},
   "keywords": [
     "jb",
-    "jb-select",
-    "select",
-    "web component"
+    "jb-pin-input",
+    "pin input",
+    "otp",
+    "one time password",
+    "one time password input",
+    "one time password input web component",
+    "otp code input",
+    "otp code input web component"
   ],
-  "version": "2.0.1",
-  "bugs": "https://github.com/javadbat/jb-select/issues",
+  "version": "1.0.0",
+  "bugs": "https://github.com/javadbat/jb-pin-input/issues",
   "license": "MIT",
   "files": [
     "LICENSE",
@@ -22,8 +27,9 @@
     "dist/"
   ],
   "main": "index.js",
+  "types": "./dist/JBPinInput.d.ts",
   "repository": {
 		"type": "git",
-		"url": "git@github.com:javadbat/jb-select.git"
+		"url": "git@github.com:javadbat/jb-pin-input.git"
   }
 }

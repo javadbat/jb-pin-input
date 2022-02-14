@@ -1,1 +1,1 @@
-import './dist/JBSelect.js';
+import './dist/JBPinInput.js';

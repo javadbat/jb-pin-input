@@ -150,15 +150,15 @@ export class JBPinInputWebComponent extends HTMLElement {
      * 
      * @return {Array.<HTMLInputElement>} inputList - array of pin input DOM
      */
-    createInputs() {
-        const inputsList = [];
+    createInputs():HTMLDivElement[]{
+        const inputsList: HTMLDivElement[] = [];
         for (let i = 0; i < this.charLength; i++) {
             const inputDom = this.createInput(i);
             inputsList.push(inputDom);
         }
         return inputsList;
     }
-    createInput(index: number) {
+    createInput(index: number):HTMLDivElement{
         const wrapperDom = document.createElement('div');
         wrapperDom.classList.add('pin-input-wrapper');
         const inputDom = document.createElement('input');
