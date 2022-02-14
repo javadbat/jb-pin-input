@@ -1,3 +1,6 @@
+:host(:focus), :host(:focus-visible){
+    outline: none;
+}
 .jb-pin-input-web-component{
     .inputs-wrapper{
         width: 100%;

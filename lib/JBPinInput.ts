@@ -84,7 +84,8 @@ export class JBPinInputWebComponent extends HTMLElement {
     }
     initWebComponent() {
         const shadowRoot = this.attachShadow({
-            mode: 'open'
+            mode: 'open',
+            delegatesFocus: true
         });
         const html = `<style>${CSS}</style>` + '\n' + HTML;
         const element = document.createElement('template');
