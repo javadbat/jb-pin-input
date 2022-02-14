@@ -6,7 +6,7 @@ pure js standalone pin input web-component
 - mobile freindly
 - light and fast
 
-sample:<https://codepen.io/javadbat/pen/abpjKVP>
+sample:<https://codepen.io/javadbat/pen/zYPEqNJ>
 
 ## doc
 
