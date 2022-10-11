@@ -99,10 +99,6 @@ export class JBPinInputWebComponent extends HTMLElement {
 
     }
     registerEventListener() {
-        // this.inputElement.addEventListener('change', this.onInputChange.bind(this));
-        // this.inputElement.addEventListener('keypress', this.onInputKeyPress.bind(this));
-        // this.inputElement.addEventListener('keyup', this.onInputKeyup.bind(this));
-        // this.inputElement.addEventListener('keydown',this.onInputKeyDown.bind(this));
     }
     initProp() {
         //this._validationList = [];
