@@ -147,7 +147,7 @@ export class JBPinInputWebComponent extends HTMLElement {
      * 
      * @return {Array.<HTMLInputElement>} inputList - array of pin input DOM
      */
-    createInputs():HTMLDivElement[]{
+    createInputs(): HTMLDivElement[] {
         const inputsList: HTMLDivElement[] = [];
         for (let i = 0; i < this.charLength; i++) {
             const inputDom = this.createInput(i);
@@ -155,7 +155,7 @@ export class JBPinInputWebComponent extends HTMLElement {
         }
         return inputsList;
     }
-    createInput(index: number):HTMLDivElement{
+    createInput(index: number): HTMLDivElement {
         const wrapperDom = document.createElement('div');
         wrapperDom.classList.add('pin-input-wrapper');
         const inputDom = document.createElement('input');
@@ -185,6 +185,12 @@ export class JBPinInputWebComponent extends HTMLElement {
         if (regexResult && regexResult.groups && regexResult.groups.pin) {
             filteredValue = regexResult.groups.pin;
             this.value = filteredValue;
+            const index = this.value.length;
+            //change input foucs to the last pin based on pasted value length
+            if (this.value.length > 0) {
+                (this.elements!).inputs[index - 1].focus();
+            }
+
         }
         else {
             const filteredValue = value.match(`[0-9]{1,${this.charLength}}`);
@@ -192,9 +198,12 @@ export class JBPinInputWebComponent extends HTMLElement {
                 const inputValue = filteredValue[0];
                 const value = [...this.value];
                 const loopLength = Math.min(this.charLength - index, inputValue.length);
-                for (let i = 0; i < loopLength; i++) {
+                let i;
+                for (i = 0; i < loopLength; i++) {
                     value[index + i] = inputValue[i];
                 }
+                //change input foucs to the last pin based on pasted value length
+                (this.elements!).inputs[i].focus();
                 this.value = value.join('');
 
             }
