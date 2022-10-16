@@ -190,7 +190,6 @@ export class JBPinInputWebComponent extends HTMLElement {
             if (this.value.length > 0) {
                 (this.elements!).inputs[index - 1].focus();
             }
-
         }
         else {
             const filteredValue = value.match(`[0-9]{1,${this.charLength}}`);
