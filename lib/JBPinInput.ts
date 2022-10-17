@@ -99,6 +99,7 @@ export class JBPinInputWebComponent extends HTMLElement {
 
     }
     registerEventListener() {
+        //
     }
     initProp() {
         //this._validationList = [];
