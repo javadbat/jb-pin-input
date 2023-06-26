@@ -43,14 +43,15 @@ export class JBPinInputWebComponent extends HTMLElement {
 
         //this._shadowRoot.querySelector('.input-box input').value = value;
     }
-    get validationList() {
-        //return this._validationList;
-        return true;
-    }
-    set validationList(value) {
-        // this._validationList = value;
-        // this.triggerInputValidation(false);
-    }
+    // get validationList() {
+    //     //return this._validationList;
+    //     return true;
+    // }
+    // set validationList(value) {
+    //     //TODO: impl custom validation
+    //     // this._validationList = value;
+    //     // this.triggerInputValidation(false);
+    // }
     #charLength = 6;
     get charLength() {
         return this.#charLength;
