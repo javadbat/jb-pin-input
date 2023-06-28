@@ -43,6 +43,14 @@ to select value in your code you have 2 option:
 2- set through dom attribute `<jb-pin-input value="yourValueSting"></jb-pin-input>`
 remember set value as attribute if your option is a plain string but in direct assign like first option you can attach both string or object value assignation
 
+### char length
+
+you may need to change the length of your pin for example in some app it's 5 in some 6 or more.    
+so if you need to change the count of pin inputs you can set `charLength` property in component like this:
+
+```js
+document.querySelector('jb-pin-input').charLength = 5;
+```
 
 ### events
 
