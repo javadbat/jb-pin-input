@@ -5,6 +5,7 @@ pure js standalone pin input web-component
 - smart paste algorithm
 - mobile freindly
 - light and fast
+- accept persian & arabic number char
 
 sample:<https://codepen.io/javadbat/pen/zYPEqNJ>
 
@@ -63,6 +64,12 @@ document.querySelector('jb-pin-input').charLength = 5;
     //on user press enter
     dropDownElement.addEventListener('enter',(e)=>{/*your function*/});
 
+```
+### Auto focus
+
+pin input will gain focus when loaded and initiated automatically if you set `autofocus` attribute
+```html
+<jb-pin-input autofocus></jb-pin-input>
 ```
 
 ### set custome style

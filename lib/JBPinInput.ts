@@ -8,6 +8,7 @@ export class JBPinInputWebComponent extends HTMLElement {
 
     internals_?: ElementInternals;
     #value: null | string = null;
+    #acceptPersianNumber = true;
     validationResult: ValidationResult = {
         isValid: false,
         message: ""
@@ -19,16 +20,25 @@ export class JBPinInputWebComponent extends HTMLElement {
     }
     get value() {
         const arr = (this.elements!).inputs.map((input) => {
-            const value = input.value;
-            if (value) {
-                return value;
+            const char = input.value;
+            if (char) {
+                return char;
             } else {
                 return this.emptyChar;
             }
         });
-        return arr.join('');
+        const value = arr.join('');
+        return this.#standardValue(value);
     }
-    set value(value) {
+    set value(value:string) {
+        const sValue = this.#standardValue(value);
+        this.#setValue(sValue);
+    }
+    /**
+     * @description set value to the inputs without any validation so use validation before calling this function
+     * @param {string} value 
+     */
+    #setValue(value:string){
         (this.elements!).inputs.forEach((input, index) => {
             if (Number.isNaN(value[index]) || value[index] === "" || value[index] == this.emptyChar || value[index] == null || value[index] == undefined) {
                 input.value = "";
@@ -39,9 +49,6 @@ export class JBPinInputWebComponent extends HTMLElement {
         if (this.internals_ && typeof this.internals_.setFormValue == "function") {
             this.internals_.setFormValue(value);
         }
-
-
-        //this._shadowRoot.querySelector('.input-box input').value = value;
     }
     // get validationList() {
     //     //return this._validationList;
@@ -132,6 +139,21 @@ export class JBPinInputWebComponent extends HTMLElement {
         }
 
     }
+    #standardValue(value:string){
+        //TODO: add acceptance for non-digits by config
+        let standardedValue = value;
+        if(this.#acceptPersianNumber){
+            standardedValue = this.#faToEnDigits(standardedValue);
+        }
+        return standardedValue;
+    }
+    #faToEnDigits(value:string){
+        let standardedValue = value;
+        if(this.#acceptPersianNumber){
+            standardedValue = value.replace(/\u06F0/g, '0').replace(/\u06F1/g, '1').replace(/\u06F2/g, '2').replace(/\u06F3/g, '3').replace(/\u06F4/g, '4').replace(/\u06F5/g, '5').replace(/\u06F6/g, '6').replace(/\u06F7/g, '7').replace(/\u06F8/g, '8').replace(/\u06F9/g, '9');
+        }
+        return standardedValue;
+    }
     initInputsDom() {
         const inputElements = this.createInputs();
         (this.elements!).inputs = inputElements.map(x => x.querySelector('.pin-input')!);
@@ -179,14 +201,18 @@ export class JBPinInputWebComponent extends HTMLElement {
     }
     onPasteValue(e: ClipboardEvent) {
         e.preventDefault();
-        const value = (e.clipboardData!).getData('text');
+        let value = (e.clipboardData!).getData('text');
         const index = Number((e.target as HTMLInputElement).parentElement!.dataset.pinIndex);
         const regex = new RegExp(`(.*\\D|^)(?<pin>[0-9]{${this.charLength}})(\\D.*|$)`);
+        // convert persian digit so regex accept them too
+        value = this.#faToEnDigits(value);
         const regexResult = regex.exec(value);
         let filteredValue = "";
         if (regexResult && regexResult.groups && regexResult.groups.pin) {
+            //first we looking for full pin code match
+            //if we find all digits in pasted value
             filteredValue = regexResult.groups.pin;
-            this.value = filteredValue;
+            this.#setValue(filteredValue);
             const index = this.value.length;
             //change input foucs to the last pin based on pasted value length
             if (this.value.length > 0) {
@@ -194,12 +220,13 @@ export class JBPinInputWebComponent extends HTMLElement {
             }
         }
         else {
+            //when full match not found we just get any incomplete numbers
             const filteredValue = value.match(`[0-9]{1,${this.charLength}}`);
             if (filteredValue) {
                 const inputValue = filteredValue[0];
                 const value = [...this.value];
                 const loopLength = Math.min(this.charLength - index, inputValue.length);
-                let i;
+                let i:number;
                 for (i = 0; i < loopLength; i++) {
                     value[index + i] = inputValue[i];
                 }
@@ -252,7 +279,8 @@ export class JBPinInputWebComponent extends HTMLElement {
         const currentPinIndex = parseInt((elem as HTMLInputElement).parentElement!.dataset.pinIndex!);
         let nextIndex = currentPinIndex;
         this.triggerInputValidation(false);
-        if (/[0-9]+/g.test((e.target as HTMLInputElement).value)) {
+        const value = this.#faToEnDigits((e.target as HTMLInputElement).value);
+        if (/[0-9]+/g.test(value)) {
             // if user type 1-9
             nextIndex = currentPinIndex + 1 < this.charLength ? (currentPinIndex + 1) : this.charLength - 1;
         }
@@ -267,8 +295,9 @@ export class JBPinInputWebComponent extends HTMLElement {
  */
     onBeforeInput(e: InputEvent) {
         const inputedText = e.data!;
-        const carretPosition = (e.target as HTMLInputElement).selectionStart;
-        if (!(/[0-9]+/g.test(inputedText))) {
+        const standardedInputedText = this.#faToEnDigits(inputedText);
+        // const carretPosition = (e.target as HTMLInputElement).selectionStart;
+        if (!(/[0-9]+/g.test(standardedInputedText))) {
             if (e.inputType !== 'deleteContentBackward') {
                 //on backspace
                 e.preventDefault();
@@ -364,7 +393,7 @@ export class JBPinInputWebComponent extends HTMLElement {
         if (!validationResult) {
             validationObject = {
                 message: "لطفا کد تایید را وارد کنید.",
-                isValid: false
+                isValid: false,
             };
         }
         return validationObject;
