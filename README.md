@@ -62,7 +62,7 @@ document.querySelector('jb-pin-input').charLength = 5;
     dropDownElement.addEventListener('change',(e)=>{/*your function*/});
     dropDownElement.addEventListener('keyup',(e)=>{/*your function*/});
     //on user press enter
-    dropDownElement.addEventListener('enter',(e)=>{/*your function*/});
+    dropDownElement.addEventListener('enter',(e)=>{/*when user press enter button*/});
 
 ```
 ### Auto focus
