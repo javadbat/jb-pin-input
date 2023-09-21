@@ -149,7 +149,7 @@ export class JBPinInputWebComponent extends HTMLElement {
     }
     #faToEnDigits(value:string){
         let standardedValue = value;
-        if(this.#acceptPersianNumber){
+        if(this.#acceptPersianNumber && typeof value == "string"){
             standardedValue = value.replace(/\u06F0/g, '0').replace(/\u06F1/g, '1').replace(/\u06F2/g, '2').replace(/\u06F3/g, '3').replace(/\u06F4/g, '4').replace(/\u06F5/g, '5').replace(/\u06F6/g, '6').replace(/\u06F7/g, '7').replace(/\u06F8/g, '8').replace(/\u06F9/g, '9');
         }
         return standardedValue;
@@ -252,7 +252,7 @@ export class JBPinInputWebComponent extends HTMLElement {
 
     }
     onInputKeyDown(e: KeyboardEvent) {
-        const keyDownnInitObj = {
+        const keyDownnInitObj:KeyboardEventInit = {
             key: e.key,
             keyCode: e.keyCode,
             code: e.code,
@@ -266,8 +266,26 @@ export class JBPinInputWebComponent extends HTMLElement {
         this.dispatchEvent(event);
     }
     onInputKeyPress(e: KeyboardEvent) {
-        //TODO: raise keypress event
-        const event = new CustomEvent('keypress');
+        const keyPressInitObj:KeyboardEventInit = {
+            key: e.key,
+            keyCode: e.keyCode,
+            code: e.code,
+            ctrlKey: e.ctrlKey,
+            shiftKey: e.shiftKey,
+            altKey: e.altKey,
+            charCode: e.charCode,
+            which: e.which,
+            bubbles:e.bubbles,
+            cancelable:e.cancelable,
+            composed:e.composed,
+            detail:e.detail,
+            isComposing:e.isComposing,
+            location:e.location,
+            metaKey:e.metaKey,
+            view:e.view,
+            repeat:e.repeat
+        };
+        const event = new KeyboardEvent('keypress',keyPressInitObj);
         this.dispatchEvent(event);
     }
     /**
@@ -294,18 +312,30 @@ export class JBPinInputWebComponent extends HTMLElement {
  * @param {InputEvent} e 
  */
     onBeforeInput(e: InputEvent) {
+        const target = e.target as HTMLInputElement;
         const inputedText = e.data!;
         const standardedInputedText = this.#faToEnDigits(inputedText);
         // const carretPosition = (e.target as HTMLInputElement).selectionStart;
         if (!(/[0-9]+/g.test(standardedInputedText))) {
-            if (e.inputType !== 'deleteContentBackward') {
-                //on backspace
+            if (e.inputType === 'deleteContentBackward') {
+                if(target.value == ""){
+                    //dont move it to onkeyup becuse we cant determine input is empty condition there becuase input is always empty in there
+                    //if value is empty we move cursor to prev input if not we just stop 
+                    const currentPinIndex = parseInt(target.parentElement!.dataset.pinIndex!);
+                    const nextIndex = currentPinIndex == 0 ? 0 : (currentPinIndex - 1);
+                    const nextInput = (this.elements!).inputs[nextIndex];
+                    nextInput.focus();
+                }
+            }else{
+                
+                //if input is not number and not backspace
                 e.preventDefault();
             }
         } else {
             //on number input
-            if ((e.target as HTMLInputElement).value.length > 0) {
-                (e.target as HTMLInputElement).value = '';
+            if (target.value.length > 0) {
+                //when input had value before this input we remove old value so new value would replace
+                target.value = '';
             }
         }
     }
@@ -315,16 +345,12 @@ export class JBPinInputWebComponent extends HTMLElement {
      */
     onInputKeyup(e: KeyboardEvent) {
         //change focus 
-        const elem = e.target;
-        const currentPinIndex = parseInt((elem as HTMLInputElement).parentElement!.dataset.pinIndex!);
+        const elem = e.target as HTMLInputElement;
+        const currentPinIndex = parseInt(elem.parentElement!.dataset.pinIndex!);
         let nextIndex = currentPinIndex;
 
         //if inputed key is not a number
         switch (e.keyCode) {
-            case 8:
-                //backspace
-                nextIndex = currentPinIndex == 0 ? 0 : (currentPinIndex - 1);
-                break;
             case 39:
                 // right arrow
                 nextIndex = currentPinIndex + 1 < this.charLength ? (currentPinIndex + 1) : this.charLength - 1;
