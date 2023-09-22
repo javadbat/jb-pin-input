@@ -121,7 +121,7 @@ export class JBPinInputWebComponent extends HTMLElement {
 
     }
     static get observedAttributes() {
-        return ['autofocus'];
+        return ['autofocus','char-length'];
     }
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
         // do something when an attribute has changed
@@ -134,6 +134,11 @@ export class JBPinInputWebComponent extends HTMLElement {
                     if ((this.elements!).inputs[0]) {
                         (this.elements!).inputs[0].focus();
                     }
+                }
+                break;
+            case 'char-length':
+                if(Number.isInteger(Number(value))){
+                    this.charLength = Number(value);
                 }
                 break;
         }
