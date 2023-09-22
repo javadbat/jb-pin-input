@@ -5,9 +5,11 @@ pure js standalone pin input web-component
 - smart paste algorithm
 - mobile freindly
 - light and fast
+- support typescript
 - accept persian & arabic number char
 
-sample:<https://codepen.io/javadbat/pen/zYPEqNJ>
+sample in codepen:<https://codepen.io/javadbat/pen/zYPEqNJ>
+sample in github:<https://javadbat.github.io/jb-pin-input>
 
 ## doc
 
