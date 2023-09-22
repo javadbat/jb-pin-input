@@ -96,4 +96,4 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-pin-input-pin-font-weight             | font weight of  each number input. default value is `900`                                     |   
 | --jb-pin-input-wrapper-box-shadow          | border width of each number input wrapper. default value is `none`                            |
 | --jb-pin-input-error-message-margin        | margin of error message. default value is `0`                                                 |
-|   --jb-pin-input-error-message-color       | color of error message. default value is `#dc3545`                                            |
+| --jb-pin-input-error-message-color         | color of error message. default value is `#dc3545`                                            |
