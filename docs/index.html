@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jb-pin-input web-component</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <h1>JB-Pin-Input</h1>
+        <h2>Purejs Pin Input(OTP) Web Component</h2>
+        <p>Easy to use web component to Get Pin Digit From User</p>
+        <h2>benefits:</h2>
+        <ul>
+            <li>typescript ready</li>
+            <li>customizable ui</li>
+            <li>dynamic length</li>
+        </ul>
+            <h2>Usage</h2>
+        <p>Since jb-pin-input is a web-component you can use it in pure html site and any JS framework like React, Angular, Vue,... so you have 2 way to using it: </p>
+        <ul>
+            <li>use  <a href="https://www.npmjs.com/package/jb-pin-input" target="_blank">npm</a> if your app is nodejs and support it's ecosystem</li>
+            <li>add Components's script from CDN</li>
+        </ul>
+        <p>in first way you just have to install jb-pin-input and import it's scripts anyway in app and then use it anywhere with simple HTML Tag 	&lt;jb-pin-input	&gt;	&lt;/jb-pin-input	&gt;  <a href="https://www.npmjs.com/package/jb-pin-input" target="_blank">read more detail here</a></p>
+        <p>
+            in second way just add following script tag in your html and then write 	&lt;jb-pin-input	&gt;	&lt;/jb-pin-input	&gt; tag anywhere in your HTML file
+        </p>
+        <code>
+            &lt;script src="https://cdn.jsdelivr.net/npm/jb-pin-input/dist/JBPinInput.umd.js"&gt;&lt;/script&gt;
+        </code>
+        <h2>examples</h2>
+        <div class="component-wrapper">
+            <jb-pin-input></jb-pin-input>
+        </div>
+        <h3>with auto focus</h3>
+        <div class="component-wrapper">
+            <jb-pin-input autofocus></jb-pin-input>
+        </div>
+        <h3>different char length</h3>
+        <div class="component-wrapper">
+            <jb-pin-input char-length="4"></jb-pin-input>
+        </div>
+        <h3>different style</h3>
+        <div class="component-wrapper border-style">
+            <jb-pin-input char-length="4"></jb-pin-input>
+        </div>
+        
+        <div class="desc">
+            you can read more and get this package from
+            <a href="https://www.npmjs.com/package/jb-pin-input" target="_blank">npm</a>
+            or
+            <a href="https://github.com/javadbat/jb-pin-input" target="_blank">github</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jb-pin-input/dist/JBPinInput.umd.js"></script>
+</body>
+
+</html>
