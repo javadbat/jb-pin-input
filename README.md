@@ -74,7 +74,7 @@ pin input will gain focus when loaded and initiated automatically if you set `au
 <jb-pin-input autofocus></jb-pin-input>
 ```
 
-### set custome style
+### set custom styles
 
 in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.  
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
