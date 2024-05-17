@@ -3,7 +3,7 @@
 pure js standalone pin input web-component
 
 - smart paste algorithm
-- mobile freindly
+- mobile friendly
 - light and fast
 - support typescript
 - accept persian & arabic number char
