@@ -1,0 +1,41 @@
+{
+  "name": "jb-pin-input-react",
+  "description": "pin input react component",
+  "type": "module",
+  "author": {
+		"name": "mohammad javad bathaei",
+		"email": "javadbat@gmail.com"
+	},
+  "keywords": [
+    "jb",
+    "jb-pin-input",
+    "pin input",
+    "JBPinInput",
+    "otp",
+    "one time password",
+    "one time password input",
+    "one time password input component",
+    "otp code input",
+    "otp code input component",
+    "react",
+    "react component"
+  ],
+  "version": "2.3.0",
+  "bugs": "https://github.com/javadbat/jb-pin-input-react/issues",
+  "license": "MIT",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "lib/",
+    "dist/"
+  ],
+  "main": "index.js",
+  "types": "./dist/jb-pin-input/lib/JBPinInput.d.ts",
+  "repository": {
+		"type": "git",
+		"url": "git@github.com:javadbat/jb-pin-input-react.git"
+  },
+  "dependencies": {
+    "jb-pin-input": ">=1.5.0"
+  }
+}
