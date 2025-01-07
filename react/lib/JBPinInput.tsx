@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useImperativeHandle, useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import 'jb-pin-input';
 import { useBindEvent } from '../../../../common/hooks/use-event.js';
 // eslint-disable-next-line no-duplicate-imports
@@ -152,26 +151,5 @@ type JBPinInputProps = {
     charLength?:number,
     children?:any,
 }
-JBPinInput.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  message:PropTypes.string,
-  // type: PropTypes.string,
-  onChange: PropTypes.func,
-  onKeyup: PropTypes.func,
-  onKeydown: PropTypes.func,
-  onEnter: PropTypes.func,
-  onInput: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  onBeforeinput: PropTypes.func,
-  className: PropTypes.string,
-  // validationList: PropTypes.array,
-  disabled: PropTypes.bool,
-  inputmode: PropTypes.string,
-  autofocus: PropTypes.bool,
-  charLength: PropTypes.number,
-  children: PropTypes.element
-};
 JBPinInput.displayName = "JBPinInput";
 

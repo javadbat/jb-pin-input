@@ -17,7 +17,7 @@
     "otp code input",
     "otp code input web component"
   ],
-  "version": "1.6.0",
+  "version": "1.6.2",
   "bugs": "https://github.com/javadbat/jb-pin-input/issues",
   "license": "MIT",
   "files": [
@@ -26,7 +26,7 @@
     "lib/",
     "dist/",
     "react/",
-    "react/dist"
+    "react/dist/"
   ],
   "main": "index.js",
   "types": "./dist/web-component/jb-pin-input/lib/jb-pin-input.d.ts",
