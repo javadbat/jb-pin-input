@@ -11,6 +11,10 @@ pure js standalone pin input web-component
 sample in codepen:<https://codepen.io/javadbat/pen/zYPEqNJ>
 sample in github:<https://javadbat.github.io/jb-pin-input>
 
+## using with JS frameworks
+
+to use this component in **react** see [`jb-pin-input/react`](https://github.com/javadbat/jb-pin-input/tree/main/react);
+
 ## doc
 
 ### usage

@@ -1,5 +1,5 @@
-import HTML from './JBPinInput.html';
-import CSS from './JBPinInput.scss';
+import HTML from './jb-pin-input.html';
+import CSS from './jb-pin-input.scss';
 import { Elements, ValidationResult } from "./Types";
 
 export class JBPinInputWebComponent extends HTMLElement {

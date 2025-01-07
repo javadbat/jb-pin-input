@@ -3,9 +3,9 @@
         "baseUrl": "."
     },
     "include": [
-        "../../common/scripts/**/*.ts",
-        "../../common/hooks/**/*.ts",
-        "../../common/hooks/**/*.js",
+        "../../../common/scripts/**/*.ts",
+        "../../../common/hooks/**/*.ts",
+        "../../../common/hooks/**/*.js",
         "lib/**/*.ts",
         "lib/**/*.tsx"
     ],
@@ -14,5 +14,5 @@
         "**/*.spec.ts",
         "dist",
     ],
-    "extends":"../tsconfig-react.json"
+    "extends":"../../tsconfig-react.json"
 }

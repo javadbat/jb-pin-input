@@ -1,18 +1,21 @@
 # JBPinInput React component
+
 this component is React.js wrapper for [jb-pin-input](https://www.npmjs.com/package/jb-pin-input) web component with these benefits:
+
 - smart paste algorithm
-- mobile freindly
+- mobile friendly
 - light and fast
 - support typescript
 - accept persian & arabic number char
 
 sample in codepen:<https://codepen.io/javadbat/pen/zYPEqNJ>
 sample in github:<https://javadbat.github.io/jb-pin-input>
+
 ## install
 
 run following command to install it with npm
 ```cmd
-npm i jb-pin-input-react
+npm i jb-pin-input
 ```
 
 ## usage
@@ -20,13 +23,13 @@ npm i jb-pin-input-react
 just import the package and use it like other react component
 
 ```jsx
-import {JBPinInput} from 'jb-pin-input-react'
+import {JBPinInput} from 'jb-pin-input/react'
 
 <JBPinInput></JBPinInput>
 ```
 ## char length
 
-if you want to change the pin length to 5digit or 10 digit or anything elese you just have to provide ti to charLength Prop
+if you want to change the pin length to 5 digit or 10 digit or anything else, you just have to provide it to `charLength` Prop
 
 ```jsx
 <JBPinInput charLength={5}></JBPinInput>
@@ -39,7 +42,7 @@ if you want pin input get focus as rendered in app just add autofocus props
 <JBPinInput autofocus></JBPinInput>
 ```
 
-### set custome style
+### set custom style
 
 in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.  
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
