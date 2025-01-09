@@ -1,10 +1,10 @@
 import HTML from './jb-pin-input.html';
 import CSS from './jb-pin-input.scss';
 import { ValidationItem, ValidationResult, type WithValidation, ValidationHelper, ShowValidationErrorInput } from 'jb-validation';
-import { Elements, ValidationValue } from "./Types1";
+import { Elements, ValidationValue } from "./types";
 import { JBFormInputStandards } from 'jb-form';
 
-export * from './Types1';
+export * from './types';
 export class JBPinInputWebComponent extends HTMLElement implements WithValidation<ValidationValue>, JBFormInputStandards<string> {
   elements!: Elements;
   #internals?: ElementInternals;
