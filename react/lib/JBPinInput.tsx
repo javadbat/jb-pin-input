@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useImperativeHandle, useState, useCallback } from 'react';
 import 'jb-pin-input';
+import {ValidationItem} from 'jb-validation';
 import { useBindEvent } from '../../../../common/hooks/use-event.js';
 // eslint-disable-next-line no-duplicate-imports
-import { JBPinInputWebComponent } from 'jb-pin-input';
+import { JBPinInputWebComponent, ValidationValue} from 'jb-pin-input';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -84,9 +85,11 @@ export const JBPinInput = React.forwardRef((props:JBPinInputProps, ref) => {
       element.current.value = value?.toString() || "";
     }
   }, [props.value]);
-  // useEffect(() => {
-  //     element.current.validationList = props.validationList || [];
-  // }, [props.validationList]);
+  useEffect(() => {
+    if (element && element.current) {
+      element.current.validation.list = props.validationList || [];
+    }
+  }, [props.validationList]);
   useEffect(() => {
     if (typeof props.disabled == "boolean") {
       element.current?.setAttribute('disabled', `${props.disabled}`);
@@ -143,8 +146,7 @@ type JBPinInputProps = {
     onBlur?: (e:JBPinInputEventType<FocusEvent>)=>void,
     className?: string,
     //type: string,
-    //validationList: Validation,
-    //numberFieldParameter: PropTypes.object,
+    validationList: ValidationItem<ValidationValue>[],
     disabled?: boolean,
     inputmode?: string,
     autofocus?: boolean,
