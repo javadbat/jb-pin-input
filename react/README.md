@@ -46,6 +46,7 @@ if you want pin input get focus as rendered in app just add autofocus props
 
 in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.  
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
+
 | css variable name                          | description                                                                                   |
 | -------------                              | -------------                                                                                 |
 | --jb-pin-input-inputs-wrapper-width        | width of inputs wrapper,default is `100%`                                                     |
@@ -58,10 +59,13 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-pin-input-wrapper-border-color        | border color of each number input wrapper. default value is `black`                           |
 | --jb-pin-input-wrapper-border-style        | border style of  each number input wrapper. default value is `solid`                          |
 | --jb-pin-input-wrapper-border-color-active | border color of each number input wrapper  when user focus on it. default value is `#1565D8`  |
-| --jb-pin-input-pin-color                   | color of inputed text.default value is #333                                                   |
+| --jb-pin-input-pin-color                   | color of inputted text.default value is #333                                                   |
 | --jb-pin-input-pin-height                  | height of  each number input. default value is `40px`                                         |
 | --jb-pin-input-pin-font-size               | font size of  each number input. default value is `24`                                        |   
 | --jb-pin-input-pin-font-weight             | font weight of  each number input. default value is `900`                                     |   
 | --jb-pin-input-wrapper-box-shadow          | border width of each number input wrapper. default value is `none`                            |
 | --jb-pin-input-error-message-margin        | margin of error message. default value is `0`                                                 |
-| --jb-pin-input-error-message-color         | color of error message. default value is `#dc3545`                                            |
+| --jb-pin-input-message-font-size           | font size of message                                                                          |
+| --jb-pin-input-message-color               | color of message                                                                              |
+| --jb-pin-input-message-error-color         | color of error message. default value is `#dc3545`                                            |
+| --jb-pin-input-message-box-display         | you can hide message box by set this to none                                                  |

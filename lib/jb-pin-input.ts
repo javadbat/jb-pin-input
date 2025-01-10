@@ -1,18 +1,20 @@
 import HTML from './jb-pin-input.html';
 import CSS from './jb-pin-input.scss';
 import { ValidationItem, ValidationResult, type WithValidation, ValidationHelper, ShowValidationErrorInput } from 'jb-validation';
-import { Elements, ValidationValue } from "./types";
-import { JBFormInputStandards } from 'jb-form';
+import { Elements, ValidationValue } from "./types.js";
+import { type JBFormInputStandards } from 'jb-form';
 
-export * from './types';
+export * from './types.js';
+
 export class JBPinInputWebComponent extends HTMLElement implements WithValidation<ValidationValue>, JBFormInputStandards<string> {
   elements!: Elements;
   #internals?: ElementInternals;
-  #value: null | string = null;
   #acceptPersianNumber = true;
   static get formAssociated() { return true; }
+  /**
+   * @description char that replace value of empty input in value
+   */
   get emptyChar() {
-    //char that replace value of empty input in value
     return '-';
   }
   #disabled = false;
@@ -38,16 +40,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     return this.#required;
   }
   get value() {
-    const arr = (this.elements!).inputs.map((input) => {
-      const char = input.value;
-      if (char) {
-        return char;
-      } else {
-        return this.emptyChar;
-      }
-    });
-    const value = arr.join('');
-    return this.#standardValue(value);
+    return this.#getValue(this.emptyChar);
   }
   set value(value: string) {
     const sValue = this.#standardValue(value);
@@ -55,10 +48,21 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   /**
    * @description set value to the inputs without any validation so use validation before calling this function
-   * @param {string} value 
    */
+  #getValue(emptyChar:string){
+    const arr = (this.elements!).inputs.map((input) => {
+      const char = input.value;
+      if (char) {
+        return char;
+      } else {
+        return emptyChar;
+      }
+    });
+    const value = arr.join('');
+    return this.#standardValue(value);
+  }
   #setValue(value: string) {
-    (this.elements!).inputs.forEach((input, index) => {
+    this.elements.inputs.forEach((input, index) => {
       if (Number.isNaN(value[index]) || value[index] === "" || value[index] == this.emptyChar || value[index] == null || value[index] == undefined) {
         input.value = "";
       } else {
@@ -69,15 +73,6 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       this.#internals.setFormValue(value);
     }
   }
-  // get validationList() {
-  //     //return this._validationList;
-  //     return true;
-  // }
-  // set validationList(value) {
-  //     //TODO: impl custom validation
-  //     // this._validationList = value;
-  //     // this.triggerInputValidation(false);
-  // }
   #charLength = 6;
   get charLength() {
     return this.#charLength;
@@ -86,19 +81,23 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.#charLength = value;
     this.initInputsDom();
   }
+
   #validation = new ValidationHelper({
     clearValidationError: this.clearValidationError.bind(this),
     showValidationError: this.showValidationError.bind(this),
     getValue: () => this.value,
-    getValueString: () => this.#value,
-    setValidationResult: this.#setValidationResult.bind(this)
+    getValueString: () => this.value,
+    setValidationResult: this.#setValidationResult.bind(this),
+    getValidations: this.#getInsideValidation.bind(this)
   });
+
   get validation() {
     return this.#validation;
   }
+
   initialValue = "";
   get isDirty(): boolean {
-    return this.#value !== this.initialValue;
+    return this.value !== this.initialValue;
   }
   get name() {
     return this.getAttribute('name') || '';
@@ -138,7 +137,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.elements = {
       inputsWrapper: shadowRoot.querySelector('.inputs-wrapper')!,
       inputs: [],
-      error: shadowRoot.querySelector('.error-message')!
+      messageBox:shadowRoot.querySelector(".message-box")
     };
 
   }
@@ -146,18 +145,11 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     //
   }
   initProp() {
-    //this._validationList = [];
-    //this.value = this.getAttribute('value') || '';
-    // this.validation = {
-    //     isValid: null,
-    //     message: null
-    // };
     this.initInputsDom();
     this.registerEventListener();
-
   }
   static get observedAttributes() {
-    return ['autofocus', 'char-length'];
+    return ['autofocus', 'char-length', 'required', 'message'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     // do something when an attribute has changed
@@ -177,6 +169,10 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
           this.charLength = Number(value);
         }
         break;
+      case 'message':
+        if(!this.elements.messageBox.classList.contains("error")){
+          this.elements.messageBox.innerHTML = value;
+        }
     }
 
   }
@@ -224,15 +220,18 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     const wrapperDom = document.createElement('div');
     wrapperDom.classList.add('pin-input-wrapper');
     const inputDom = document.createElement('input');
+
     inputDom.classList.add('pin-input');
-    inputDom.addEventListener('keypress', this.onInputKeyPress.bind(this));
-    inputDom.addEventListener('keyup', this.onInputKeyup.bind(this));
-    inputDom.addEventListener('beforeinput', this.onBeforeInput.bind(this));
-    inputDom.addEventListener('blur', this.onInputBlur.bind(this));
-    inputDom.addEventListener('input', (e) => this.onInput((e as InputEvent)), { passive: true });
-    inputDom.addEventListener('paste', this.onPasteValue.bind(this));
+    inputDom.addEventListener('keypress', this.#onInputKeyPress.bind(this));
+    inputDom.addEventListener('keyup', this.#onInputKeyup.bind(this));
+    inputDom.addEventListener('beforeinput', this.#onBeforeInput.bind(this));
+    inputDom.addEventListener('blur', this.#onInputBlur.bind(this));
+    inputDom.addEventListener('focus', this.#onInputFocus.bind(this));
+    inputDom.addEventListener('input', (e) => this.#onInput((e as InputEvent)), { passive: true });
+    inputDom.addEventListener('paste', this.#onPasteValue.bind(this));
     inputDom.setAttribute('inputmode', 'numeric');
     inputDom.setAttribute('pattern', '[0-9]*');
+
     const shapeDom = document.createElement('div');
     shapeDom.classList.add('pin-input-shape');
     wrapperDom.appendChild(inputDom);
@@ -240,7 +239,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     wrapperDom.setAttribute('data-pin-index', index.toString());
     return wrapperDom;
   }
-  onPasteValue(e: ClipboardEvent) {
+  #onPasteValue(e: ClipboardEvent) {
     e.preventDefault();
     let value = (e.clipboardData!).getData('text');
     const index = Number((e.target as HTMLInputElement).parentElement!.dataset.pinIndex);
@@ -280,16 +279,34 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     }
 
   }
-  onInputBlur(e: FocusEvent) {
+  /**
+   * @property is we changing focus (when user type) or user focus
+   */
+  #weFocus = false;
+  #onInputFocus(e: FocusEvent) {
+    if(this.#weFocus){
+      this.#weFocus = false;
+    }else{
+      this.#onFocusValue = this.value;
+    }
+  }
+  #onInputBlur(e: FocusEvent) {
     const focusedElement = e.relatedTarget;
     if (this.elements.inputs.includes(focusedElement as HTMLInputElement)) {
       //
     } else {
-      this.blur();
+      this.#onBlur();
     }
   }
-  blur() {
-    this.validation.checkValidity({ showError: true });
+  /**
+   * @property keep value of component from last focus. will use it to detect change on blur
+   */
+  #onFocusValue = "";
+  #onBlur() {
+    this.#checkValidity(true);
+    if(this.value !== this.#onFocusValue){
+      this.#DispatchChangeEvent();
+    }
   }
   onInputKeyDown(e: KeyboardEvent) {
     const keyDownnInitObj: KeyboardEventInit = {
@@ -305,7 +322,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     const event = new KeyboardEvent("keydown", keyDownnInitObj);
     this.dispatchEvent(event);
   }
-  onInputKeyPress(e: KeyboardEvent) {
+  #onInputKeyPress(e: KeyboardEvent) {
     const keyPressInitObj: KeyboardEventInit = {
       key: e.key,
       keyCode: e.keyCode,
@@ -328,30 +345,37 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     const event = new KeyboardEvent('keypress', keyPressInitObj);
     this.dispatchEvent(event);
   }
-  /**
-   * 
-   * @param {InputEvent} e 
-   */
-  onInput(e: InputEvent) {
+  #onInput(e: InputEvent) {
     const elem = e.target;
     const currentPinIndex = parseInt((elem as HTMLInputElement).parentElement!.dataset.pinIndex!);
     let nextIndex = currentPinIndex;
-    this.validation.checkValidity({ showError: false });
     const value = this.#faToEnDigits((e.target as HTMLInputElement).value);
+    const isLastIndex = !(currentPinIndex + 1 < this.charLength);
     if (/[0-9]+/g.test(value)) {
       // if user type 1-9
-      nextIndex = currentPinIndex + 1 < this.charLength ? (currentPinIndex + 1) : this.charLength - 1;
+      nextIndex = !isLastIndex ? (currentPinIndex + 1) : this.charLength - 1;
     }
     if (currentPinIndex !== nextIndex) {
       const nextInput = (this.elements!).inputs[nextIndex];
+      this.#weFocus = true;
       nextInput.focus();
     }
+    this.#dispatchOnInputEvent(e);
+    this.#checkValidity(false).then((validityRes)=>{
+      if(e.inputType !== "deleteContentBackward" && isLastIndex && validityRes.isAllValid){
+        this.#dispatchOnCompleteEvent();
+      }
+    });
   }
-  /**
-* 
-* @param {InputEvent} e 
-*/
-  onBeforeInput(e: InputEvent) {
+  #dispatchOnCompleteEvent(){
+    const event = new CustomEvent("complete",{bubbles:true,composed:true,cancelable:false});
+    this.dispatchEvent(event);
+  }
+  #dispatchOnInputEvent(e: InputEvent){
+    const event = new InputEvent("input",{cancelable:false});
+    this.dispatchEvent(event);
+  }
+  #onBeforeInput(e: InputEvent) {
     const target = e.target as HTMLInputElement;
     const inputtedText = e.data!;
     const standardInputtedText = this.#faToEnDigits(inputtedText);
@@ -378,12 +402,17 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
         target.value = '';
       }
     }
+    this.#dispatchOnBeforeInputEvent(e)
+  }
+  #dispatchOnBeforeInputEvent(e: InputEvent){
+    const event = new InputEvent("beforeinput",{cancelable:false});
+    this.dispatchEvent(event);
   }
   /**
    * 
    * @param {KeyboardEvent} e 
    */
-  onInputKeyup(e: KeyboardEvent) {
+  #onInputKeyup(e: KeyboardEvent) {
     //change focus 
     const elem = e.target as HTMLInputElement;
     const currentPinIndex = parseInt(elem.parentElement!.dataset.pinIndex!);
@@ -405,10 +434,6 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       const nextInput = (this.elements!).inputs[nextIndex];
       nextInput.focus();
     }
-
-    //here is the rare  time we update #value directly becuase we want trigger event that may read value directly from dom
-    //this.#value = inputText;
-    //this.triggerInputValidation(false);
     const keyUpInitObj = {
       key: e.key,
       keyCode: e.keyCode,
@@ -422,53 +447,28 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     const event = new KeyboardEvent('keyup', keyUpInitObj);
     this.dispatchEvent(event);
     if (e.keyCode == 13) {
-      this.onInputEnter();
+      this.#onInputEnter();
     }
   }
-  onInputEnter() {
+  #onInputEnter() {
     const event = new CustomEvent('enter');
     this.dispatchEvent(event);
   }
-  onInputChange(e: InputEvent) {
-    const inputText = (e.target as HTMLInputElement).value;
-    // this.triggerInputValidation(true);
-    //here is the rare  time we update #value directly becuase we want trigger event that may read value directly from dom
-    this.#value = inputText;
+
+  #DispatchChangeEvent() {
     // const validationObject = this.checkInputValidation(inputText);
-    const event = new CustomEvent('change', {
-      detail: {
-        // isValid: validationObject.isAllValid,
-        // validationObject: validationObject,
-      },
-    });
+    const event = new Event('change', {cancelable:false,bubbles:true, composed:true});
     this.dispatchEvent(event);
   }
-  checkAllInputFields() {
-    let validationResult = true;
-    let validationObject = {
-      message: "",
-      isValid: true
-    };
-    for (let i = 0; i < this.elements.inputs.length; i++) {
-      if (this.elements.inputs[i].value == "" || this.elements.inputs[i].value == null) {
-        validationResult = false;
-        break;
-      }
-
-    }
-    if (!validationResult) {
-      validationObject = {
-        message: "لطفا کد تایید را وارد کنید.",
-        isValid: false,
-      };
-    }
-    return validationObject;
-  }
-  showValidationError(error: ShowValidationErrorInput) {
-    this.elements.error.innerHTML = error.message;
+  showValidationError(error: ShowValidationErrorInput | string) {
+    const message = typeof error == "string"?error:error.message;
+    this.elements.messageBox.innerHTML = message;
+    this.elements.messageBox.classList.add("error");
   }
   clearValidationError() {
-    this.elements.error.innerHTML = "";
+    const text = this.getAttribute("message") || "";
+    this.elements.messageBox.innerHTML = text;
+    this.elements.messageBox.classList.remove("error");
   }
   /**
 * @description will determine if component trigger jb-validation mechanism automatically on user event or it just let user-developer handle validation mechanism by himself
@@ -504,8 +504,10 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     const validationList: ValidationItem<ValidationValue>[] = [];
     if (this.required) {
       validationList.push({
-        validator: /.{1}/g,
-        message: this.getAttribute("label") + " " + "میبایست حتما وارد شود",
+        validator:(value:string)=>{
+          return value.length == this.charLength && !value.includes(this.emptyChar)
+        },
+        message: "میبایست کامل وارد شود",
         stateType: "valueMissing"
       });
     }
@@ -540,10 +542,17 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     return this.#internals.validationMessage;
   }
   /**
-   * @public
+   * focus on first empty input
+   * @public 
    */
   focus() {
-    (this.elements!).inputs[0].focus();
+    const firstEmpty = this.elements.inputs.find(i=>i.value == "");
+    if(firstEmpty){
+      firstEmpty.focus();
+    }else{
+      this.elements.inputs[this.elements.inputs.length-1]?.focus();
+
+    }
   }
 }
 const myElementNotExists = !customElements.get('jb-pin-input');

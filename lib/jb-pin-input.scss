@@ -57,9 +57,16 @@
 
     }
 
-    .error-message {
-        color: var(--jb-pin-input-error-message-color,#dc3545);
-        font-size: 12px;
-        margin:var(--jb-pin-input-error-message-margin,0);
+    .message-box {
+        font-size: var(--jb-pin-input-message-font-size, 0.7rem);
+        padding: 4px 0px;
+        color: var(--jb-pin-input-message-color, #929292);
+        display: var(--jb-pin-input-message-box-display, block);
+        &:empty {
+            padding: 0;
+        }
+        &.error {
+            color: var(--jb-pin-input-message-error-color, #dc3545 );
+        }
     }
 }

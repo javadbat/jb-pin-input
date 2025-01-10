@@ -1,7 +1,7 @@
 export type Elements = {
     inputsWrapper: HTMLDivElement,
     inputs: Array<HTMLInputElement>,
-    error: HTMLParagraphElement
+    messageBox: HTMLDivElement
 }
 export type ValidationResult = {
     isValid: boolean

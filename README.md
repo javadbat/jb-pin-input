@@ -1,5 +1,9 @@
 # jb-pin-input
 
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/jb-pin-input)
+[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://raw.githubusercontent.com/javadbat/jb-pin-input/main/LICENSE)
+[![NPM Downloads](https://img.shields.io/npm/dw/jb-pin-input)](https://www.npmjs.com/package/jb-pin-input)
+
 pure js standalone pin input web-component
 
 - smart paste algorithm
@@ -7,6 +11,9 @@ pure js standalone pin input web-component
 - light and fast
 - support typescript
 - accept persian & arabic number char
+- have `complete` custom event for when user enter all digits
+- dynamic char count
+- support `jb-validation` for inside validation mechanism for easier validations
 
 sample in codepen:<https://codepen.io/javadbat/pen/zYPEqNJ>
 sample in github:<https://javadbat.github.io/jb-pin-input>
@@ -58,6 +65,34 @@ so if you need to change the count of pin inputs you can set `charLength` proper
 ```js
 document.querySelector('jb-pin-input').charLength = 5;
 ```
+### custom validation
+
+jb-pin-input use [jb-validation](https://github.com/javadbat/jb-validation) module for validation, with it you can set your own custom validation like any other jb web components family to achieve this you must create a array of validations and assign them to component like this:
+
+```js
+const validationList = [
+        {
+            validator:/^1234$/g,
+            message:'you can only enter 1234'
+        },
+        {
+          validator:(value)=>{
+            return value.startsWith("1");
+          },
+          message:"pin input must be start with 1"
+        }
+];
+document.querySelector('jb-date-input').validation.list = validationList
+```
+to trigger validation and check is the element has a valid value:
+
+```js
+// if show error was false, in case of error component dont show error itself and function will return if data valid or not
+const showError = true
+const validationObj = dom.validation.checkValidity({showError})
+```
+
+for more advance validation read [jb-validation](https://github.com/javadbat/jb-validation) doc.
 
 ### events
 
@@ -67,8 +102,12 @@ document.querySelector('jb-pin-input').charLength = 5;
     dropDownElement.addEventListener('init',(e)=>{/*your function*/});
     dropDownElement.addEventListener('change',(e)=>{/*your function*/});
     dropDownElement.addEventListener('keyup',(e)=>{/*your function*/});
-    //on user press enter
+    dropDownElement.addEventListener('input',(e)=>{/*your function*/});
+    dropDownElement.addEventListener('beforeinput',(e)=>{/*your function*/});
+    //⭐ special event
     dropDownElement.addEventListener('enter',(e)=>{/*when user press enter button*/});
+    //⭐ special event
+    dropDownElement.addEventListener('complete',(e)=>{/*when user enter the last char and after all validation passes*/});
 
 ```
 ### Auto focus
@@ -101,3 +140,12 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-pin-input-wrapper-box-shadow          | border width of each number input wrapper. default value is `none`                            |
 | --jb-pin-input-error-message-margin        | margin of error message. default value is `0`                                                 |
 | --jb-pin-input-error-message-color         | color of error message. default value is `#dc3545`                                            |
+
+
+## Other Related Docs:
+
+- see [`jb-pin-input/react`](https://github.com/javadbat/jb-pin-input/tree/main/react); if you want to use this component in react
+
+- see [All JB Design system Component List](https://github.com/javadbat/design-system/blob/main/docs/component-list.md) for more components
+
+- use [Contribution Guide](https://github.com/javadbat/design-system/blob/main/docs/contribution-guide.md) if you want to contribute in this component.
