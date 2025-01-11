@@ -7,9 +7,9 @@ this component is React.js wrapper for [jb-pin-input](https://www.npmjs.com/pack
 - light and fast
 - support typescript
 - accept persian & arabic number char
+- onComplete event for when user fill all pins
 
-sample in codepen:<https://codepen.io/javadbat/pen/zYPEqNJ>
-sample in github:<https://javadbat.github.io/jb-pin-input>
+Demo :  Demo: [codeSandbox preview](https://3f63dj.csb.app/samples/jb-pin-input) for just see the demo and [codeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBPinInput.tsx) if you want to see and play with code
 
 ## install
 
@@ -47,6 +47,8 @@ if you want pin input get focus as rendered in app just add autofocus props
 in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.  
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
 
+in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.  
+if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
 | css variable name                          | description                                                                                   |
 | -------------                              | -------------                                                                                 |
 | --jb-pin-input-inputs-wrapper-width        | width of inputs wrapper,default is `100%`                                                     |
@@ -65,7 +67,13 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-pin-input-pin-font-weight             | font weight of  each number input. default value is `900`                                     |   
 | --jb-pin-input-wrapper-box-shadow          | border width of each number input wrapper. default value is `none`                            |
 | --jb-pin-input-error-message-margin        | margin of error message. default value is `0`                                                 |
-| --jb-pin-input-message-font-size           | font size of message                                                                          |
-| --jb-pin-input-message-color               | color of message                                                                              |
-| --jb-pin-input-message-error-color         | color of error message. default value is `#dc3545`                                            |
-| --jb-pin-input-message-box-display         | you can hide message box by set this to none                                                  |
+| --jb-pin-input-error-message-color         | color of error message. default value is `#dc3545`                                            |
+
+
+## Other Related Docs:
+
+- see [`jb-pin-input`](https://github.com/javadbat/jb-pin-input) if you want to use this component as a pure-js web-component
+
+- see [All JB Design system Component List](https://github.com/javadbat/design-system/blob/main/docs/component-list.md) for more components
+
+- use [Contribution Guide](https://github.com/javadbat/design-system/blob/main/docs/contribution-guide.md) if you want to contribute in this component.
