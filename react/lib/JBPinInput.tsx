@@ -4,7 +4,7 @@ import {type ValidationItem} from 'jb-validation';
 
 // eslint-disable-next-line no-duplicate-imports
 import { type JBPinInputWebComponent, type ValidationValue} from 'jb-pin-input';
-import { JBPinInputEventsHook, type PropsEvent } from './events-hook.js';
+import { useEvents, type PropsEvent } from './events-hook.js';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -80,7 +80,7 @@ export const JBPinInput = React.forwardRef((props:Props, ref) => {
       element.current.required = props.required;
     }
   }, [element, props.required]);
-  JBPinInputEventsHook(props,element);
+  useEvents(props,element);
   return (
     <jb-pin-input ref={element} class={props.className} label={props.label} message={props.message??""}>
       {props.children}

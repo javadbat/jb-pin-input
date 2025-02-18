@@ -1,3 +1,6 @@
+import type{ JBPinInputWebComponent } from "./jb-pin-input";
+import type {EventTypeWithTarget} from 'jb-core';
+
 export type Elements = {
     inputsWrapper: HTMLDivElement,
     inputs: Array<HTMLInputElement>,
@@ -14,3 +17,4 @@ declare global {
     }
 }
 
+export type JBPinInputEventType<TEvent> = EventTypeWithTarget<TEvent,JBPinInputWebComponent>;
