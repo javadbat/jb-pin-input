@@ -29,7 +29,7 @@
     "react/dist/"
   ],
   "main": "index.js",
-  "types": "./dist/web-component/jb-pin-input/lib/jb-pin-input.d.ts",
+  "types": "./dist/jb-pin-input.d.ts",
   "repository": {
 		"type": "git",
 		"url": "git@github.com:javadbat/jb-pin-input.git"
