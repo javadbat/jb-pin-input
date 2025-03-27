@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useImperativeHandle, useState, type PropsWithChildren } from 'react';
 import 'jb-pin-input';
-import {type ValidationItem} from 'jb-validation';
 
 // eslint-disable-next-line no-duplicate-imports
-import { type JBPinInputWebComponent, type ValidationValue} from 'jb-pin-input';
+import { type JBPinInputWebComponent} from 'jb-pin-input';
 import { useEvents, type PropsEvent } from './events-hook.js';
+import { JBPinInputAttributes, useJBPinInputAttribute } from './attributes-hook.js';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -37,49 +37,7 @@ export const JBPinInput = React.forwardRef((props:Props, ref) => {
     refChangeCountSetter(refChangeCount + 1);
   }, [element.current]);
 
-  
-  useEffect(() => {
-    let value = props.value;
-    if (props.value == null || props.value === undefined) {
-      value = '';
-    }
-    if(element.current){
-      element.current.value = value?.toString() || "";
-    }
-  }, [props.value]);
-  useEffect(() => {
-    if (element && element.current) {
-      element.current.validation.list = props.validationList || [];
-    }
-  }, [props.validationList]);
-  useEffect(() => {
-    if (typeof props.disabled == "boolean") {
-      element.current?.setAttribute('disabled', `${props.disabled}`);
-    }
-  }, [props.disabled]);
-  useEffect(() => {
-    if (typeof props.charLength == "number" && element.current) {
-      element.current.charLength = props.charLength;
-    }
-  }, [props.charLength]);
-  useEffect(() => {
-    if(props.inputmode){
-      element.current?.setAttribute('inputmode',props.inputmode);
-    }else{
-      element.current?.removeAttribute('inputmode');
-    }
-  }
-  , [props.inputmode]);
-  useEffect(()=>{
-    if(props.autofocus){
-      element.current?.setAttribute("autofocus","true");
-    }
-  },[props.autofocus]);
-  useEffect(() => {
-    if (element.current && typeof props.required == "boolean") {
-      element.current.required = props.required;
-    }
-  }, [element, props.required]);
+  useJBPinInputAttribute(element, props);
   useEvents(props,element);
   return (
     <jb-pin-input ref={element} class={props.className} label={props.label} message={props.message??""}>
@@ -88,17 +46,10 @@ export const JBPinInput = React.forwardRef((props:Props, ref) => {
   );
 });
 export type Props = PropsWithChildren<JBPinInputProps>;
-type JBPinInputProps = PropsEvent & {
-    label?: string,
-    value?: string | number,
-    required?: boolean,
-    message?:string,
+type JBPinInputProps = PropsEvent & JBPinInputAttributes & {
     className?: string,
-    validationList?: ValidationItem<ValidationValue>[],
-    disabled?: boolean,
-    inputmode?: string,
-    autofocus?: boolean,
-    charLength?:number,
+    label?: string,
+    message?:string,
 }
 JBPinInput.displayName = "JBPinInput";
 

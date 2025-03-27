@@ -1,6 +1,6 @@
 import HTML from './jb-pin-input.html';
 import CSS from './jb-pin-input.scss';
-import { ValidationItem, ValidationResult, type WithValidation, ValidationHelper, ShowValidationErrorInput } from 'jb-validation';
+import { ValidationItem, ValidationResult, type WithValidation, ValidationHelper, ShowValidationErrorParameters } from 'jb-validation';
 import { Elements, ValidationValue } from "./types.js";
 import { type JBFormInputStandards } from 'jb-form';
 
@@ -149,7 +149,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.registerEventListener();
   }
   static get observedAttributes() {
-    return ['autofocus', 'char-length', 'required', 'message'];
+    return ['autofocus', 'char-length', 'required', 'message', 'error'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     // do something when an attribute has changed
@@ -173,6 +173,10 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
         if(!this.elements.messageBox.classList.contains("error")){
           this.elements.messageBox.innerHTML = value;
         }
+        break;
+      case 'error':
+        this.reportValidity();
+        break;
     }
 
   }
@@ -460,7 +464,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     const event = new Event('change', {cancelable:false,bubbles:true, composed:true});
     this.dispatchEvent(event);
   }
-  showValidationError(error: ShowValidationErrorInput | string) {
+  showValidationError(error: ShowValidationErrorParameters | string) {
     const message = typeof error == "string"?error:error.message;
     this.elements.messageBox.innerHTML = message;
     this.elements.messageBox.classList.add("error");
@@ -502,6 +506,13 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   #getInsideValidation(): ValidationItem<ValidationValue>[] {
     const validationList: ValidationItem<ValidationValue>[] = [];
+    if(this.getAttribute("error") !== null && this.getAttribute("error").trim().length > 0){
+      validationList.push({
+        validator: undefined,
+        message: this.getAttribute("error"),
+        stateType: "customError"
+      });
+    }
     if (this.required) {
       validationList.push({
         validator:(value:string)=>{

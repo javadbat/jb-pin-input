@@ -34,6 +34,15 @@ export const charLength: Story = {
   }
 };
 
+export const WithError: Story = {
+  args: {
+    label: 'with error',
+    message: "simple message",
+    error:"error message",
+    value: "",
+  }
+};
+
 export const Required: Story = {
   args: {
     label: 'required',
