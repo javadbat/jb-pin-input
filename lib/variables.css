@@ -1,0 +1,9 @@
+:host{
+  --wrapper-border-color:var(--jb-pin-input-wrapper-border-color, var(--jb-neutral));
+  --pin-color:var(--jb-pin-input-pin-color, var(--jb-text-primary));
+  --bottom-line-color:var(--jb-pin-input-bottom-line-color, var(--jb-neutral-8));
+  --border-color-active:var(--jb-pin-input-wrapper-border-color-active, var(--jb-primary));
+  --bottom-line-color-active:var(--jb-pin-input-bottom-line-color-active, var(--jb-primary));
+  --message-color:var(--jb-pin-input-message-color, var(--jb-text-secondary));
+  --message-error-color:var(--jb-pin-input-message-error-color, var(--jb-red));
+}

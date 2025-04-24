@@ -1,3 +1,5 @@
+@use './variables.css';
+
 :host(:focus),
 :host(:focus-visible) {
     outline: none;
@@ -13,13 +15,13 @@
         direction: ltr;
 
         .pin-input-wrapper {
-            border: var(--jb-pin-input-wrapper-border-width, 0) var(--jb-pin-input-wrapper-border-style, solid) var(--jb-pin-input-wrapper-border-color, black);
+            border: var(--jb-pin-input-wrapper-border-width, 0) var(--jb-pin-input-wrapper-border-style, solid) var(--wrapper-border-color);
             border-radius: var(--jb-pin-input-wrapper-border-radius, 15px);
 
             .pin-input {
                 border: none;
                 //background-color: bisque;
-                color: var(--jb-pin-input-pin-color, #333);
+                color: var(--pin-color);
                 background-color: transparent;
                 width: 100%;
                 min-width: 8px;
@@ -37,7 +39,7 @@
             }
 
             .pin-input-shape {
-                background-color: var(--jb-pin-input-bottom-line-color, #9DA6B6);
+                background-color: var(--bottom-line-color);
                 border-radius: var(--jb-pin-input-bottom-line-border-radius, 16px);
                 width: 100%;
                 height: var(--jb-pin-input-bottom-line-height, 4px);
@@ -45,10 +47,10 @@
             }
 
             &:focus-within {
-                border-color:var(--jb-pin-input-wrapper-border-color-active, #1565D8);
+                border-color:var(--border-color-active);
                 box-shadow: var(--jb-pin-input-wrapper-box-shadow,none);
                 .pin-input-shape {
-                    background-color: var(--jb-pin-input-bottom-line-color-active, #1565D8);
+                    background-color: var(--bottom-line-color-active);
                 }
             }
 
@@ -60,13 +62,13 @@
     .message-box {
         font-size: var(--jb-pin-input-message-font-size, 0.7rem);
         padding: 4px 0px;
-        color: var(--jb-pin-input-message-color, #929292);
+        color: var(--message-color);
         display: var(--jb-pin-input-message-box-display, block);
         &:empty {
             padding: 0;
         }
         &.error {
-            color: var(--jb-pin-input-message-error-color, #dc3545 );
+            color: var(--message-error-color);
         }
     }
 }
