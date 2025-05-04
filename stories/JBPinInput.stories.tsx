@@ -4,7 +4,7 @@ import { JBPinInputStyleTest } from './samples/JBPinInputStyleTest';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<Props> = {
-  title: "Example/form elements/JBPinInput",
+  title: "Components/form elements/JBPinInput",
   component: JBPinInput,
 };
 export default meta;

@@ -1,4 +1,7 @@
 :host{
+  --wrapper-border-radius: var(--jb-pin-input-wrapper-border-radius, var(--jb-radius));
+  --bottom-line-border-radius: var(--jb-pin-input-bottom-line-border-radius, var(--jb-radius));
+  /*colors*/
   --wrapper-border-color:var(--jb-pin-input-wrapper-border-color, var(--jb-neutral));
   --pin-color:var(--jb-pin-input-pin-color, var(--jb-text-primary));
   --bottom-line-color:var(--jb-pin-input-bottom-line-color, var(--jb-neutral-8));

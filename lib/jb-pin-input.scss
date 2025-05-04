@@ -16,7 +16,7 @@
 
         .pin-input-wrapper {
             border: var(--jb-pin-input-wrapper-border-width, 0) var(--jb-pin-input-wrapper-border-style, solid) var(--wrapper-border-color);
-            border-radius: var(--jb-pin-input-wrapper-border-radius, 15px);
+            border-radius: var(--wrapper-border-radius);
 
             .pin-input {
                 border: none;
@@ -40,7 +40,7 @@
 
             .pin-input-shape {
                 background-color: var(--bottom-line-color);
-                border-radius: var(--jb-pin-input-bottom-line-border-radius, 16px);
+                border-radius: var(--bottom-line-border-radius);
                 width: 100%;
                 height: var(--jb-pin-input-bottom-line-height, 4px);
                 display: var(--jb-pin-input-bottom-line-display, block);

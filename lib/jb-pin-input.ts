@@ -3,7 +3,7 @@ import CSS from './jb-pin-input.scss';
 import { ValidationItem, ValidationResult, type WithValidation, ValidationHelper, ShowValidationErrorParameters } from 'jb-validation';
 import { Elements, ValidationValue } from "./types.js";
 import { type JBFormInputStandards } from 'jb-form';
-import {defineColors} from 'jb-core/theme';
+import {registerDefaultVariables} from 'jb-core/theme';
 
 export * from './types.js';
 
@@ -131,7 +131,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       mode: 'open',
       delegatesFocus: true
     });
-    defineColors();
+    registerDefaultVariables();
     const html = `<style>${CSS}</style>` + '\n' + HTML;
     const element = document.createElement('template');
     element.innerHTML = html;
