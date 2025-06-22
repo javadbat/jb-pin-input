@@ -1,3 +1,4 @@
+'use client';
 import React, { useRef, useEffect, useImperativeHandle, useState, type PropsWithChildren } from 'react';
 import 'jb-pin-input';
 
@@ -6,7 +7,7 @@ import { type JBPinInputWebComponent} from 'jb-pin-input';
 import { useEvents, type PropsEvent } from './events-hook.js';
 import { JBPinInputAttributes, useJBPinInputAttribute } from './attributes-hook.js';
 
-declare global {
+declare module "react" {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace JSX {
       interface IntrinsicElements {
