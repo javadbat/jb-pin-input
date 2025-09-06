@@ -22,42 +22,42 @@ sample in github:<https://javadbat.github.io/jb-pin-input>
 
 to use this component in **react** see [`jb-pin-input/react`](https://github.com/javadbat/jb-pin-input/tree/main/react);
 
-## doc
-
-### usage
-
-##### load javascript code
+## Install & Usage 
 
 you can load this web component with 2 method:
 
 1- using npm:
 if you have modern app with module mechanism and npm you can install and import module from npm:
 
-```cmd
+```sh
 npm i jb-pin-input
 ```
+
 in your js file:
 
 ```javascript
 import 'jb-pin-input';
 ```
+
 2- using cdn:
+
 ```html
 <script src="https://unpkg.com/jb-pin-input"></script>
 ```
-#### in HTML view
+
+### in HTML view
 
 ```html
 <jb-pin-input></jb-pin-input>
 ```
-### set value
+## set value
 
 to select value in your code you have 2 option:
 1- set it via dom assign `pinInputDom.value = yourValue`
 2- set through dom attribute `<jb-pin-input value="yourValueSting"></jb-pin-input>`
 remember set value as attribute if your option is a plain string but in direct assign like first option you can attach both string or object value assignation
 
-### char length
+## char length
 
 you may need to change the length of your pin for example in some app it's 5 in some 6 or more.    
 so if you need to change the count of pin inputs you can set `charLength` property in component like this:
@@ -65,7 +65,7 @@ so if you need to change the count of pin inputs you can set `charLength` proper
 ```js
 document.querySelector('jb-pin-input').charLength = 5;
 ```
-### custom validation
+## custom validation
 
 jb-pin-input use [jb-validation](https://github.com/javadbat/jb-validation) module for validation, with it you can set your own custom validation like any other jb web components family to achieve this you must create a array of validations and assign them to component like this:
 
@@ -84,6 +84,7 @@ const validationList = [
 ];
 document.querySelector('jb-date-input').validation.list = validationList
 ```
+
 to trigger validation and check is the element has a valid value:
 
 ```js
@@ -94,7 +95,7 @@ const validationObj = dom.validation.checkValidity({showError})
 
 for more advance validation read [jb-validation](https://github.com/javadbat/jb-validation) doc.
 
-### events
+## events
 
 ```js
 
@@ -110,14 +111,14 @@ for more advance validation read [jb-validation](https://github.com/javadbat/jb-
     dropDownElement.addEventListener('complete',(e)=>{/*when user enter the last char and after all validation passes*/});
 
 ```
-### Auto focus
+## Auto focus
 
 pin input will gain focus when loaded and initiated automatically if you set `autofocus` attribute
 ```html
 <jb-pin-input autofocus></jb-pin-input>
 ```
 
-### set custom styles
+## set custom styles
 
 in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.  
 if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
@@ -146,6 +147,6 @@ if you want to set a custom style to this web-component all you need is to set c
 
 - see [`jb-pin-input/react`](https://github.com/javadbat/jb-pin-input/tree/main/react); if you want to use this component in react
 
-- see [All JB Design system Component List](https://javadbat.github.io/design-system/
+- see [All JB Design system Component List](https://javadbat.github.io/design-system/)
 
 - use [Contribution Guide](https://github.com/javadbat/design-system/blob/main/docs/contribution-guide.md) if you want to contribute in this component.

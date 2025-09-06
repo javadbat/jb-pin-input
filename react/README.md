@@ -9,12 +9,16 @@ this component is React.js wrapper for [jb-pin-input](https://www.npmjs.com/pack
 - accept persian & arabic number char
 - onComplete event for when user fill all pins
 
-Demo :  Demo: [codeSandbox preview](https://3f63dj.csb.app/samples/jb-pin-input) for just see the demo and [codeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBPinInput.tsx) if you want to see and play with code
+## Demo
+
+-[codeSandbox preview](https://3f63dj.csb.app/samples/jb-pin-input) for just see the demo and [codeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBPinInput.tsx) if you want to see and play with code
+- [storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput)
 
 ## install
 
 run following command to install it with npm
-```cmd
+
+```sh
 npm i jb-pin-input
 ```
 
