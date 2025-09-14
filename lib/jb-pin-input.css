@@ -1,5 +1,3 @@
-@use './variables.css';
-
 :host(:focus),
 :host(:focus-visible) {
     outline: none;
@@ -20,7 +18,6 @@
 
             .pin-input {
                 border: none;
-                //background-color: bisque;
                 color: var(--pin-color);
                 background-color: transparent;
                 width: 100%;

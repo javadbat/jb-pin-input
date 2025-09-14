@@ -6,10 +6,11 @@ export const webComponentList: WebComponentBuildConfig[] = [
     path: "./lib/jb-pin-input.ts",
     outputPath: "./dist/jb-pin-input.js",
     umdName: "JBPinInput",
-    external: ["jb-validation", "jb-form", "jb-core"],
+    external: ["jb-validation", "jb-form", "jb-core", "jb-core/theme"],
     globals: {
       "jb-validation": "JBValidation",
       "jb-core":"JBCore",
+      "jb-core/theme":"JBCoreTheme",
       "jb-form":"JBForm"
     },
   },

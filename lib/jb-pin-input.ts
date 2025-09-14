@@ -1,4 +1,5 @@
-import CSS from './jb-pin-input.scss';
+import CSS from './jb-pin-input.css';
+import VariablesCSS from './variables.css';
 import { ValidationItem, ValidationResult, type WithValidation, ValidationHelper, ShowValidationErrorParameters } from 'jb-validation';
 import { Elements, ValidationValue } from "./types.js";
 import { type JBFormInputStandards } from 'jb-form';
@@ -132,7 +133,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       delegatesFocus: true
     });
     registerDefaultVariables();
-    const html = `<style>${CSS}</style>` + '\n' + renderHTML();
+    const html = `<style>${CSS} ${VariablesCSS}</style>` + '\n' + renderHTML();
     const element = document.createElement('template');
     element.innerHTML = html;
     shadowRoot.appendChild(element.content.cloneNode(true));
