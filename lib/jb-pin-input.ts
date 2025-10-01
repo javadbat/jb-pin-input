@@ -5,6 +5,7 @@ import { Elements, ValidationValue } from "./types.js";
 import { type JBFormInputStandards } from 'jb-form';
 import {registerDefaultVariables} from 'jb-core/theme';
 import { renderHTML } from './render';
+import { getRequiredMessage, i18n } from 'jb-core/i18n';
 
 export * from './types.js';
 
@@ -521,7 +522,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
         validator:(value:string)=>{
           return value.length == this.charLength && !value.includes(this.emptyChar)
         },
-        message: "میبایست کامل وارد شود",
+        message: getRequiredMessage(i18n,null),
         stateType: "valueMissing"
       });
     }
