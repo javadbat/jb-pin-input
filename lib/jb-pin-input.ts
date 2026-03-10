@@ -1,8 +1,8 @@
 import CSS from './jb-pin-input.css';
 import VariablesCSS from './variables.css';
-import { ValidationItem, ValidationResult, type WithValidation, ValidationHelper, ShowValidationErrorParameters } from 'jb-validation';
-import { Elements, ValidationValue } from "./types.js";
-import { type JBFormInputStandards } from 'jb-form';
+import { type ValidationItem, type ValidationResult, type WithValidation, ValidationHelper, type ShowValidationErrorParameters } from 'jb-validation';
+import type { Elements, ValidationValue } from "./types.js";
+import type { JBFormInputStandards } from 'jb-form';
 import {registerDefaultVariables} from 'jb-core/theme';
 import { renderHTML } from './render';
 import { getRequiredMessage, i18n } from 'jb-core/i18n';
@@ -26,7 +26,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   set disabled(value: boolean) {
     this.#disabled = value;
-    this.elements.inputs.forEach((i) => i.disabled = value);
+    this.elements.inputs.forEach((i) => {i.disabled = value});
     if (value) {
       //TODO: remove as any when typescript support
       (this.#internals as any).states?.add("disabled");
@@ -114,7 +114,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.initWebComponent();
   }
   connectedCallback() {
-    // standard web component event that called when all of dom is binded
+    // standard web component event that called when all of dom is bound
     this.callOnLoadEvent();
     this.initProp();
     this.callOnInitEvent();
@@ -134,7 +134,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       delegatesFocus: true
     });
     registerDefaultVariables();
-    const html = `<style>${CSS} ${VariablesCSS}</style>` + '\n' + renderHTML();
+    const html = `<style>${CSS} ${VariablesCSS}</style>\n${renderHTML()}`;
     const element = document.createElement('template');
     element.innerHTML = html;
     shadowRoot.appendChild(element.content.cloneNode(true));
@@ -155,7 +155,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   static get observedAttributes() {
     return ['autofocus', 'char-length', 'required', 'message', 'error'];
   }
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+  attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
     // do something when an attribute has changed
     this.onAttributeChange(name, newValue);
   }
@@ -256,7 +256,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     value = this.#faToEnDigits(value);
     const regexResult = regex.exec(value);
     let filteredValue = "";
-    if (regexResult && regexResult.groups && regexResult.groups.pin) {
+    if (regexResult?.groups?.pin) {
       //first we looking for full pin code match
       //if we find all digits in pasted value
       filteredValue = regexResult.groups.pin;
@@ -317,7 +317,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     }
   }
   onInputKeyDown(e: KeyboardEvent) {
-    const keyDownnInitObj: KeyboardEventInit = {
+    const keyDownInitObj: KeyboardEventInit = {
       key: e.key,
       keyCode: e.keyCode,
       code: e.code,
@@ -327,7 +327,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       charCode: e.charCode,
       which: e.which
     };
-    const event = new KeyboardEvent("keydown", keyDownnInitObj);
+    const event = new KeyboardEvent("keydown", keyDownInitObj);
     this.dispatchEvent(event);
   }
   #onInputKeyPress(e: KeyboardEvent) {
@@ -355,7 +355,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   #onInput(e: InputEvent) {
     const elem = e.target;
-    const currentPinIndex = parseInt((elem as HTMLInputElement).parentElement!.dataset.pinIndex!);
+    const currentPinIndex = parseInt((elem as HTMLInputElement).parentElement!.dataset.pinIndex!, 10);
     let nextIndex = currentPinIndex;
     const value = this.#faToEnDigits((e.target as HTMLInputElement).value);
     const isLastIndex = !(currentPinIndex + 1 < this.charLength);
@@ -393,7 +393,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
         if (target.value == "") {
           //dont move it to onkeyup becuse we cant determine input is empty condition there becuase input is always empty in there
           //if value is empty we move cursor to prev input if not we just stop 
-          const currentPinIndex = parseInt(target.parentElement!.dataset.pinIndex!);
+          const currentPinIndex = parseInt(target.parentElement!.dataset.pinIndex!, 10);
           const nextIndex = currentPinIndex == 0 ? 0 : (currentPinIndex - 1);
           const nextInput = (this.elements!).inputs[nextIndex];
           nextInput.focus();
@@ -423,7 +423,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   #onInputKeyup(e: KeyboardEvent) {
     //change focus 
     const elem = e.target as HTMLInputElement;
-    const currentPinIndex = parseInt(elem.parentElement!.dataset.pinIndex!);
+    const currentPinIndex = parseInt(elem.parentElement!.dataset.pinIndex!, 10);
     let nextIndex = currentPinIndex;
 
     //if inputed key is not a number
@@ -483,7 +483,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
 */
   get isAutoValidationDisabled(): boolean {
     //currently we only support disable-validation in attribute and only in initiate time but later we can add support for change of this 
-    return this.getAttribute('disable-auto-validation') === '' || this.getAttribute('disable-auto-validation') === 'true' ? true : false;
+    return !!(this.getAttribute('disable-auto-validation') === '' || this.getAttribute('disable-auto-validation') === 'true' );
   }
   #checkValidity(showError: boolean) {
     if (!this.isAutoValidationDisabled) {

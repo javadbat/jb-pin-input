@@ -1,6 +1,6 @@
-import { JBPinInputWebComponent, type ValidationValue } from "jb-pin-input";
-import { type ValidationItem } from "jb-validation";
-import { RefObject, useEffect } from "react";
+import type { JBPinInputWebComponent, ValidationValue } from "jb-pin-input";
+import type { ValidationItem } from "jb-validation";
+import { type RefObject, useEffect } from "react";
 
 export type JBPinInputAttributes = {
   value?: string | number,
@@ -22,22 +22,26 @@ export function useJBPinInputAttribute(element: RefObject<JBPinInputWebComponent
     if (element.current) {
       element.current.value = value?.toString() || "";
     }
-  }, [props.value]);
+  }, [props.value, element.current]);
+
   useEffect(() => {
-    if (element && element.current) {
+    if (element?.current) {
       element.current.validation.list = props.validationList || [];
     }
-  }, [props.validationList]);
+  }, [props.validationList, element]);
+
   useEffect(() => {
     if (typeof props.disabled == "boolean") {
       element.current?.setAttribute('disabled', `${props.disabled}`);
     }
-  }, [props.disabled]);
+  }, [props.disabled,element]);
+
   useEffect(() => {
     if (typeof props.charLength == "number" && element.current) {
       element.current.charLength = props.charLength;
     }
-  }, [props.charLength]);
+  }, [props.charLength, element.current]);
+
   useEffect(() => {
     if (props.inputmode) {
       element.current?.setAttribute('inputmode', props.inputmode);
@@ -45,12 +49,13 @@ export function useJBPinInputAttribute(element: RefObject<JBPinInputWebComponent
       element.current?.removeAttribute('inputmode');
     }
   }
-  , [props.inputmode]);
+  , [props.inputmode, element.current]);
+  
   useEffect(() => {
     if (props.autofocus) {
       element.current?.setAttribute("autofocus", "true");
     }
-  }, [props.autofocus]);
+  }, [props.autofocus, element.current?.setAttribute]);
 
   useEffect(() => {
     if (element.current && typeof props.required == "boolean") {
@@ -64,5 +69,5 @@ export function useJBPinInputAttribute(element: RefObject<JBPinInputWebComponent
     } else {
       element?.current?.removeAttribute('error');
     }
-  }, [props.error]);
+  }, [props.error, element?.current]);
 }

@@ -1,4 +1,4 @@
-import { JBPinInputWebComponent, JBPinInputEventType } from 'jb-pin-input';
+import type { JBPinInputWebComponent, JBPinInputEventType } from 'jb-pin-input';
 import { useEvent } from 'jb-core/react';
 
 export type PropsEvent = {
