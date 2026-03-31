@@ -121,17 +121,19 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
 
   }
   callOnLoadEvent() {
-    const event = new CustomEvent('load', { bubbles: true, composed: true });
+    const event = new CustomEvent('load', { bubbles: true, composed: false });
     this.dispatchEvent(event);
   }
   callOnInitEvent() {
-    const event = new CustomEvent('init', { bubbles: true, composed: true });
+    const event = new CustomEvent('init', { bubbles: true, composed: false });
     this.dispatchEvent(event);
   }
   initWebComponent() {
     const shadowRoot = this.attachShadow({
       mode: 'open',
-      delegatesFocus: true
+      delegatesFocus: true,
+      clonable:true,
+      serializable:true
     });
     registerDefaultVariables();
     const html = `<style>${CSS} ${VariablesCSS}</style>\n${renderHTML()}`;
