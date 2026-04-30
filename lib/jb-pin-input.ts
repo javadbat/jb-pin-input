@@ -34,6 +34,9 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       (this.#internals as any).states?.delete("disabled");
     }
   }
+  get form(){
+    return this.#internals?.form??null
+  }
   #required = false;
   set required(value: boolean) {
     this.#required = value;
@@ -143,7 +146,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.elements = {
       inputsWrapper: shadowRoot.querySelector('.inputs-wrapper')!,
       inputs: [],
-      messageBox:shadowRoot.querySelector(".message-box")
+      messageBox:shadowRoot.querySelector(".message-box")!
     };
 
   }
@@ -371,7 +374,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       nextInput.focus();
     }
     this.#dispatchOnInputEvent(e);
-    this.#checkValidity(false).then((validityRes)=>{
+    this.#checkValidity(false)?.then((validityRes)=>{
       if(e.inputType !== "deleteContentBackward" && isLastIndex && validityRes.isAllValid){
         this.#dispatchOnCompleteEvent();
       }
@@ -497,25 +500,25 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
 */
   #setValidationResult(result: ValidationResult<ValidationValue>) {
     if (result.isAllValid) {
-      this.#internals.setValidity({}, '');
+      this.#internals?.setValidity({}, '');
     } else {
       const states: ValidityStateFlags = {};
       let message = "";
       result.validationList.forEach((res) => {
         if (!res.isValid) {
           if (res.validation.stateType) { states[res.validation.stateType] = true; }
-          if (message == '') { message = res.message; }
+          if (message == '') { message = res.message??""; }
         }
       });
-      this.#internals.setValidity(states, message);
+      this.#internals?.setValidity(states, message);
     }
   }
   #getInsideValidation(): ValidationItem<ValidationValue>[] {
     const validationList: ValidationItem<ValidationValue>[] = [];
-    if(this.getAttribute("error") !== null && this.getAttribute("error").trim().length > 0){
+    if(this.getAttribute("error") !== null && (this.getAttribute("error")??"").trim().length > 0){
       validationList.push({
         validator: undefined,
-        message: this.getAttribute("error"),
+        message: this.getAttribute("error")??"",
         stateType: "customError"
       });
     }
@@ -556,7 +559,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     return validationResult.isAllValid;
   }
   get validationMessage(){
-    return this.#internals.validationMessage;
+    return this.#internals?.validationMessage??null;
   }
   /**
    * focus on first empty input
