@@ -13,7 +13,7 @@ export type PropsEvent = {
   onComplete?: (e: JBPinInputEventType<CustomEvent>) => void,
 }
 
-export function useEvents(props:PropsEvent,element:React.MutableRefObject<JBPinInputWebComponent>) {
+export function useEvents(props:PropsEvent,element:React.RefObject<JBPinInputWebComponent | null>) {
   useEvent(element, 'change', props.onChange);
   useEvent(element, 'keydown', props.onKeyDown);
   useEvent(element, 'keyup', props.onKeyUp);

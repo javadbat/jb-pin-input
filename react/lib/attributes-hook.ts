@@ -12,7 +12,7 @@ export type JBPinInputAttributes = {
   charLength?: number,
   error?: string,
 }
-export function useJBPinInputAttribute(element: RefObject<JBPinInputWebComponent>, props: JBPinInputAttributes) {
+export function useJBPinInputAttribute(element: RefObject<JBPinInputWebComponent | null>, props: JBPinInputAttributes) {
 
   useEffect(() => {
     let value = props.value;

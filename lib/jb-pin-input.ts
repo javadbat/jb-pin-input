@@ -28,10 +28,9 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.#disabled = value;
     this.elements.inputs.forEach((i) => {i.disabled = value});
     if (value) {
-      //TODO: remove as any when typescript support
-      (this.#internals as any).states?.add("disabled");
+      this.#internals?.states?.add("disabled");
     } else {
-      (this.#internals as any).states?.delete("disabled");
+      this.#internals?.states?.delete("disabled");
     }
   }
   get form(){
@@ -85,12 +84,12 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   set charLength(value) {
     this.#charLength = value;
-    this.initInputsDom();
+    this.#initInputsDom();
   }
 
   #validation = new ValidationHelper({
     clearValidationError: this.clearValidationError.bind(this),
-    showValidationError: this.showValidationError.bind(this),
+    showValidationError: this.#showValidationError.bind(this),
     getValue: () => this.value,
     getValueString: () => this.value,
     setValidationResult: this.#setValidationResult.bind(this),
@@ -154,7 +153,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     //
   }
   initProp() {
-    this.initInputsDom();
+    this.#initInputsDom();
     this.registerEventListener();
   }
   static get observedAttributes() {
@@ -204,8 +203,8 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     }
     return standardValue;
   }
-  initInputsDom() {
-    const inputElements = this.createInputs();
+  #initInputsDom() {
+    const inputElements = this.#createInputs();
     (this.elements!).inputs = inputElements.map(x => x.querySelector('.pin-input')!);
     (this.elements!).inputsWrapper.innerHTML = "";
     inputElements.forEach((elements) => {
@@ -221,15 +220,15 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
    * 
    * @return {Array.<HTMLInputElement>} inputList - array of pin input DOM
    */
-  createInputs(): HTMLDivElement[] {
+  #createInputs(): HTMLDivElement[] {
     const inputsList: HTMLDivElement[] = [];
     for (let i = 0; i < this.charLength; i++) {
-      const inputDom = this.createInput(i);
+      const inputDom = this.#createInput(i);
       inputsList.push(inputDom);
     }
     return inputsList;
   }
-  createInput(index: number): HTMLDivElement {
+  #createInput(index: number): HTMLDivElement {
     const wrapperDom = document.createElement('div');
     wrapperDom.classList.add('pin-input-wrapper');
     const inputDom = document.createElement('input');
@@ -321,7 +320,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       this.#DispatchChangeEvent();
     }
   }
-  onInputKeyDown(e: KeyboardEvent) {
+  #onInputKeyDown(e: KeyboardEvent) {
     const keyDownInitObj: KeyboardEventInit = {
       key: e.key,
       keyCode: e.keyCode,
@@ -473,7 +472,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     const event = new Event('change', {cancelable:false,bubbles:true, composed:true});
     this.dispatchEvent(event);
   }
-  showValidationError(error: ShowValidationErrorParameters | string) {
+  #showValidationError(error: ShowValidationErrorParameters | string) {
     const message = typeof error == "string"?error:error.message;
     this.elements.messageBox.innerHTML = message;
     this.elements.messageBox.classList.add("error");
