@@ -17,16 +17,14 @@
 -[codeSandbox preview](https://3f63dj.csb.app/samples/jb-pin-input) for just see the demo and [codeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBPinInput.tsx) if you want to see and play with code
 - [storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput)
 
-## install
-
+## Installation
 run following command to install it with npm
 
 ```sh
 npm i jb-pin-input
 ```
 
-## usage
-
+## Usage
 just import the package and use it like other react component
 
 ```jsx
@@ -51,12 +49,12 @@ if you want pin input get focus as rendered in app just add autofocus props
 
 ### set custom style
 
-in some cases in your project you need to change defualt style of web-component for example you need zero margin or different border-radius and etc.  
-if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
+in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.  
+if you want to set a custom style to this web-component all you need is to set CSS variable in parent scope of web-component
 
 in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.  
-if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
-| css variable name                          | description                                                                                   |
+if you want to set a custom style to this web-component all you need is to set CSS variable in parent scope of web-component
+| CSS variable name                          | description                                                                                   |
 | -------------                              | -------------                                                                                 |
 | --jb-pin-input-inputs-wrapper-width        | width of inputs wrapper,default is `100%`                                                     |
 | --jb-pin-input-bottom-line-color           | color of bottom line of each number.  default value is `#9DA6B6`                              |
@@ -77,8 +75,12 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-pin-input-error-message-color         | color of error message. default value is `#dc3545`                                            |
 
 
-## Other Related Docs:
 
+## Shared Documentation
+
+For web-component behavior, events, slots, and CSS variables, see [`jb-pin-input`](https://github.com/javadbat/jb-pin-input).
+
+## Related Docs
 - see [`jb-pin-input`](https://github.com/javadbat/jb-pin-input) if you want to use this component as a pure-js web-component
 
 - see [All JB Design system Component List](https://javadbat.github.io/design-system/

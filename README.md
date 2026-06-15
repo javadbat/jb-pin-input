@@ -19,11 +19,20 @@ pure js standalone pin input web-component
 sample in codepen:<https://codepen.io/javadbat/pen/zYPEqNJ>
 sample in github:<https://javadbat.github.io/jb-pin-input>
 
-## using with JS frameworks
-
+## Using With JS Frameworks
 - [<img src="https://img.shields.io/badge/React.js-jb--pin--input%2Freact-000.svg?logo=react&logoColor=%2361DAFB" height="30" />](https://github.com/javadbat/jb-pin-input/tree/main/react)
 
-## Install & Usage 
+## Installation
+
+## Attributes/Properties
+
+| name | type | description |
+| --- | --- | --- |
+| `value` | property | Current pin value. |
+| `length` | property/attribute | Number of pin cells. |
+| `validation.list` | property | Custom validators from `jb-validation`. |
+| `checkValidity()` | method | Runs validation and returns validation result. |
+| `change` | event | Fired when the value changes. |
 
 you can load this web component with 2 method:
 
@@ -83,21 +92,20 @@ const validationList = [
           message:"pin input must be start with 1"
         }
 ];
-document.querySelector('jb-date-input').validation.list = validationList
+document.querySelector('jb-pin-input').validation.list = validationList
 ```
 
 to trigger validation and check is the element has a valid value:
 
 ```js
-// if show error was false, in case of error component dont show error itself and function will return if data valid or not
+// if show error was false, in case of error component don't show error itself and function will return if data valid or not
 const showError = true
 const validationObj = dom.validation.checkValidity({showError})
 ```
 
 for more advance validation read [jb-validation](https://github.com/javadbat/jb-validation) doc.
 
-## events
-
+## Events
 ```js
 
     dropDownElement.addEventListener('load',(e)=>{/*your function*/});
@@ -122,8 +130,8 @@ pin input will gain focus when loaded and initiated automatically if you set `au
 ## set custom styles
 
 in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.  
-if you want to set a custom style to this web-component all you need is to set css variable in parent scope of web-component
-| css variable name                          | description                                                                                   |
+if you want to set a custom style to this web-component all you need is to set CSS variable in parent scope of web-component
+| CSS variable name                          | description                                                                                   |
 | -------------                              | -------------                                                                                 |
 | --jb-pin-input-inputs-wrapper-width        | width of inputs wrapper,default is `100%`                                                     |
 | --jb-pin-input-bottom-line-color           | color of bottom line of each number.                                                          |
@@ -140,12 +148,14 @@ if you want to set a custom style to this web-component all you need is to set c
 | --jb-pin-input-pin-font-size               | font size of  each number input. default value is `24`                                        |   
 | --jb-pin-input-pin-font-weight             | font weight of  each number input. default value is `900`                                     |   
 | --jb-pin-input-wrapper-box-shadow          | border width of each number input wrapper. default value is `none`                            |
-| --jb-pin-input-error-message-margin        | margin of error message. default value is `0`                                                 |
-| --jb-pin-input-error-message-color         | color of error message.                                                                       |
+| --jb-pin-input-message-box-display | Customize message box display. |
+| --jb-pin-input-message-color | Customize message color. |
+| --jb-pin-input-message-error-color | Customize message error color. |
+| --jb-pin-input-message-font-size | Customize message font size. |
+| --jb-pin-input-wrapper-border-radius | Customize wrapper border radius. |
 
 
-## Other Related Docs:
-
+## Related Docs
 - see [`jb-pin-input/react`](https://github.com/javadbat/jb-pin-input/tree/main/react); if you want to use this component in react
 
 - see [All JB Design system Component List](https://javadbat.github.io/design-system/)
