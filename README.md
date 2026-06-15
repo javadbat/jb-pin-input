@@ -2,7 +2,8 @@
 
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/jb-pin-input)
 [![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://raw.githubusercontent.com/javadbat/jb-pin-input/main/LICENSE)
-[![NPM Downloads](https://img.shields.io/npm/dw/jb-pin-input)](https://www.npmjs.com/package/jb-pin-input)
+[![NPM Version](https://img.shields.io/npm/v/jb-pin-input)](https://www.npmjs.com/package/jb-pin-input)
+![GitHub Created At](https://img.shields.io/github/created-at/javadbat/jb-pin-input)
 
 pure js standalone pin input web-component
 
