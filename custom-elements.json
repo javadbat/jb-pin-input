@@ -1,0 +1,372 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "README.md",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "lib/jb-pin-input.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Standalone form-associated PIN/OTP input web component with multiple numeric cells, smart paste, validation, and complete event.",
+          "name": "JBPinInputWebComponent",
+          "tagName": "jb-pin-input",
+          "customElement": true,
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "attributes": [
+            {
+              "name": "value",
+              "description": "Initial or reflected PIN value. Missing cells are represented by dash in value.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "char-length",
+              "description": "Number of PIN cells.",
+              "type": {
+                "text": "number"
+              },
+              "default": "6"
+            },
+            {
+              "name": "name",
+              "description": "Form field name.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "required",
+              "description": "Enables required validation. Empty attribute and true mean true.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "disabled",
+              "description": "Disables all inner PIN inputs. Empty attribute and true mean true.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "autofocus",
+              "description": "Focuses the first input after initialization. Empty attribute and true mean true.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "inputmode",
+              "description": "Input mode forwarded to each internal input.",
+              "type": {
+                "text": "string"
+              },
+              "default": "numeric"
+            },
+            {
+              "name": "message",
+              "description": "Helper text shown below the PIN cells when no validation error is visible.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "error",
+              "description": "External validation error message.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "disable-auto-validation",
+              "description": "Disables automatic validation on blur when set to an empty attribute or true.",
+              "type": {
+                "text": "boolean"
+              }
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Canonical PIN value. Empty cells are represented by dash.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "charLength",
+              "description": "Number of PIN cells.",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "emptyChar",
+              "description": "Character used in value for empty cells.",
+              "type": {
+                "text": "'-'"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "inputMode",
+              "description": "Input mode forwarded to each internal input.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Enables or disables all inner inputs.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "description": "Enables required validation.",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validation",
+              "description": "Validation helper from jb-validation.",
+              "type": {
+                "text": "ValidationHelper<string>"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "description": "Associated form from ElementInternals.",
+              "type": {
+                "text": "HTMLFormElement | null"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "Form field name from the name attribute.",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "isDirty",
+              "description": "True when current value differs from initialValue.",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "validationMessage",
+              "description": "Current validation message from ElementInternals.",
+              "type": {
+                "text": "string | null"
+              },
+              "readonly": true
+            }
+          ],
+          "methods": [
+            {
+              "name": "checkValidity",
+              "description": "Runs validation without showing the error message. Dispatches invalid when invalid.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "name": "reportValidity",
+              "description": "Runs validation and shows the first error message. Dispatches invalid when invalid.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "name": "focus",
+              "description": "Focuses the first empty cell, or the last cell when all cells are filled."
+            },
+            {
+              "name": "clearValidationError",
+              "description": "Clears the visible validation error and restores the message attribute."
+            }
+          ],
+          "events": [
+            {
+              "name": "load",
+              "description": "Dispatched from connectedCallback before initialization."
+            },
+            {
+              "name": "init",
+              "description": "Dispatched from connectedCallback after initialization."
+            },
+            {
+              "name": "beforeinput",
+              "description": "Re-dispatched from the active inner input."
+            },
+            {
+              "name": "input",
+              "description": "Dispatched after a PIN cell changes."
+            },
+            {
+              "name": "change",
+              "description": "Dispatched on blur when the PIN value changed during focus."
+            },
+            {
+              "name": "keydown",
+              "description": "Re-dispatched from the active inner input."
+            },
+            {
+              "name": "keyup",
+              "description": "Re-dispatched from the active inner input."
+            },
+            {
+              "name": "keypress",
+              "description": "Re-dispatched from the active inner input."
+            },
+            {
+              "name": "enter",
+              "description": "Dispatched when Enter is pressed."
+            },
+            {
+              "name": "complete",
+              "description": "Dispatched after the last cell is filled and validation passes."
+            },
+            {
+              "name": "invalid",
+              "description": "Dispatched when checkValidity or reportValidity fails."
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "message",
+              "description": "Helper or validation message element."
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--jb-pin-input-inputs-wrapper-width",
+              "description": "Width of the inputs wrapper."
+            },
+            {
+              "name": "--jb-pin-input-bottom-line-color",
+              "description": "Bottom line color."
+            },
+            {
+              "name": "--jb-pin-input-bottom-line-border-radius",
+              "description": "Bottom line border radius."
+            },
+            {
+              "name": "--jb-pin-input-bottom-line-height",
+              "description": "Bottom line height."
+            },
+            {
+              "name": "--jb-pin-input-bottom-line-display",
+              "description": "Bottom line display value."
+            },
+            {
+              "name": "--jb-pin-input-bottom-line-color-active",
+              "description": "Bottom line color while focused."
+            },
+            {
+              "name": "--jb-pin-input-wrapper-border-width",
+              "description": "Cell wrapper border width."
+            },
+            {
+              "name": "--jb-pin-input-wrapper-border-color",
+              "description": "Cell wrapper border color."
+            },
+            {
+              "name": "--jb-pin-input-wrapper-border-style",
+              "description": "Cell wrapper border style."
+            },
+            {
+              "name": "--jb-pin-input-wrapper-border-color-active",
+              "description": "Cell wrapper border color while focused."
+            },
+            {
+              "name": "--jb-pin-input-wrapper-border-radius",
+              "description": "Cell wrapper border radius."
+            },
+            {
+              "name": "--jb-pin-input-wrapper-box-shadow",
+              "description": "Cell wrapper box shadow while focused."
+            },
+            {
+              "name": "--jb-pin-input-pin-color",
+              "description": "PIN text color."
+            },
+            {
+              "name": "--jb-pin-input-pin-height",
+              "description": "Cell input height."
+            },
+            {
+              "name": "--jb-pin-input-pin-font-size",
+              "description": "Cell input font size."
+            },
+            {
+              "name": "--jb-pin-input-pin-font-weight",
+              "description": "Cell input font weight."
+            },
+            {
+              "name": "--jb-pin-input-message-box-display",
+              "description": "Message box display value."
+            },
+            {
+              "name": "--jb-pin-input-message-color",
+              "description": "Message text color."
+            },
+            {
+              "name": "--jb-pin-input-message-error-color",
+              "description": "Error message text color."
+            },
+            {
+              "name": "--jb-pin-input-message-font-size",
+              "description": "Message font size."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "JBPinInputWebComponent",
+          "declaration": {
+            "name": "JBPinInputWebComponent",
+            "module": "lib/jb-pin-input.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "jb-pin-input",
+          "declaration": {
+            "name": "JBPinInputWebComponent",
+            "module": "lib/jb-pin-input.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

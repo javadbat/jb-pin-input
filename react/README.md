@@ -5,84 +5,155 @@
 [![NPM Version](https://img.shields.io/npm/v/jb-pin-input-react)](https://www.npmjs.com/package/jb-pin-input-react)
 ![GitHub Created At](https://img.shields.io/github/created-at/javadbat/jb-pin-input)
 
-- smart paste algorithm
-- mobile friendly
-- light and fast
-- support typescript
-- accept persian & arabic number char
-- onComplete event for when user fill all pins
+React wrapper for [`jb-pin-input`](https://github.com/javadbat/jb-pin-input). It imports and registers the underlying form-associated web component for PIN, OTP, and one-time-code entry.
+
+- Smart paste support.
+- Mobile friendly numeric cells.
+- TypeScript support.
+- Accepts Persian and Arabic number characters and stores English digits.
+- `onComplete` event for when all PIN cells are filled and validation passes.
 
 ## Demo
 
--[codeSandbox preview](https://3f63dj.csb.app/samples/jb-pin-input) for just see the demo and [codeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBPinInput.tsx) if you want to see and play with code
-- [storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput)
+- [CodeSandbox preview](https://3f63dj.csb.app/samples/jb-pin-input)
+- [CodeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBPinInput.tsx)
+- [Storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput)
 
 ## Installation
-run following command to install it with npm
 
 ```sh
 npm i jb-pin-input
 ```
 
-## Usage
-just import the package and use it like other react component
-
 ```jsx
-import {JBPinInput} from 'jb-pin-input/react'
+import { JBPinInput } from 'jb-pin-input/react';
 
-<JBPinInput></JBPinInput>
-```
-## char length
-
-if you want to change the pin length to 5 digit or 10 digit or anything else, you just have to provide it to `charLength` Prop
-
-```jsx
-<JBPinInput charLength={5}></JBPinInput>
+<JBPinInput name="otp" charLength={6} message="Enter verification code" />;
 ```
 
-## autofocus
+## Props
 
-if you want pin input get focus as rendered in app just add autofocus props
+| prop | type | description |
+| --- | --- | --- |
+| `value` | `string \| number` | Controlled PIN value. Empty cells are represented by `-` in the underlying web component value. |
+| `charLength` | `number` | Number of PIN cells. |
+| `name` | `string` | Form field name. |
+| `message` | `string` | Helper text shown below the PIN cells when no validation error is visible. |
+| `required` | `boolean` | Enables required validation. |
+| `disabled` | `boolean` | Disables all PIN cells. |
+| `autofocus` | `boolean` | Focuses the first PIN cell after initialization. |
+| `inputmode` | `string` | Input mode forwarded to each internal input. Defaults to `numeric`. |
+| `error` | `string` | External validation error message. |
+| `validationList` | `ValidationItem<string>[]` | Custom validation rules from `jb-validation`. |
+
+## Events
+
+| prop | event | description |
+| --- | --- | --- |
+| `onBeforeInput` | `beforeinput` | Called before a cell receives input. |
+| `onInput` | `input` | Called after a PIN cell changes. |
+| `onChange` | `change` | Called on blur when the PIN value changed during focus. |
+| `onComplete` | `complete` | Called after the last cell is filled and validation passes. |
+| `onEnter` | `enter` | Called when Enter is pressed. |
+| `onKeyDown` | `keydown` | Re-dispatched from the active inner input. |
+| `onKeyUp` | `keyup` | Re-dispatched from the active inner input. |
+| `onFocus` | `focus` | Native focus event on the component host. |
+| `onBlur` | `blur` | Native blur event on the component host. |
+
+## Controlled value
+
 ```jsx
-<JBPinInput autofocus></JBPinInput>
+const [value, setValue] = useState('');
+
+<JBPinInput
+  name="otp"
+  value={value}
+  onChange={(event) => setValue(event.target.value)}
+/>;
 ```
 
-### set custom style
+## Character length
 
-in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.  
-if you want to set a custom style to this web-component all you need is to set CSS variable in parent scope of web-component
+```jsx
+<JBPinInput charLength={5} />;
+```
 
-in some cases in your project you need to change default style of web-component for example you need zero margin or different border-radius and etc.  
-if you want to set a custom style to this web-component all you need is to set CSS variable in parent scope of web-component
-| CSS variable name                          | description                                                                                   |
-| -------------                              | -------------                                                                                 |
-| --jb-pin-input-inputs-wrapper-width        | width of inputs wrapper,default is `100%`                                                     |
-| --jb-pin-input-bottom-line-color           | color of bottom line of each number.  default value is `#9DA6B6`                              |
-| --jb-pin-input-bottom-line-border-radius   | border radius of bottom line.  default value is `16px`                                        |
-| --jb-pin-input-bottom-line-height          | height of bottom line of each number. default value is `4px`                                  |
-| --jb-pin-input-bottom-line-display         | display of bottom line of each number. default value is `block`                               |
-| --jb-pin-input-bottom-line-color-active    | color of bottom line of each number when user focus on it. default value is `#1565D8`         |
-| --jb-pin-input-wrapper-border-width        | border width of each number input wrapper. default value is `0`                               |
-| --jb-pin-input-wrapper-border-color        | border color of each number input wrapper. default value is `black`                           |
-| --jb-pin-input-wrapper-border-style        | border style of  each number input wrapper. default value is `solid`                          |
-| --jb-pin-input-wrapper-border-color-active | border color of each number input wrapper  when user focus on it. default value is `#1565D8`  |
-| --jb-pin-input-pin-color                   | color of inputted text.default value is #333                                                   |
-| --jb-pin-input-pin-height                  | height of  each number input. default value is `40px`                                         |
-| --jb-pin-input-pin-font-size               | font size of  each number input. default value is `24`                                        |   
-| --jb-pin-input-pin-font-weight             | font weight of  each number input. default value is `900`                                     |   
-| --jb-pin-input-wrapper-box-shadow          | border width of each number input wrapper. default value is `none`                            |
-| --jb-pin-input-error-message-margin        | margin of error message. default value is `0`                                                 |
-| --jb-pin-input-error-message-color         | color of error message. default value is `#dc3545`                                            |
+## Configure behavior
 
+```jsx
+<JBPinInput
+  // Number of cells rendered for the code.
+  charLength={6}
+  // Focus the first cell after mount.
+  autofocus
+  // Use numeric keyboard on mobile devices.
+  inputmode="numeric"
+  // Require all cells to be filled before validation passes.
+  required
+  // Disable every cell.
+  disabled={false}
+  // Show helper text when no validation error is visible.
+  message="Enter the code sent to your phone"
+  // Show an external validation error.
+  error=""
+/>;
+```
 
+## Complete event
+
+```jsx
+<JBPinInput
+  charLength={6}
+  onComplete={(event) => {
+    console.log(event.target.value);
+  }}
+/>;
+```
+
+## Validation
+
+```jsx
+<JBPinInput
+  required
+  validationList={[
+    {
+      validator: (value) => value.startsWith('1'),
+      message: 'PIN must start with 1',
+    },
+  ]}
+/>;
+```
+
+## Styling
+
+The React component uses the same CSS variables as the web component.
+
+```css
+.otp-field {
+  --jb-pin-input-inputs-wrapper-width: 320px;
+  --jb-pin-input-bottom-line-color-active: #0f766e;
+  --jb-pin-input-pin-font-size: 28px;
+}
+```
+
+```jsx
+<JBPinInput className="otp-field" />;
+```
 
 ## Shared Documentation
 
-For web-component behavior, events, slots, and CSS variables, see [`jb-pin-input`](https://github.com/javadbat/jb-pin-input).
+For web-component behavior, form association, validation, events, and CSS variables, see [`jb-pin-input`](https://github.com/javadbat/jb-pin-input).
 
 ## Related Docs
-- see [`jb-pin-input`](https://github.com/javadbat/jb-pin-input) if you want to use this component as a pure-js web-component
 
-- see [All JB Design system Component List](https://javadbat.github.io/design-system/
+- See [`jb-pin-input`](https://github.com/javadbat/jb-pin-input) if you want to use this component as a pure JavaScript web component.
+- See [All JB Design System Component List](https://javadbat.github.io/design-system/) for more components.
+- Use [Contribution Guide](https://github.com/javadbat/design-system/blob/main/docs/contribution-guide.md) if you want to contribute to this component.
 
-- use [Contribution Guide](https://github.com/javadbat/design-system/blob/main/docs/contribution-guide.md) if you want to contribute in this component.
+## AI agent notes
+
+- Import `JBPinInput` from `jb-pin-input/react`; the wrapper imports and registers the underlying `jb-pin-input` web component.
+- Use `charLength` in React, not `char-length`.
+- Use `event.target.value` for the canonical value. Empty cells are represented by `-`.
+- Use `onComplete` when all cells are filled and validation passes; use `onChange` for committed changes after blur.
+- The component does not render a built-in label element, so add the visible label in your app layout.

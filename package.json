@@ -23,6 +23,7 @@
   "files": [
     "LICENSE",
     "README.md",
+    "custom-elements.json",
     "lib/",
     "dist/",
     "react/",
@@ -30,6 +31,7 @@
   ],
   "main": "index.js",
   "types": "./dist/jb-pin-input.d.ts",
+  "customElements": "custom-elements.json",
   "repository": {
 		"type": "git",
 		"url": "git@github.com:javadbat/jb-pin-input.git"

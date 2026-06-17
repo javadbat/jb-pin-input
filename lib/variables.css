@@ -1,6 +1,6 @@
 :host{
   /*Sizes*/
-  --inputs-wrapper-width: var(--jb-pin-input-inputs-wrapper-width, 100%)
+  --inputs-wrapper-width: var(--jb-pin-input-inputs-wrapper-width, 100%);
   --wrapper-border-width:var(--jb-pin-input-wrapper-border-width, 0);
   --wrapper-border-style:var(--jb-pin-input-wrapper-border-style, solid);
   --wrapper-border-radius: var(--jb-pin-input-wrapper-border-radius, var(--jb-radius));

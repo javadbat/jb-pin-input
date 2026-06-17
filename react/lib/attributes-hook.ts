@@ -54,8 +54,10 @@ export function useJBPinInputAttribute(element: RefObject<JBPinInputWebComponent
   useEffect(() => {
     if (props.autofocus) {
       element.current?.setAttribute("autofocus", "true");
+    } else {
+      element.current?.removeAttribute("autofocus");
     }
-  }, [props.autofocus, element.current?.setAttribute]);
+  }, [props.autofocus, element.current]);
 
   useEffect(() => {
     if (element.current && typeof props.required == "boolean") {
