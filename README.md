@@ -150,7 +150,7 @@ Use `required` for the common required rule. It is valid only when all cells are
 <jb-pin-input required></jb-pin-input>
 ```
 
-Use `validation.list` for custom rules.
+Use `validation.list` for custom rules. For advanced validators, async validation, and validation result options, see [`jb-validation`](https://github.com/javadbat/jb-validation).
 
 ```js
 const pinInput = document.querySelector('jb-pin-input');

@@ -78,7 +78,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   #setValue(value: string) {
     this.elements.inputs.forEach((input, index) => {
-      if (Number.isNaN(value[index]) || value[index] === "" || value[index] == this.emptyChar || value[index] == null || value[index] == undefined) {
+      if (Number.isNaN(value[index]) || value[index] === "" || value[index] === this.emptyChar || value[index] === null || value[index] === undefined) {
         input.value = "";
       } else {
         input.value = value[index];
@@ -87,7 +87,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.#setFormValue(value);
   }
   #setFormValue(value = this.value) {
-    if (this.#internals && typeof this.#internals.setFormValue == "function") {
+    if (this.#internals && typeof this.#internals.setFormValue === "function") {
       this.#internals.setFormValue(value);
     }
   }
@@ -125,7 +125,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   constructor() {
     super();
-    if (typeof this.attachInternals == "function") {
+    if (typeof this.attachInternals === "function") {
       //some browser dont support attachInternals
       this.#internals = this.attachInternals();
     }
@@ -187,7 +187,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   onAttributeChange(name: string, value: string | null) {
     switch (name) {
       case 'autofocus':
-        if (value == '' || value == 'true') {
+        if (value === '' || value === 'true') {
           if ((this.elements!).inputs[0]) {
             (this.elements!).inputs[0].focus();
           }
@@ -199,13 +199,13 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
         }
         break;
       case 'disabled':
-        this.disabled = value == '' || value == 'true';
+        this.disabled = value === '' || value === 'true';
         break;
       case 'inputmode':
         this.#setInputsInputMode(value || "numeric");
         break;
       case 'required':
-        this.required = value == '' || value == 'true';
+        this.required = value === '' || value === 'true';
         break;
       case 'value':
         this.value = value ?? "";
@@ -231,7 +231,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   #faToEnDigits(value: string) {
     let standardValue = value;
-    if (this.#acceptPersianNumber && typeof value == "string") {
+    if (this.#acceptPersianNumber && typeof value === "string") {
       standardValue = value
         .replace(/\u06F0|\u0660/g, '0')
         .replace(/\u06F1|\u0661/g, '1')
@@ -257,7 +257,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.disabled = this.disabled;
     // auto focus if it set to be auto focused
     const autofocus = this.getAttribute('autofocus');
-    if ((autofocus == '' || autofocus == 'true') && (this.elements!).inputs[0]) {
+    if ((autofocus === '' || autofocus === 'true') && (this.elements!).inputs[0]) {
       (this.elements!).inputs[0].focus();
     }
   }
@@ -448,10 +448,10 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     if (!(/[0-9]+/g.test(standardInputtedText))) {
       if (e.inputType === 'deleteContentBackward') {
         if (target.value == "") {
-          //dont move it to onkeyup becuse we cant determine input is empty condition there becuase input is always empty in there
+          //dont move it to onkeyup because we cant determine input is empty condition there becuase input is always empty in there
           //if value is empty we move cursor to prev input if not we just stop 
           const currentPinIndex = parseInt(target.parentElement!.dataset.pinIndex!, 10);
-          const nextIndex = currentPinIndex == 0 ? 0 : (currentPinIndex - 1);
+          const nextIndex = currentPinIndex === 0 ? 0 : (currentPinIndex - 1);
           const nextInput = (this.elements!).inputs[nextIndex];
           nextInput.focus();
         }
@@ -511,7 +511,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     };
     const event = new KeyboardEvent('keyup', keyUpInitObj);
     this.dispatchEvent(event);
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       this.#onInputEnter();
     }
   }
@@ -526,7 +526,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.dispatchEvent(event);
   }
   #showValidationError(error: ShowValidationErrorParameters | string) {
-    const message = typeof error == "string"?error:error.message;
+    const message = typeof error === "string"?error:error.message;
     this.elements.messageBox.innerHTML = message;
     this.elements.messageBox.classList.add("error");
   }
@@ -577,7 +577,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     if (this.required) {
       validationList.push({
         validator:(value:string)=>{
-          return value.length == this.charLength && !value.includes(this.emptyChar)
+          return value.length === this.charLength && !value.includes(this.emptyChar)
         },
         message: getRequiredMessage(i18n,null),
         stateType: "valueMissing"
