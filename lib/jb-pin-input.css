@@ -7,7 +7,7 @@
   .inputs-wrapper {
     width: var(--inputs-wrapper-width);
     display: flex;
-    gap: 8px;
+    gap: var(--inputs-gap);
     align-items: center;
     justify-content: center;
     direction: ltr;
@@ -62,7 +62,7 @@
     padding: 4px 0px;
     color: var(--message-color);
     display: var(--message-box-display);
-
+    margin:var(--message-margin);
     &:empty {
       padding: 0;
     }

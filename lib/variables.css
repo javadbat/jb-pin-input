@@ -1,6 +1,7 @@
 :host{
   /*Sizes*/
   --inputs-wrapper-width: var(--jb-pin-input-inputs-wrapper-width, 100%);
+  --inputs-gap: var(--jb-pin-input-inputs-gap, 0.5rem);
   --wrapper-border-width:var(--jb-pin-input-wrapper-border-width, 0);
   --wrapper-border-style:var(--jb-pin-input-wrapper-border-style, solid);
   --wrapper-border-radius: var(--jb-pin-input-wrapper-border-radius, var(--jb-radius));
@@ -12,6 +13,7 @@
   --wrapper-box-shadow: var(--jb-pin-input-wrapper-box-shadow,none);
   --message-font-size: var(--jb-pin-input-message-font-size, 0.7rem);
   --message-box-display: var(--jb-pin-input-message-box-display, block);
+  --message-margin: var(--jb-pin-input-message-margin,0);
   /*colors*/
   --wrapper-border-color:var(--jb-pin-input-wrapper-border-color, var(--jb-neutral));
   --pin-color:var(--jb-pin-input-pin-color, var(--jb-text-primary));

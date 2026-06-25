@@ -6,6 +6,7 @@ import type { JBFormInputStandards } from 'jb-form';
 import {registerDefaultVariables} from 'jb-core/theme';
 import { renderHTML } from './render';
 import { getRequiredMessage, i18n } from 'jb-core/i18n';
+import { createInputEvent } from 'jb-core';
 
 export * from './types.js';
 
@@ -280,10 +281,12 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   #createInput(index: number): HTMLDivElement {
     const wrapperDom = document.createElement('div');
+    wrapperDom.part.add('input-wrapper',`input-wrapper-${index}`)
     wrapperDom.classList.add('pin-input-wrapper');
     const inputDom = document.createElement('input');
 
     inputDom.classList.add('pin-input');
+    inputDom.part.add("pin-input",`pin-input-${index}`)
     inputDom.addEventListener('keydown', this.#onInputKeyDown.bind(this));
     inputDom.addEventListener('keypress', this.#onInputKeyPress.bind(this));
     inputDom.addEventListener('keyup', this.#onInputKeyup.bind(this));
@@ -297,6 +300,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
 
     const shapeDom = document.createElement('div');
     shapeDom.classList.add('pin-input-shape');
+    shapeDom.part.add(`input-line`,`input-line-${index}`)
     wrapperDom.appendChild(inputDom);
     wrapperDom.appendChild(shapeDom);
     wrapperDom.setAttribute('data-pin-index', index.toString());
@@ -437,7 +441,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.dispatchEvent(event);
   }
   #dispatchOnInputEvent(e: InputEvent){
-    const event = new InputEvent("input",{cancelable:false});
+    const event = createInputEvent("input",e,{cancelable:false});
     this.dispatchEvent(event);
   }
   #onBeforeInput(e: InputEvent) {
@@ -470,7 +474,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.#dispatchOnBeforeInputEvent(e)
   }
   #dispatchOnBeforeInputEvent(e: InputEvent){
-    const event = new InputEvent("beforeinput",{cancelable:false});
+    const event = createInputEvent("beforeinput",e,{cancelable:false});
     this.dispatchEvent(event);
   }
   /**
@@ -480,10 +484,10 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   #onInputKeyup(e: KeyboardEvent) {
     //change focus 
     const elem = e.target as HTMLInputElement;
-    const currentPinIndex = parseInt(elem.parentElement!.dataset.pinIndex!, 10);
+    const currentPinIndex = Number(elem.parentElement!.dataset.pinIndex!);
     let nextIndex = currentPinIndex;
 
-    //if inputed key is not a number
+    //if inputted key is not a number
     switch (e.keyCode) {
       case 39:
         // right arrow

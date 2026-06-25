@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { JBPinInput, Props } from 'jb-pin-input/react';
+import { JBPinInput, type Props } from 'jb-pin-input/react';
 import { JBPinInputStyleTest } from './samples/JBPinInputStyleTest';
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -55,7 +55,7 @@ export const WithValidation: Story = {
       const ref = useRef(null);
       const validationList = [
         {
-          validator: (value) => {
+          validator: (value:string) => {
             return value.startsWith("1");
           },
           message: "pin input must be start with 1"

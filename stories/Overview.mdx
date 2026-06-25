@@ -1,0 +1,18 @@
+import {Meta, Title, Story, Controls, Stories, Source} from '@storybook/blocks';
+import * as PinInputStories from './JBPinInput.stories';
+
+<Meta of={PinInputStories}/>
+
+<Title>JB Pin Input</Title>
+
+PIN input component for segmented code entry with autofocus, length, validation, and custom styles.
+
+<Story of={PinInputStories.charLength}/>
+<Controls of={PinInputStories.charLength}/>
+<Source of={PinInputStories.charLength}/>
+
+## Validation
+<Story of={PinInputStories.WithValidation}/>
+
+## Other samples & variants
+<Stories/>

@@ -26,6 +26,7 @@ Use [`jb-password-input`](https://github.com/javadbat/jb-password-input) for sec
 - [CodePen](https://codepen.io/javadbat/pen/zYPEqNJ)
 - [GitHub Pages](https://javadbat.github.io/jb-pin-input)
 - [Storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput)
+- [Styling demos](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbpininput-styling--docs)
 
 ## Using With JS Frameworks
 
@@ -180,13 +181,23 @@ const isVisibleValid = pinInput.reportValidity();
 
 ## CSS parts and variables
 
+See the [Storybook styling demos](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbpininput-styling--docs) for examples using CSS variables and `::part(...)`.
+
 | part | description |
 | --- | --- |
+| `inputs-wrapper` | Wrapper around all PIN cells. Useful for layout-level styling. |
+| `input-wrapper` | Every PIN cell wrapper. |
+| `input-wrapper-{index}` | A specific PIN cell wrapper, starting from `0`; for example `input-wrapper-0`. |
+| `pin-input` | Every internal input element. |
+| `pin-input-{index}` | A specific internal input element, starting from `0`; for example `pin-input-0`. |
+| `input-line` | Every bottom line element below a PIN input. |
+| `input-line-{index}` | A specific bottom line element, starting from `0`; for example `input-line-0`. |
 | `message` | Helper or validation message element. |
 
 | CSS variable name | description |
 | --- | --- |
 | `--jb-pin-input-inputs-wrapper-width` | Width of the inputs wrapper. |
+| `--jb-pin-input-inputs-gap` | Gap between PIN cells. |
 | `--jb-pin-input-bottom-line-color` | Bottom line color. |
 | `--jb-pin-input-bottom-line-border-radius` | Bottom line border radius. |
 | `--jb-pin-input-bottom-line-height` | Bottom line height. |
@@ -206,12 +217,22 @@ const isVisibleValid = pinInput.reportValidity();
 | `--jb-pin-input-message-color` | Message text color. |
 | `--jb-pin-input-message-error-color` | Error message text color. |
 | `--jb-pin-input-message-font-size` | Message font size. |
+| `--jb-pin-input-message-margin` | Message box margin. |
 
 ```css
 jb-pin-input {
   --jb-pin-input-inputs-wrapper-width: 320px;
+  --jb-pin-input-inputs-gap: 12px;
   --jb-pin-input-bottom-line-color-active: #0f766e;
   --jb-pin-input-pin-font-size: 28px;
+}
+
+jb-pin-input::part(input-wrapper) {
+  background: #ffffff;
+}
+
+jb-pin-input::part(input-line-0) {
+  background: #0f766e;
 }
 ```
 

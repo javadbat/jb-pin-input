@@ -1,0 +1,196 @@
+import { Meta, Title } from '@storybook/blocks';
+import { JBPinInputStyleTest } from './samples/JBPinInputStyleTest';
+import './samples/JBPinInputStyleTest.css';
+
+<Meta title="Components/form elements/JBPinInput/Styling" />
+
+<Title>Styling</Title>
+
+`JBPinInput` can be styled at two levels. Start with CSS custom properties for normal design-system theming. Use exported `::part(...)` selectors when a design needs direct access to the row, cells, inner inputs, bottom lines, or message.
+
+The gallery below is intentionally split in that order: six simple demos using only CSS variables first, then six demos that use parts. The grid is capped at two demos per row so the examples stay readable on smaller screens.
+
+<JBPinInputStyleTest />
+
+## CSS Variables
+
+Use variables when you want the component to keep its internal structure and only change the design tokens.
+
+```css
+.pin-token-minimal {
+  --jb-pin-input-inputs-wrapper-width: 220px;
+  --jb-pin-input-inputs-gap: 0.5rem;
+  --jb-pin-input-bottom-line-height: 2px;
+  --jb-pin-input-bottom-line-color-active: #2563eb;
+  --jb-pin-input-pin-font-size: 22px;
+}
+```
+
+## Parts
+
+Use parts when you need to style a specific exposed element, such as every cell wrapper or one indexed line.
+
+```css
+.pin-part-ticket jb-pin-input::part(input-line-2),
+.pin-part-ticket jb-pin-input::part(input-line-3) {
+  background: #fb923c;
+}
+```
+
+## Usage
+
+```tsx
+<section className="pin-token-boxed">
+  <JBPinInput
+    charLength={4}
+    value="2846"
+    message="Bordered cells without part selectors."
+  />
+</section>
+```
+
+## Parts Reference
+
+<table>
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>inputs-wrapper</code></td>
+      <td>Wrapper around all PIN cells.</td>
+    </tr>
+    <tr>
+      <td><code>input-wrapper</code></td>
+      <td>Every PIN cell wrapper.</td>
+    </tr>
+    <tr>
+      <td><code>input-wrapper-&#123;index&#125;</code></td>
+      <td>A specific PIN cell wrapper, starting from <code>0</code>.</td>
+    </tr>
+    <tr>
+      <td><code>pin-input</code></td>
+      <td>Every internal input element.</td>
+    </tr>
+    <tr>
+      <td><code>pin-input-&#123;index&#125;</code></td>
+      <td>A specific internal input element, starting from <code>0</code>.</td>
+    </tr>
+    <tr>
+      <td><code>input-line</code></td>
+      <td>Every bottom line element below a PIN input.</td>
+    </tr>
+    <tr>
+      <td><code>input-line-&#123;index&#125;</code></td>
+      <td>A specific bottom line element, starting from <code>0</code>.</td>
+    </tr>
+    <tr>
+      <td><code>message</code></td>
+      <td>Helper or validation message element.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Styling Tokens
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--jb-pin-input-inputs-wrapper-width</code></td>
+      <td>Width of the full PIN input row.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-inputs-gap</code></td>
+      <td>Gap between PIN cells.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-wrapper-border-width</code></td>
+      <td>Border width for each PIN cell.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-wrapper-border-style</code></td>
+      <td>Border style for each PIN cell.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-wrapper-border-radius</code></td>
+      <td>Border radius for each PIN cell.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-wrapper-border-color</code></td>
+      <td>Default PIN cell border color.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-wrapper-border-color-active</code></td>
+      <td>PIN cell border color on focus.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-wrapper-box-shadow</code></td>
+      <td>Focus shadow for the active PIN cell.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-pin-height</code></td>
+      <td>Height of each PIN input.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-pin-color</code></td>
+      <td>PIN digit color.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-pin-font-size</code></td>
+      <td>PIN digit font size.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-pin-font-weight</code></td>
+      <td>PIN digit font weight.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-bottom-line-display</code></td>
+      <td>Shows or hides the lower shape.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-bottom-line-height</code></td>
+      <td>Height of the lower shape.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-bottom-line-border-radius</code></td>
+      <td>Radius of the lower shape.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-bottom-line-color</code></td>
+      <td>Default lower shape color.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-bottom-line-color-active</code></td>
+      <td>Lower shape color on focus.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-message-font-size</code></td>
+      <td>Helper and error message font size.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-message-margin</code></td>
+      <td>Helper and error message margin.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-message-color</code></td>
+      <td>Helper message color.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-message-error-color</code></td>
+      <td>Error message color.</td>
+    </tr>
+    <tr>
+      <td><code>--jb-pin-input-message-box-display</code></td>
+      <td>Shows or hides the message area.</td>
+    </tr>
+  </tbody>
+</table>
