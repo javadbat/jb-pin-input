@@ -31,8 +31,10 @@ export function useJBPinInputAttribute(element: RefObject<JBPinInputWebComponent
   }, [props.validationList, element]);
 
   useEffect(() => {
-    if (typeof props.disabled == "boolean") {
-      element.current?.setAttribute('disabled', `${props.disabled}`);
+    if (props.disabled === true) {
+      element.current?.setAttribute('disabled', 'true');
+    } else if (props.disabled === false) {
+      element.current?.removeAttribute('disabled');
     }
   }, [props.disabled,element]);
 

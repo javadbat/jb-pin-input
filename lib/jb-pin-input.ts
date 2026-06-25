@@ -6,7 +6,7 @@ import type { JBFormInputStandards } from 'jb-form';
 import {registerDefaultVariables} from 'jb-core/theme';
 import { renderHTML } from './render';
 import { getRequiredMessage, i18n } from 'jb-core/i18n';
-import { createInputEvent } from 'jb-core';
+import { createInputEvent, createKeyboardEvent, faToEnDigits } from 'jb-core';
 
 export * from './types.js';
 
@@ -95,13 +95,9 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   #setValue(value: string) {
     this.elements.inputs.forEach((input, index) => {
-      if (Number.isNaN(value[index]) || value[index] === "" || value[index] === this.emptyChar || value[index] === null || value[index] === undefined) {
-        input.value = "";
-      } else {
-        input.value = value[index];
-      }
+      input.value = this.#getValidCellValue(value[index]);
     });
-    this.#setFormValue(value);
+    this.#setFormValue();
   }
   #setFormValue(value = this.value) {
     if (this.#internals && typeof this.#internals.setFormValue === "function") {
@@ -247,26 +243,26 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     //TODO: add acceptance for non-digits by config
     let standardValue = value;
     if (this.#acceptPersianNumber) {
-      standardValue = this.#faToEnDigits(standardValue);
+      standardValue = faToEnDigits(standardValue);
     }
     return standardValue;
   }
-  #faToEnDigits(value: string) {
-    let standardValue = value;
-    if (this.#acceptPersianNumber && typeof value === "string") {
-      standardValue = value
-        .replace(/\u06F0|\u0660/g, '0')
-        .replace(/\u06F1|\u0661/g, '1')
-        .replace(/\u06F2|\u0662/g, '2')
-        .replace(/\u06F3|\u0663/g, '3')
-        .replace(/\u06F4|\u0664/g, '4')
-        .replace(/\u06F5|\u0665/g, '5')
-        .replace(/\u06F6|\u0666/g, '6')
-        .replace(/\u06F7|\u0667/g, '7')
-        .replace(/\u06F8|\u0668/g, '8')
-        .replace(/\u06F9|\u0669/g, '9');
+  #getValidCellValue(value?: string) {
+    const standardValue = this.#standardValue(value ?? "");
+    return /^[0-9]$/.test(standardValue) ? standardValue : "";
+  }
+  #getDigits(value: string) {
+    return [...this.#standardValue(value)].filter((char) => /^[0-9]$/.test(char));
+  }
+  #setValueFromIndex(index: number, value: string) {
+    const digits = this.#getDigits(value);
+    const nextValue = [...this.value];
+    const loopLength = Math.min(this.charLength - index, digits.length);
+    for (let i = 0; i < loopLength; i++) {
+      nextValue[index + i] = digits[i];
     }
-    return standardValue;
+    this.value = nextValue.join("");
+    return loopLength;
   }
   #initInputsDom() {
     const inputElements = this.#createInputs();
@@ -383,7 +379,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     const index = Number((e.target as HTMLInputElement).parentElement!.dataset.pinIndex);
     const regex = new RegExp(`(.*\\D|^)(?<pin>[0-9]{${this.charLength}})(\\D.*|$)`);
     // convert persian digit so regex accept them too
-    value = this.#faToEnDigits(value);
+    value = faToEnDigits(value);
     const regexResult = regex.exec(value);
     let filteredValue = "";
     if (regexResult?.groups?.pin) {
@@ -391,32 +387,35 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       //if we find all digits in pasted value
       filteredValue = regexResult.groups.pin;
       this.#setValue(filteredValue);
-      const index = this.value.length;
       //change input foucs to the last pin based on pasted value length
       if (this.value.length > 0) {
-        (this.elements!).inputs[index - 1].focus();
+        (this.elements!).inputs[this.charLength - 1].focus();
       }
     }
     else {
       //when full match not found we just get any incomplete numbers
       const filteredValue = value.match(`[0-9]{1,${this.charLength}}`);
       if (filteredValue) {
-        const inputValue = filteredValue[0];
-        const value = [...this.value];
-        const loopLength = Math.min(this.charLength - index, inputValue.length);
-        let i: number;
-        for (i = 0; i < loopLength; i++) {
-          value[index + i] = inputValue[i];
-        }
+        const loopLength = this.#setValueFromIndex(index, filteredValue[0]);
         //change input focus to the last pin based on pasted value length
-        const nextFocusIndex = Math.min(index + i - 1, this.charLength - 1);
+        const nextFocusIndex = Math.min(index + loopLength - 1, this.charLength - 1);
         (this.elements!).inputs[nextFocusIndex]?.focus();
-        this.value = value.join('');
 
       }
 
     }
-
+    this.#dispatchOnInputEvent(new InputEvent("input", {
+      bubbles: true,
+      composed: true,
+      cancelable: false,
+      data: value,
+      inputType: "insertFromPaste"
+    }));
+    this.#checkValidity(false)?.then((validityRes)=>{
+      if(!this.value.includes(this.emptyChar) && validityRes.isAllValid){
+        this.#dispatchOnCompleteEvent();
+      }
+    });
   }
   /**
    * @property is we changing focus (when user type) or user focus
@@ -448,51 +447,34 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     }
   }
   #onInputKeyDown(e: KeyboardEvent) {
-    const keyDownInitObj: KeyboardEventInit = {
-      key: e.key,
-      keyCode: e.keyCode,
-      code: e.code,
-      ctrlKey: e.ctrlKey,
-      shiftKey: e.shiftKey,
-      altKey: e.altKey,
-      charCode: e.charCode,
-      which: e.which
-    };
-    const event = new KeyboardEvent("keydown", keyDownInitObj);
-    this.dispatchEvent(event);
+    const event = createKeyboardEvent("keydown", e, { bubbles: true, composed: true });
+    if (!this.dispatchEvent(event)) {
+      e.preventDefault();
+    }
   }
   #onInputKeyPress(e: KeyboardEvent) {
-    const keyPressInitObj: KeyboardEventInit = {
-      key: e.key,
-      keyCode: e.keyCode,
-      code: e.code,
-      ctrlKey: e.ctrlKey,
-      shiftKey: e.shiftKey,
-      altKey: e.altKey,
-      charCode: e.charCode,
-      which: e.which,
-      bubbles: e.bubbles,
-      cancelable: e.cancelable,
-      composed: e.composed,
-      detail: e.detail,
-      isComposing: e.isComposing,
-      location: e.location,
-      metaKey: e.metaKey,
-      view: e.view,
-      repeat: e.repeat
-    };
-    const event = new KeyboardEvent('keypress', keyPressInitObj);
-    this.dispatchEvent(event);
+    const event = createKeyboardEvent("keypress", e, { bubbles: true, composed: true });
+    if (!this.dispatchEvent(event)) {
+      e.preventDefault();
+    }
   }
   #onInput(e: InputEvent) {
     const elem = e.target;
     const currentPinIndex = parseInt((elem as HTMLInputElement).parentElement!.dataset.pinIndex!, 10);
     let nextIndex = currentPinIndex;
-    const value = this.#faToEnDigits((e.target as HTMLInputElement).value);
+    const input = e.target as HTMLInputElement;
+    const digits = this.#getDigits(input.value);
+    const value = digits.join("");
     const isLastIndex = !(currentPinIndex + 1 < this.charLength);
-    if (/[0-9]+/g.test(value)) {
+    if (digits.length > 1) {
+      const loopLength = this.#setValueFromIndex(currentPinIndex, value);
+      nextIndex = Math.min(currentPinIndex + loopLength - 1, this.charLength - 1);
+    } else if (digits.length === 1) {
+      input.value = digits[0] ?? "";
       // if user type 1-9
       nextIndex = !isLastIndex ? (currentPinIndex + 1) : this.charLength - 1;
+    } else {
+      input.value = "";
     }
     if (currentPinIndex !== nextIndex) {
       const nextInput = (this.elements!).inputs[nextIndex];
@@ -512,13 +494,18 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.dispatchEvent(event);
   }
   #dispatchOnInputEvent(e: InputEvent){
-    const event = createInputEvent("input",e,{cancelable:false});
+    const event = createInputEvent("input",e,{bubbles:true, composed:true, cancelable:false});
     this.dispatchEvent(event);
   }
   #onBeforeInput(e: InputEvent) {
     const target = e.target as HTMLInputElement;
+    const event = createInputEvent("beforeinput", e, { bubbles: true, composed: true });
+    if (!this.dispatchEvent(event)) {
+      e.preventDefault();
+      return;
+    }
     const inputtedText = e.data || "";
-    const standardInputtedText = this.#faToEnDigits(inputtedText);
+    const standardInputtedText = faToEnDigits(inputtedText);
     // const caretPosition = (e.target as HTMLInputElement).selectionStart;
     if (!(/[0-9]+/g.test(standardInputtedText))) {
       if (e.inputType === 'deleteContentBackward') {
@@ -542,11 +529,6 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
         target.value = '';
       }
     }
-    this.#dispatchOnBeforeInputEvent(e)
-  }
-  #dispatchOnBeforeInputEvent(e: InputEvent){
-    const event = createInputEvent("beforeinput",e,{cancelable:false});
-    this.dispatchEvent(event);
   }
   /**
    * 
@@ -574,18 +556,10 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       const nextInput = (this.elements!).inputs[nextIndex];
       nextInput.focus();
     }
-    const keyUpInitObj = {
-      key: e.key,
-      keyCode: e.keyCode,
-      code: e.code,
-      ctrlKey: e.ctrlKey,
-      shiftKey: e.shiftKey,
-      altKey: e.altKey,
-      charCode: e.charCode,
-      which: e.which,
-    };
-    const event = new KeyboardEvent('keyup', keyUpInitObj);
-    this.dispatchEvent(event);
+    const event = createKeyboardEvent("keyup", e, { bubbles: true, composed: true });
+    if (!this.dispatchEvent(event)) {
+      e.preventDefault();
+    }
     if (e.keyCode === 13) {
       this.#onInputEnter();
     }
@@ -609,7 +583,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.#setMessage(text, false);
   }
   #setMessage(message: string, isError: boolean) {
-    this.elements.messageBox.innerHTML = message;
+    this.elements.messageBox.textContent = message;
     this.elements.messageBox.classList.toggle("error", isError);
     this.#hasVisibleError = isError && message.trim().length > 0;
     this.#setMessageA11y();
