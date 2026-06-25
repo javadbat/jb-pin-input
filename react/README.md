@@ -28,7 +28,7 @@ npm i jb-pin-input
 ```jsx
 import { JBPinInput } from 'jb-pin-input/react';
 
-<JBPinInput name="otp" charLength={6} message="Enter verification code" />;
+<JBPinInput label="Verification code" name="otp" charLength={6} message="Enter verification code" />;
 ```
 
 ## Props
@@ -38,6 +38,7 @@ import { JBPinInput } from 'jb-pin-input/react';
 | `value` | `string \| number` | Controlled PIN value. Empty cells are represented by `-` in the underlying web component value. |
 | `charLength` | `number` | Number of PIN cells. |
 | `name` | `string` | Form field name. |
+| `label` | `string` | Accessible label used for the PIN group and each internal cell. |
 | `message` | `string` | Helper text shown below the PIN cells when no validation error is visible. |
 | `required` | `boolean` | Enables required validation. |
 | `disabled` | `boolean` | Disables all PIN cells. |
@@ -82,6 +83,8 @@ const [value, setValue] = useState('');
 
 ```jsx
 <JBPinInput
+  // Accessible name for the PIN group and generated cells.
+  label="Verification code"
   // Number of cells rendered for the code.
   charLength={6}
   // Focus the first cell after mount.
@@ -156,4 +159,4 @@ For web-component behavior, form association, validation, events, and CSS variab
 - Use `charLength` in React, not `char-length`.
 - Use `event.target.value` for the canonical value. Empty cells are represented by `-`.
 - Use `onComplete` when all cells are filled and validation passes; use `onChange` for committed changes after blur.
-- The component does not render a built-in label element, so add the visible label in your app layout.
+- Use `label` or `aria-label` for the accessible name. The component does not render a visible label element, so add visible label text in your app layout when needed.

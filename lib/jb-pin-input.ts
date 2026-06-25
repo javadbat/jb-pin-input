@@ -14,6 +14,8 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   elements!: Elements;
   #internals?: ElementInternals;
   #acceptPersianNumber = true;
+  #hasVisibleError = false;
+  #isInvalid = false;
   static get formAssociated() { return true; }
   /**
    * @description char that replace value of empty input in value
@@ -28,6 +30,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   set disabled(value: boolean) {
     this.#disabled = Boolean(value);
     this.elements.inputs.forEach((i) => {i.disabled = this.#disabled});
+    this.setAttribute("aria-disabled", `${this.#disabled}`);
     if (this.#disabled) {
       this.#internals?.states?.add("disabled");
     } else {
@@ -40,6 +43,9 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   #required = false;
   set required(value: boolean) {
     this.#required = Boolean(value);
+    this.elements.inputs.forEach((input) => {
+      input.setAttribute("aria-required", `${this.#required}`);
+    });
     this.#checkValidity(false);
   }
   get required() {
@@ -60,6 +66,16 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       this.setAttribute("inputmode", value);
     } else {
       this.removeAttribute("inputmode");
+    }
+  }
+  get label() {
+    return this.getAttribute("label") || "";
+  }
+  set label(value: string) {
+    if (value) {
+      this.setAttribute("label", value);
+    } else {
+      this.removeAttribute("label");
     }
   }
   /**
@@ -179,7 +195,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.registerEventListener();
   }
   static get observedAttributes() {
-    return ['autofocus', 'char-length', 'disabled', 'inputmode', 'required', 'value', 'message', 'error'];
+    return ['autofocus', 'char-length', 'disabled', 'inputmode', 'required', 'value', 'message', 'error', 'label', 'accessible-label', 'aria-label'];
   }
   attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null) {
     // do something when an attribute has changed
@@ -213,11 +229,16 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
         break;
       case 'message':
         if(!this.elements.messageBox.classList.contains("error")){
-          this.elements.messageBox.innerHTML = value ?? "";
+          this.#setMessage(value ?? "", false);
         }
         break;
       case 'error':
         this.reportValidity();
+        break;
+      case 'label':
+      case 'accessible-label':
+      case 'aria-label':
+        this.#setAccessibleLabels();
         break;
     }
 
@@ -256,6 +277,16 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     });
     this.#setInputsInputMode(this.inputMode);
     this.disabled = this.disabled;
+    this.#setAccessibleLabels();
+    this.elements.inputs.forEach((input) => {
+      input.setAttribute("aria-required", `${this.required}`);
+      if (this.#isInvalid) {
+        input.setAttribute("aria-invalid", "true");
+      } else {
+        input.removeAttribute("aria-invalid");
+      }
+    });
+    this.#setMessageA11y();
     // auto focus if it set to be auto focused
     const autofocus = this.getAttribute('autofocus');
     if ((autofocus === '' || autofocus === 'true') && (this.elements!).inputs[0]) {
@@ -265,6 +296,42 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   #setInputsInputMode(inputMode: string) {
     this.elements.inputs.forEach((input) => {
       input.setAttribute('inputmode', inputMode || 'numeric');
+    });
+  }
+  #getAccessibleLabel() {
+    const label =
+      this.getAttribute("aria-label")?.trim() ||
+      this.getAttribute("accessible-label")?.trim() ||
+      this.getAttribute("label")?.trim() ||
+      this.getAttribute("name")?.trim();
+    return label || "PIN";
+  }
+  #setAccessibleLabels() {
+    if (!this.elements?.inputsWrapper || !this.elements?.inputs) {
+      return;
+    }
+    const label = this.#getAccessibleLabel();
+    this.elements.inputsWrapper.setAttribute("aria-label", label);
+    this.elements.inputs.forEach((input, index) => {
+      input.setAttribute("aria-label", `${label}, digit ${index + 1} of ${this.charLength}`);
+    });
+  }
+  #setMessageA11y() {
+    if (!this.elements?.messageBox || !this.elements?.inputsWrapper || !this.elements?.inputs) {
+      return;
+    }
+    const messageId = this.elements.messageBox.id || "message";
+    this.elements.messageBox.id = messageId;
+    this.elements.messageBox.setAttribute("aria-live", this.#hasVisibleError ? "assertive" : "polite");
+    this.elements.messageBox.setAttribute("role", this.#hasVisibleError ? "alert" : "status");
+    this.elements.inputsWrapper.setAttribute("aria-describedby", messageId);
+    this.elements.inputs.forEach((input) => {
+      input.setAttribute("aria-describedby", messageId);
+      if (this.#hasVisibleError) {
+        input.setAttribute("aria-errormessage", messageId);
+      } else {
+        input.removeAttribute("aria-errormessage");
+      }
     });
   }
   /**
@@ -297,6 +364,10 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     inputDom.addEventListener('paste', this.#onPasteValue.bind(this));
     inputDom.setAttribute('inputmode', this.inputMode);
     inputDom.setAttribute('pattern', '[0-9]*');
+    inputDom.setAttribute('autocomplete', index === 0 ? 'one-time-code' : 'off');
+    inputDom.setAttribute('aria-label', `${this.#getAccessibleLabel()}, digit ${index + 1} of ${this.charLength}`);
+    inputDom.setAttribute('aria-describedby', 'message');
+    inputDom.setAttribute('aria-required', `${this.required}`);
 
     const shapeDom = document.createElement('div');
     shapeDom.classList.add('pin-input-shape');
@@ -531,13 +602,17 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   #showValidationError(error: ShowValidationErrorParameters | string) {
     const message = typeof error === "string"?error:error.message;
-    this.elements.messageBox.innerHTML = message;
-    this.elements.messageBox.classList.add("error");
+    this.#setMessage(message, true);
   }
   clearValidationError() {
     const text = this.getAttribute("message") || "";
-    this.elements.messageBox.innerHTML = text;
-    this.elements.messageBox.classList.remove("error");
+    this.#setMessage(text, false);
+  }
+  #setMessage(message: string, isError: boolean) {
+    this.elements.messageBox.innerHTML = message;
+    this.elements.messageBox.classList.toggle("error", isError);
+    this.#hasVisibleError = isError && message.trim().length > 0;
+    this.#setMessageA11y();
   }
   /**
 * @description will determine if component trigger jb-validation mechanism automatically on user event or it just let user-developer handle validation mechanism by himself
@@ -555,6 +630,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
 * @description this method called on every checkValidity calls and update validation result of #internal
 */
   #setValidationResult(result: ValidationResult<ValidationValue>) {
+    this.#isInvalid = !result.isAllValid;
     if (result.isAllValid) {
       this.#internals?.setValidity({}, '');
     } else {
@@ -568,6 +644,13 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       });
       this.#internals?.setValidity(states, message);
     }
+    this.elements.inputs.forEach((input) => {
+      if (this.#isInvalid) {
+        input.setAttribute("aria-invalid", "true");
+      } else {
+        input.removeAttribute("aria-invalid");
+      }
+    });
   }
   #getInsideValidation(): ValidationItem<ValidationValue>[] {
     const validationList: ValidationItem<ValidationValue>[] = [];

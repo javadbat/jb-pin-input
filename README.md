@@ -43,7 +43,7 @@ import 'jb-pin-input';
 ```
 
 ```html
-<jb-pin-input name="otp" char-length="6" message="Enter verification code"></jb-pin-input>
+<jb-pin-input label="Verification code" name="otp" char-length="6" message="Enter verification code"></jb-pin-input>
 ```
 
 ### CDN
@@ -61,6 +61,8 @@ import 'jb-pin-input';
 | `value` | `string` | `""` | Initial or reflected PIN value. Missing cells are represented by `-` in `.value`. |
 | `char-length` | `number` | `6` | Number of PIN cells. |
 | `name` | `string` | `""` | Form field name. |
+| `label` | `string` | `""` | Accessible label used for the PIN group and each internal cell. |
+| `accessible-label` | `string` | `""` | Accessible label fallback when you do not want to use `label`. |
 | `required` | `boolean` | `false` | Enables required validation. Empty attribute and `"true"` mean true. |
 | `disabled` | `boolean` | `false` | Disables all inner PIN inputs. Empty attribute and `"true"` mean true. |
 | `autofocus` | `boolean` | `false` | Focuses the first input after initialization. Empty attribute and `"true"` mean true. |
@@ -239,8 +241,10 @@ jb-pin-input::part(input-line-0) {
 ## Accessibility notes
 
 - The component is form-associated and submits `.value` as its form value.
-- The component uses multiple internal inputs with `inputmode="numeric"` by default.
-- Add an external label or accessible name in your app layout because this component does not render a built-in label element.
+- The component uses multiple internal inputs with `inputmode="numeric"` by default. Each internal cell receives an accessible name in the form `Verification code, digit 1 of 6`.
+- Set `label`, `accessible-label`, or `aria-label` on `<jb-pin-input>` so assistive technologies receive a useful name. The `label` attribute is not rendered visually, so add a visible label in your app layout when needed.
+- The first internal input uses `autocomplete="one-time-code"` for OTP autofill support.
+- Helper and validation messages are connected to each internal input with `aria-describedby`; visible errors also set `aria-invalid` and `aria-errormessage`.
 
 ## Related Docs
 
@@ -254,6 +258,7 @@ jb-pin-input::part(input-line-0) {
 - Use `char-length` in HTML and `charLength` in JavaScript/React.
 - `.value` includes `-` for empty cells, so a partially entered value may look like `"12----"`.
 - Listen to `complete` for the moment all cells are filled and validation passes.
+- Use `label`, `accessible-label`, or `aria-label` to provide the accessible name for the generated PIN cells.
 - Listen to `change` for a committed value change after blur.
 - This package includes [`custom-elements.json`](./custom-elements.json) and points to it with the package.json `customElements` field. The field is documented by the Custom Elements Manifest project in [Referencing manifests from npm packages](https://github.com/webcomponents/custom-elements-manifest#referencing-manifests-from-npm-packages).
 - In `custom-elements.json`, `exports.kind: "js"` describes JavaScript/TypeScript exports and `exports.kind: "custom-element-definition"` maps the `jb-pin-input` tag name to `JBPinInputWebComponent`.

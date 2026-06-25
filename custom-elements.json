@@ -39,6 +39,20 @@
               }
             },
             {
+              "name": "label",
+              "description": "Accessible label used for the PIN group and each internal cell.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "accessible-label",
+              "description": "Accessible label fallback when you do not want to use label.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
               "name": "required",
               "description": "Enables required validation. Empty attribute and true mean true.",
               "type": {
@@ -119,6 +133,14 @@
               "kind": "field",
               "name": "inputMode",
               "description": "Input mode forwarded to each internal input.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "description": "Accessible label used for the PIN group and each internal cell.",
               "type": {
                 "text": "string"
               }
