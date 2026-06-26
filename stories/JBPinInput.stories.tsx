@@ -1,16 +1,16 @@
 import React, { useRef, useState } from 'react';
 import type { JBPinInputWebComponent } from 'jb-pin-input';
 import { JBButton } from 'jb-button/react';
-import { JBPinInput, type Props } from 'jb-pin-input/react';
+import { JBPinInput } from 'jb-pin-input/react';
 import { JBPinInputStyleTest } from './samples/JBPinInputStyleTest';
 import type { Meta, StoryObj } from '@storybook/react';
 
-const meta: Meta<Props> = {
+const meta = {
   title: "Components/form elements/JBPinInput",
   component: JBPinInput,
-};
+} satisfies Meta<typeof JBPinInput>;
 export default meta;
-type Story = StoryObj<typeof JBPinInput>;
+type Story = StoryObj<typeof meta>;
 
 export const Normal: Story = {
   args: {
