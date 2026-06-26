@@ -1,0 +1,45 @@
+import { Meta, Source, Story, Title } from '@storybook/addon-docs/blocks';
+import * as PinInputStories from './JBPinInput.stories';
+
+<Meta title="Components/form elements/JBPinInput/CharLength" />
+
+<Title>Character length</Title>
+
+Use `charLength` to control how many PIN cells are rendered. The default is `6`, which matches common OTP flows, but shorter or longer codes can be configured when your product requires them.
+
+## Live example
+
+This example renders an 8 digit PIN input.
+
+<Story of={PinInputStories.charLength} />
+
+<Source of={PinInputStories.charLength} />
+
+## Web-component usage
+
+Set the `char-length` attribute in HTML:
+
+```html
+<jb-pin-input label="Verification code" char-length="8"></jb-pin-input>
+```
+
+Or assign the `charLength` property in JavaScript:
+
+```js
+const pinInput = document.querySelector('jb-pin-input');
+
+pinInput.charLength = 8;
+```
+
+## React usage
+
+Pass `charLength` to the React component:
+
+```tsx
+import { JBPinInput } from 'jb-pin-input/react';
+
+export function VerificationCode() {
+  return <JBPinInput label="Verification code" charLength={8} />;
+}
+```
+

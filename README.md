@@ -26,7 +26,7 @@ Use [`jb-password-input`](https://github.com/javadbat/jb-password-input) for sec
 - [CodePen](https://codepen.io/javadbat/pen/zYPEqNJ)
 - [GitHub Pages](https://javadbat.github.io/jb-pin-input)
 - [Storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput)
-- [Styling demos](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbpininput-styling--docs)
+
 
 ## Using With JS Frameworks
 
@@ -76,12 +76,12 @@ import 'jb-pin-input';
 | name | type | readonly | description |
 | --- | --- | --- | --- |
 | `value` | `string` | no | Canonical PIN value. Empty cells are represented by `-`. |
-| `charLength` | `number` | no | Number of PIN cells. |
+| `charLength` | `number` | no | Number of PIN cells. See the [charLength demo](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbpininput-charlength--docs). |
 | `emptyChar` | `'-'` | yes | Character used in `.value` for empty cells. |
 | `inputMode` | `string` | no | Input mode forwarded to each internal input. |
 | `disabled` | `boolean` | no | Enables or disables all inner inputs. |
 | `required` | `boolean` | no | Enables required validation. |
-| `validation` | `ValidationHelper<string>` | yes | Validation helper from `jb-validation`; set `validation.list` for custom rules. |
+| `validation` | `ValidationHelper<string>` | yes | Validation helper from `jb-validation`; set `validation.list` for custom rules. See the [validation demo](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbpininput-validation--docs). |
 | `form` | `HTMLFormElement \| null` | yes | Associated form from `ElementInternals`. |
 | `name` | `string` | yes | Form field name from the `name` attribute. |
 | `isDirty` | `boolean` | yes | `true` when current value differs from `initialValue`. |

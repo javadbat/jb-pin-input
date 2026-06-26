@@ -1,0 +1,157 @@
+import { Meta, Source, Story, Title } from '@storybook/addon-docs/blocks';
+import * as PinInputStories from './JBPinInput.stories';
+
+<Meta title="Components/form elements/JBPinInput/Validation" />
+
+<Title>Validation</Title>
+
+Use `required` when every PIN cell must be filled, and use `validationList` in React or `validation.list` on the web component for custom validation rules.
+
+`JBPinInput` uses [`jb-validation`](https://github.com/javadbat/jb-validation) underneath. Read its docs for more advanced usage, including reusable validation lists, validation states, deferred rules, and async validators.
+
+## Live example
+
+This example requires a complete PIN value and adds a custom rule: the PIN must start with `1`.
+
+<Story of={PinInputStories.WithValidation} />
+
+<Source of={PinInputStories.WithValidation} />
+
+## Function validation
+
+Use a function validator when the rule needs custom logic. This checksum example accepts a 4 digit PIN when the last digit equals the sum of the previous digits modulo `10`; for example, `1236` is valid because `1 + 2 + 3 = 6`.
+
+<Story of={PinInputStories.ChecksumValidation} />
+
+<Source of={PinInputStories.ChecksumValidation} />
+
+```js
+pinInput.validation.list = [
+  {
+    validator: (value) => {
+      if (value.includes('-')) {
+        return true;
+      }
+
+      const digits = value.split('').map(Number);
+      const checksum = digits.slice(0, -1).reduce((sum, digit) => sum + digit, 0) % 10;
+
+      return checksum === digits[digits.length - 1];
+    },
+    message: 'Last digit must match the checksum',
+  },
+];
+```
+
+## Async validation
+
+Async validators return a promise. This example waits 3 seconds and accepts only `1234`. The `defer` flag keeps the async validation from running until the built-in required validation has passed.
+
+<Story of={PinInputStories.AsyncValidation} />
+
+<Source of={PinInputStories.AsyncValidation} />
+
+```js
+pinInput.validation.list = [
+  {
+    validator: async (value) => {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      return value === '1234';
+    },
+    message: 'Only 1234 is accepted',
+    defer: true,
+  },
+];
+```
+
+## Trigger validation manually
+
+Call `reportValidity()` when validation should run from your own UI, such as a submit button or a "verify code" action. It returns `true` or `false` and shows the first validation error when the value is invalid.
+
+<Story of={PinInputStories.ManualValidation} />
+
+<Source of={PinInputStories.ManualValidation} />
+
+```js
+const pinInput = document.querySelector('jb-pin-input');
+const validateButton = document.querySelector('#validate-pin');
+
+validateButton.addEventListener('click', () => {
+  const isValid = pinInput.reportValidity();
+
+  console.log(isValid);
+  console.log(pinInput.validationMessage);
+});
+```
+
+```tsx
+import { useRef } from 'react';
+import type { JBPinInputWebComponent } from 'jb-pin-input';
+import { JBButton } from 'jb-button/react';
+import { JBPinInput } from 'jb-pin-input/react';
+
+export function ManualPinValidation() {
+  const pinInputRef = useRef<JBPinInputWebComponent>(null);
+
+  return (
+    <>
+      <JBPinInput ref={pinInputRef} required />
+      <JBButton type="button" onClick={() => pinInputRef.current?.reportValidity()}>
+        Validate PIN
+      </JBButton>
+    </>
+  );
+}
+```
+
+## Web-component usage
+
+Set `required` in markup for the built-in required rule, then assign custom rules through the `validation.list` property:
+
+```html
+<jb-pin-input label="Verification code" required></jb-pin-input>
+```
+
+```js
+const pinInput = document.querySelector('jb-pin-input');
+
+pinInput.validation.list = [
+  {
+    validator: (value) => value.startsWith('1'),
+    message: 'PIN must start with 1',
+  },
+];
+```
+
+## React usage
+
+Pass `required` and `validationList` to the React component:
+
+```tsx
+import { JBPinInput } from 'jb-pin-input/react';
+
+export function VerificationCode() {
+  return (
+    <JBPinInput
+      label="Verification code"
+      required
+      validationList={[
+        {
+          validator: (value) => value.startsWith('1'),
+          message: 'PIN must start with 1',
+        },
+        {
+          validator: async (value) => {
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+            return value === '1234';
+          },
+          message: 'Only 1234 is accepted',
+          defer: true,
+        },
+      ]}
+    />
+  );
+}
+```
+
+Use `checkValidity()` to validate without showing an error, or `reportValidity()` to validate and show the first visible error.
