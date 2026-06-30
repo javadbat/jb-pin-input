@@ -6,22 +6,8 @@ import type { JBPinInputWebComponent } from 'jb-pin-input';
 import { useEvents, type PropsEvent } from './events-hook.js';
 import { type JBPinInputAttributes, useJBPinInputAttribute } from './attributes-hook.js';
 import type { JBElementStandardProps } from 'jb-core/react';
+import './module-declaration.js';
 
-declare module "react" {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace JSX {
-    interface IntrinsicElements {
-      'jb-pin-input': JBPinInputType;
-    }
-    interface JBPinInputType extends React.DetailedHTMLProps<React.HTMLAttributes<JBPinInputWebComponent>, JBPinInputWebComponent> {
-      class?: string,
-      label?: string,
-      name?: string,
-      message?: string,
-      // ref:React.RefObject<JBDateInputWebComponent>,
-    }
-  }
-}
 // eslint-disable-next-line react/display-name
 export const JBPinInput = React.forwardRef((props: Props, ref) => {
   const element = useRef<JBPinInputWebComponent>(null);
