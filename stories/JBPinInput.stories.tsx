@@ -4,6 +4,15 @@ import { JBButton } from 'jb-button/react';
 import { JBPinInput } from 'jb-pin-input/react';
 import { JBPinInputStyleTest } from './samples/JBPinInputStyleTest';
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, waitFor } from 'storybook/test';
+import {
+  dispatchPaste,
+  getJBButton,
+  getJBButtonNativeButton,
+  getMessageText,
+  getPinCells,
+  getPinInput,
+} from './test-utils';
 
 const meta = {
   title: "Components/form elements/JBPinInput",
@@ -17,6 +26,29 @@ export const Normal: Story = {
     label: 'pin input',
     message: "please fill the pin",
     value: "",
+  },
+  play: async ({ canvasElement }) => {
+    const pinInput = getPinInput(canvasElement);
+    const inputs = getPinCells(pinInput);
+
+    inputs[0].focus();
+    await userEvent.keyboard('12a3');
+
+    await waitFor(() => {
+      expect(pinInput.value).toBe('123---');
+      expect(inputs[0].value).toBe('1');
+      expect(inputs[1].value).toBe('2');
+      expect(inputs[2].value).toBe('3');
+      expect(pinInput.shadowRoot?.activeElement).toBe(inputs[3]);
+    });
+
+    dispatchPaste(inputs[0], 'verification code: 987654');
+
+    await waitFor(() => {
+      expect(pinInput.value).toBe('987654');
+      expect(inputs.map((input) => input.value).join('')).toBe('987654');
+      expect(pinInput.shadowRoot?.activeElement).toBe(inputs[5]);
+    });
   }
 };
 
@@ -25,6 +57,14 @@ export const AutoFocus: Story = {
     label: 'autofocus',
     autofocus: true,
     value: "",
+  },
+  play: async ({ canvasElement }) => {
+    const pinInput = getPinInput(canvasElement);
+    const inputs = getPinCells(pinInput);
+
+    await waitFor(() => {
+      expect(pinInput.shadowRoot?.activeElement).toBe(inputs[0]);
+    });
   }
 };
 
@@ -33,6 +73,22 @@ export const charLength: Story = {
     label: '8 digit pin',
     value: "",
     charLength: 8
+  },
+  play: async ({ canvasElement }) => {
+    const pinInput = getPinInput(canvasElement);
+
+    await waitFor(() => {
+      expect(getPinCells(pinInput)).toHaveLength(8);
+      expect(pinInput.charLength).toBe(8);
+    });
+
+    pinInput.charLength = 4;
+
+    await waitFor(() => {
+      expect(getPinCells(pinInput)).toHaveLength(4);
+      expect(pinInput.charLength).toBe(4);
+      expect(pinInput.value).toBe('----');
+    });
   }
 };
 
@@ -42,6 +98,24 @@ export const WithError: Story = {
     message: "simple message",
     error:"error message",
     value: "",
+  },
+  play: async ({ canvasElement, args }) => {
+    const pinInput = getPinInput(canvasElement);
+
+    expect(pinInput.reportValidity()).toBe(false);
+
+    await waitFor(() => {
+      expect(getMessageText(pinInput)).toBe(args.error);
+      expect(getPinCells(pinInput).every((input) => input.getAttribute('aria-invalid') === 'true')).toBe(true);
+    });
+
+    pinInput.setAttribute('error', '');
+
+    await waitFor(() => {
+      expect(pinInput.reportValidity()).toBe(true);
+      expect(getMessageText(pinInput)).toBe(args.message);
+      expect(getPinCells(pinInput).every((input) => !input.hasAttribute('aria-invalid'))).toBe(true);
+    });
   }
 };
 
@@ -71,6 +145,24 @@ export const WithValidation: Story = {
   args: {
     label: "Verification code",
     message: "Enter a code that starts with 1",
+  },
+  play: async ({ canvasElement, args }) => {
+    const pinInput = getPinInput(canvasElement);
+
+    pinInput.value = '234567';
+    expect(pinInput.reportValidity()).toBe(false);
+
+    await waitFor(() => {
+      expect(getMessageText(pinInput)).toBe('PIN must start with 1');
+      expect(getPinCells(pinInput).every((input) => input.getAttribute('aria-invalid') === 'true')).toBe(true);
+    });
+
+    pinInput.value = '123456';
+    expect(pinInput.reportValidity()).toBe(true);
+
+    await waitFor(() => {
+      expect(getMessageText(pinInput)).toBe(args.message);
+    });
   }
 };
 
@@ -122,6 +214,27 @@ export const AsyncValidation: Story = {
     label: "Async verification code",
     charLength: 4,
     message: "Enter 1234 and wait 3 seconds for async validation.",
+  },
+  play: async ({ canvasElement, args }) => {
+    const pinInput = getPinInput(canvasElement);
+
+    pinInput.value = '9999';
+    const invalidResult = await pinInput.validation.checkValidity({ showError: true });
+
+    expect(invalidResult.isAllValid).toBe(false);
+
+    await waitFor(() => {
+      expect(getMessageText(pinInput)).toBe('Only 1234 is accepted');
+    });
+
+    pinInput.value = '1234';
+    const validResult = await pinInput.validation.checkValidity({ showError: true });
+
+    expect(validResult.isAllValid).toBe(true);
+
+    await waitFor(() => {
+      expect(getMessageText(pinInput)).toBe(args.message);
+    });
   }
 };
 
@@ -153,6 +266,23 @@ export const ManualValidation: Story = {
     label: "Manual validation code",
     charLength: 4,
     message: "Click the button to run reportValidity().",
+  },
+  play: async ({ canvasElement }) => {
+    const pinInput = getPinInput(canvasElement);
+    const validateButton = getJBButton(canvasElement, 'Validate PIN');
+
+    await userEvent.click(getJBButtonNativeButton(validateButton));
+
+    await waitFor(() => {
+      expect(canvasElement).toHaveTextContent('Invalid:');
+    });
+
+    pinInput.value = '1234';
+    await userEvent.click(getJBButtonNativeButton(validateButton));
+
+    await waitFor(() => {
+      expect(canvasElement).toHaveTextContent('Valid: reportValidity() returned true.');
+    });
   }
 };
 
