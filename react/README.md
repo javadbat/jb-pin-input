@@ -151,9 +151,9 @@ The React component uses the same CSS variables as the web component.
 
 ```css
 .otp-field {
-  --jb-pin-input-inputs-wrapper-width: 320px;
+  --jb-pin-input-inputs-wrapper-width: 20rem;
   --jb-pin-input-bottom-line-color-active: #0f766e;
-  --jb-pin-input-pin-font-size: 28px;
+  --jb-pin-input-pin-font-size: 1.75rem;
 }
 ```
 

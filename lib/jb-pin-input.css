@@ -21,9 +21,9 @@
         color: var(--pin-color);
         background-color: transparent;
         width: 100%;
-        min-width: 8px;
+        min-width: 0.5rem;
         box-sizing: border-box;
-        height: var(--jb-pin-input-pin-height, 40px);
+        height: var(--jb-pin-input-pin-height, 2.5rem);
         text-align: center;
         font-family: inherit;
         font-size: var(--pin-font-size);

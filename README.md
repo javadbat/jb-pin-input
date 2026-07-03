@@ -223,10 +223,10 @@ See the [Storybook styling demos](https://javadbat.github.io/design-system/?path
 
 ```css
 jb-pin-input {
-  --jb-pin-input-inputs-wrapper-width: 320px;
-  --jb-pin-input-inputs-gap: 12px;
+  --jb-pin-input-inputs-wrapper-width: 20rem;
+  --jb-pin-input-inputs-gap: 0.75rem;
   --jb-pin-input-bottom-line-color-active: #0f766e;
-  --jb-pin-input-pin-font-size: 28px;
+  --jb-pin-input-pin-font-size: 1.75rem;
 }
 
 jb-pin-input::part(input-wrapper) {

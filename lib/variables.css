@@ -6,7 +6,7 @@
   --wrapper-border-style:var(--jb-pin-input-wrapper-border-style, solid);
   --wrapper-border-radius: var(--jb-pin-input-wrapper-border-radius, var(--jb-radius));
   --bottom-line-border-radius: var(--jb-pin-input-bottom-line-border-radius, var(--jb-radius));
-  --pin-font-size: var(--jb-pin-input-pin-font-size, 24px);
+  --pin-font-size: var(--jb-pin-input-pin-font-size, 1.5rem);
   --pin-font-weight: var(--jb-pin-input-pin-font-weight, 900);
   --bottom-line-height: var(--jb-pin-input-bottom-line-height, 4px);
   --bottom-line-display: var(--jb-pin-input-bottom-line-display, block);
