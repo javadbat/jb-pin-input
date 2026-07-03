@@ -31,6 +31,12 @@ import { JBPinInput } from 'jb-pin-input/react';
 <JBPinInput label="Verification code" name="otp" charLength={6} message="Enter verification code" />;
 ```
 
+## When to use
+
+Use `JBPinInput` for OTP, verification code, PIN, and short numeric code entry.
+
+Use `JBPasswordInput` for secret text that should be masked as a password. Use `JBInput` for normal single-field text entry.
+
 ## Props
 
 | prop | type | description |
@@ -79,6 +85,10 @@ const [value, setValue] = useState('');
 <JBPinInput charLength={5} />;
 ```
 
+## Value
+
+Read `event.target.value` for the canonical English-digit PIN value. Empty internal cells are represented by `-` in the underlying web-component value.
+
 ## Configure behavior
 
 ```jsx
@@ -113,6 +123,14 @@ const [value, setValue] = useState('');
 />;
 ```
 
+## Smart paste
+
+The underlying web component distributes pasted text across cells and normalizes Persian and Arabic digits to English digits.
+
+## Autofocus
+
+Use `autofocus` when the first cell should focus after initialization.
+
 ## Validation
 
 ```jsx
@@ -142,6 +160,14 @@ The React component uses the same CSS variables as the web component.
 ```jsx
 <JBPinInput className="otp-field" />;
 ```
+
+## CSS parts and variables
+
+Use the same CSS parts and variables as the web component. The `Styling` section above shows the React class-based pattern.
+
+## Accessibility notes
+
+Use `label` or `aria-label` to provide the accessible name for the PIN group. Add visible label text in the surrounding UI when the field purpose is not clear.
 
 ## Shared Documentation
 
