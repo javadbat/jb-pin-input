@@ -217,7 +217,7 @@ See the [Storybook styling demos](https://javadbat.github.io/design-system/?path
 | `--jb-pin-input-pin-font-weight` | Cell input font weight. |
 | `--jb-pin-input-message-box-display` | Message box display value. |
 | `--jb-pin-input-message-color` | Message text color. |
-| `--jb-pin-input-message-error-color` | Error message text color. |
+| `--jb-pin-input-message-color-error` | Error message text color. |
 | `--jb-pin-input-message-font-size` | Message font size. |
 | `--jb-pin-input-message-margin` | Message box margin. |
 

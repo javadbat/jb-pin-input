@@ -44,7 +44,7 @@
       }
 
       &:focus-within {
-        border-color: var(--border-color-active);
+        border-color: var(--wrapper-border-color-active);
         box-shadow: var(--wrapper-box-shadow);
 
         .pin-input-shape {
@@ -68,7 +68,7 @@
     }
 
     &.error {
-      color: var(--message-error-color);
+      color: var(--message-color-error);
     }
   }
 }

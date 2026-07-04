@@ -184,7 +184,7 @@
   --jb-pin-input-pin-font-size: 1.25rem;
   --jb-pin-input-pin-font-weight: 800;
   --jb-pin-input-message-margin: 0.5rem 0 0;
-  --jb-pin-input-message-error-color: #b91c1c;
+  --jb-pin-input-message-color-error: #b91c1c;
   background: #fff1f2;
   border-color: #fecdd3;
 }
@@ -347,7 +347,7 @@
   --jb-pin-input-pin-font-size: 1.125rem;
   --jb-pin-input-pin-font-weight: 800;
   --jb-pin-input-message-margin: 0.75rem 0 0;
-  --jb-pin-input-message-error-color: #be123c;
+  --jb-pin-input-message-color-error: #be123c;
   background: #fff1f2;
   border-color: #fecdd3;
 }

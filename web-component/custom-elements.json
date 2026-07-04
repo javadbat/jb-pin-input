@@ -361,7 +361,7 @@
               "description": "Message text color."
             },
             {
-              "name": "--jb-pin-input-message-error-color",
+              "name": "--jb-pin-input-message-color-error",
               "description": "Error message text color."
             },
             {
