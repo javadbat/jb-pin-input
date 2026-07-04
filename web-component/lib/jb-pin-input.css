@@ -23,7 +23,7 @@
         width: 100%;
         min-width: 0.5rem;
         box-sizing: border-box;
-        height: var(--jb-pin-input-pin-height, 2.5rem);
+        height: var(--pin-height);
         text-align: center;
         font-family: inherit;
         font-size: var(--pin-font-size);

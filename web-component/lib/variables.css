@@ -1,11 +1,12 @@
 :host{
-  /*Sizes*/
+  /* Size */
   --inputs-wrapper-width: var(--jb-pin-input-inputs-wrapper-width, 100%);
   --inputs-gap: var(--jb-pin-input-inputs-gap, 0.5rem);
   --wrapper-border-width:var(--jb-pin-input-wrapper-border-width, 0);
   --wrapper-border-style:var(--jb-pin-input-wrapper-border-style, solid);
   --wrapper-border-radius: var(--jb-pin-input-wrapper-border-radius, var(--jb-radius));
   --bottom-line-border-radius: var(--jb-pin-input-bottom-line-border-radius, var(--jb-radius));
+  --pin-height: var(--jb-pin-input-pin-height, 2.5rem);
   --pin-font-size: var(--jb-pin-input-pin-font-size, 1.5rem);
   --pin-font-weight: var(--jb-pin-input-pin-font-weight, 900);
   --bottom-line-height: var(--jb-pin-input-bottom-line-height, 4px);
@@ -14,7 +15,7 @@
   --message-font-size: var(--jb-pin-input-message-font-size, 0.7rem);
   --message-box-display: var(--jb-pin-input-message-box-display, block);
   --message-margin: var(--jb-pin-input-message-margin,0);
-  /*colors*/
+  /* Theme/Color */
   --wrapper-border-color:var(--jb-pin-input-wrapper-border-color, var(--jb-neutral));
   --pin-color:var(--jb-pin-input-pin-color, var(--jb-text-primary));
   --bottom-line-color:var(--jb-pin-input-bottom-line-color, var(--jb-neutral-8));
