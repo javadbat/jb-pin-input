@@ -1,2 +1,2 @@
-import './dist/jb-pin-input.js';
-export * from './dist/jb-pin-input.js';
+import './web-component/dist/jb-pin-input.js';
+export * from './web-component/dist/jb-pin-input.js';

@@ -3,8 +3,9 @@ import type { ReactComponentBuildConfig, WebComponentBuildConfig } from "../../t
 export const webComponentList: WebComponentBuildConfig[] = [
   {
     name: "jb-pin-input",
-    path: "./lib/jb-pin-input.ts",
-    outputPath: "./dist/jb-pin-input.js",
+    path: "./web-component/lib/jb-pin-input.ts",
+    outputPath: "./web-component/dist/jb-pin-input.js",
+    tsConfigPath: "./web-component/tsconfig.json",
     umdName: "JBPinInput",
     external: ["jb-validation", "jb-form", "jb-core", "jb-core/theme"],
     globals: {
