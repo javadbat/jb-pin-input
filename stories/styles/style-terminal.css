@@ -1,0 +1,15 @@
+jb-pin-input.terminal-style {
+  --jb-pin-input-inputs-wrapper-width: 16rem;
+  --jb-pin-input-inputs-gap: 0.5rem;
+  --jb-pin-input-wrapper-border-width: 1px;
+  --jb-pin-input-wrapper-border-color: var(--jb-border-color);
+  --jb-pin-input-wrapper-border-color-active: var(--jb-primary);
+  --jb-pin-input-wrapper-border-radius: var(--jb-radius-sm);
+  --jb-pin-input-bottom-line-display: none;
+  --jb-pin-input-pin-height: 2.75rem;
+  --jb-pin-input-pin-color: var(--jb-primary);
+  --jb-pin-input-pin-font-weight: 800;
+  --jb-pin-input-message-color: var(--jb-text-secondary);
+  --jb-pin-input-message-color-error: var(--jb-red);
+  text-shadow: 0 0 0.375rem var(--jb-primary);
+}

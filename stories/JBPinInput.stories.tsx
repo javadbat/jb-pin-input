@@ -3,7 +3,7 @@ import type { JBPinInputWebComponent } from 'jb-pin-input';
 import { JBButton } from 'jb-button/react';
 import { JBPinInput } from 'jb-pin-input/react';
 import { JBPinInputStyleTest } from './samples/JBPinInputStyleTest';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor } from 'storybook/test';
 import {
   dispatchPaste,

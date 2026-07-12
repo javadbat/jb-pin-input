@@ -1,4 +1,5 @@
-import { Meta, Title } from '@storybook/addon-docs/blocks';
+import { Meta, Story, Title } from '@storybook/addon-docs/blocks';
+import * as StyleStories from './Styles.stories';
 import { JBPinInputStyleTest } from './samples/JBPinInputStyleTest';
 import './samples/JBPinInputStyleTest.css';
 
@@ -11,6 +12,12 @@ import './samples/JBPinInputStyleTest.css';
 The gallery below is intentionally split in that order: six simple demos using only CSS variables first, then six demos that use parts. The grid is capped at two demos per row so the examples stay readable on smaller screens.
 
 <JBPinInputStyleTest />
+
+## Theme Gallery
+
+<Story of={StyleStories.Gallery} />
+
+Use [Theme Colors](../../jb-core/theme/stories/colors.mdx), [Theme Sizes](../../jb-core/theme/stories/sizes.mdx), and the [Theme Custom Galleries](https://javadbat.github.io/design-system/?path=/docs/theme-custom-material--docs) as the shared styling references.
 
 ## CSS Variables
 
