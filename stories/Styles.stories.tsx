@@ -101,6 +101,7 @@ export const Gallery: Story = {
   ),
 };
 
+export const Default: Story = { name: "Default", render: () => <PinInputStyleSample className="" /> };
 export const Carbon: Story = { name: "Carbon", render: () => <PinInputStyleSample className="carbon-style carbon-style" /> };
 export const Aurora: Story = { name: "Aurora", render: () => <PinInputStyleSample className="aurora-style aurora-style" /> };
 export const Forest: Story = { name: "Forest", render: () => <PinInputStyleSample className="forest-style forest-style" /> };
