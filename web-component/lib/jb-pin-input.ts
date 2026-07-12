@@ -136,6 +136,11 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
 
   initialValue = "";
+  formResetCallback() {
+    this.value = this.initialValue;
+    this.#validation.reset();
+    this.#internals?.setValidity({}, '');
+  }
   get isDirty(): boolean {
     return this.value !== this.initialValue;
   }
@@ -585,10 +590,16 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   #showValidationError(error: ShowValidationErrorParameters | string) {
     const message = typeof error === "string" ? error : error.message;
     this.#setMessage(message, true);
+    this.#internals?.states?.add("invalid");
+    if (this.#internals) this.#internals.ariaInvalid = "true";
   }
   clearValidationError() {
     const text = this.getAttribute("message") || "";
     this.#setMessage(text, false);
+    this.#isInvalid = false;
+    this.#internals?.states?.delete("invalid");
+    if (this.#internals) this.#internals.ariaInvalid = "false";
+    this.elements.inputs.forEach(input => input.removeAttribute("aria-invalid"));
   }
   #setMessage(message: string, isError: boolean) {
     this.elements.messageBox.textContent = message;
