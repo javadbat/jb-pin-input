@@ -11,6 +11,8 @@ declare module "react" {
       label?: string,
       name?: string,
       message?: string,
+      value?: string,
+      initialValue?: string,
       // ref:React.RefObject<JBDateInputWebComponent>,
     }
   }

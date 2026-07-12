@@ -18,12 +18,12 @@ export const JBPinInput = React.forwardRef((props: Props, ref) => {
     [element],
   );
 
-  const { autofocus, charLength, disabled, error, inputmode, required, validationList, value, onBeforeInput, onBlur, onChange, onComplete, onEnter, onFocus, onInput, onKeyDown, onKeyUp, ...otherProps } = props
-  useJBPinInputAttribute(element, { autofocus, charLength, disabled, error, inputmode, required, validationList, value });
+  const { autofocus, charLength, disabled, error, initialValue, inputmode, required, validationList, value, onBeforeInput, onBlur, onChange, onComplete, onEnter, onFocus, onInput, onKeyDown, onKeyUp, ...otherProps } = props
+  useJBPinInputAttribute(element, { autofocus, charLength, disabled, error, inputmode, required, validationList });
   useEvents({ onBeforeInput, onBlur, onChange, onComplete, onEnter, onFocus, onInput, onKeyDown, onKeyUp }, element);
 
   return (
-    <jb-pin-input ref={element} {...otherProps}>
+    <jb-pin-input ref={element} value={value?.toString() ?? ""} initialValue={initialValue?.toString() ?? ""} {...otherProps}>
       {props.children}
     </jb-pin-input>
   );
@@ -33,6 +33,8 @@ type JBPinInputProps = PropsEvent & PropsWithChildren<JBPinInputAttributes> & {
   className?: string,
   label?: string,
   message?: string,
+  value?: string | number,
+  initialValue?: string | number,
 }
 JBPinInput.displayName = "JBPinInput";
 

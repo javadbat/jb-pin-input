@@ -3,7 +3,6 @@ import type { ValidationItem } from "jb-validation";
 import { type RefObject, useEffect } from "react";
 
 export type JBPinInputAttributes = {
-  value?: string | number,
   required?: boolean,
   validationList?: ValidationItem<ValidationValue>[],
   disabled?: boolean,
@@ -13,16 +12,6 @@ export type JBPinInputAttributes = {
   error?: string,
 }
 export function useJBPinInputAttribute(element: RefObject<JBPinInputWebComponent | null>, props: JBPinInputAttributes) {
-
-  useEffect(() => {
-    let value = props.value;
-    if (props.value == null || props.value === undefined) {
-      value = '';
-    }
-    if (element.current) {
-      element.current.value = value?.toString() || "";
-    }
-  }, [props.value, element.current]);
 
   useEffect(() => {
     if (element?.current) {

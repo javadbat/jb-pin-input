@@ -54,9 +54,15 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   get value() {
     return this.#getValue(this.emptyChar);
   }
+  #pendingValue: string | null = null;
   set value(value: string) {
     const sValue = this.#standardValue(`${value ?? ""}`);
+    if (this.elements.inputs.length === 0) {
+      this.#pendingValue = sValue;
+      return;
+    }
     this.#setValue(sValue);
+    this.#pendingValue = null;
   }
   get inputMode() {
     return this.getAttribute("inputmode") || "numeric";
@@ -185,6 +191,8 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.#initInputsDom();
     if (this.hasAttribute("value")) {
       this.value = this.getAttribute("value") || "";
+    } else if (this.#pendingValue !== null) {
+      this.value = this.#pendingValue;
     } else {
       this.#setFormValue();
     }
