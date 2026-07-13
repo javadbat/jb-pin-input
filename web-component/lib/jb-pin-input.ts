@@ -7,6 +7,7 @@ import { registerDefaultVariables } from 'jb-core/theme';
 import { renderHTML } from './render';
 import { getRequiredMessage, i18n } from 'jb-core/i18n';
 import { createInputEvent, createKeyboardEvent, faToEnDigits } from 'jb-core';
+import { dictionary } from './i18n';
 
 export * from './types.js';
 
@@ -313,7 +314,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       this.getAttribute("accessible-label")?.trim() ||
       this.getAttribute("label")?.trim() ||
       this.getAttribute("name")?.trim();
-    return label || "PIN";
+    return label || dictionary.get(i18n, "pin");
   }
   #setAccessibleLabels() {
     if (!this.elements?.inputsWrapper || !this.elements?.inputs) {
@@ -322,7 +323,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     const label = this.#getAccessibleLabel();
     this.elements.inputsWrapper.setAttribute("aria-label", label);
     this.elements.inputs.forEach((input, index) => {
-      input.setAttribute("aria-label", `${label}, digit ${index + 1} of ${this.charLength}`);
+      input.setAttribute("aria-label", dictionary.get(i18n, "digitLabel")(label, index + 1, this.charLength));
     });
   }
   #setMessageA11y() {
@@ -374,7 +375,8 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     inputDom.setAttribute('inputmode', this.inputMode);
     inputDom.setAttribute('pattern', '[0-9]*');
     inputDom.setAttribute('autocomplete', index === 0 ? 'one-time-code' : 'off');
-    inputDom.setAttribute('aria-label', `${this.#getAccessibleLabel()}, digit ${index + 1} of ${this.charLength}`);
+    inputDom.setAttribute('aria-label', dictionary.get(i18n, "digitLabel")(this.#getAccessibleLabel(), index + 1, this.charLength));
+    inputDom.tabIndex = index === 0 ? 0 : -1;
     inputDom.setAttribute('aria-describedby', 'message');
     inputDom.setAttribute('aria-required', `${this.required}`);
 

@@ -1,8 +1,3 @@
-:host(:focus),
-:host(:focus-visible) {
-  outline: none;
-}
-
 .jb-pin-input-web-component {
   .inputs-wrapper {
     width: var(--inputs-wrapper-width);
@@ -29,10 +24,6 @@
         font-size: var(--pin-font-size);
         font-weight: var(--pin-font-weight, 900);
 
-        &:focus {
-          outline: none;
-        }
-
       }
 
       .pin-input-shape {
@@ -50,6 +41,11 @@
         .pin-input-shape {
           background-color: var(--bottom-line-color-active);
         }
+      }
+
+      &:has(.pin-input:focus-visible) {
+        outline: 2px solid var(--jb-pin-input-focus-ring-color, Highlight);
+        outline-offset: 2px;
       }
 
 

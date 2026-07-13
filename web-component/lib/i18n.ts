@@ -1,6 +1,8 @@
 import {JBDictionary} from 'jb-core/i18n';
 export type JBPinInputDictionary = {
   invalidValue:string,
+  pin:string,
+  digitLabel:(label:string, index:number, length:number)=>string,
 }
 
 /**
@@ -17,8 +19,12 @@ export type JBPinInputDictionary = {
 export const dictionary = new JBDictionary<JBPinInputDictionary>({
   "fa":{
     invalidValue:'کد ملی وارد شده نامعتبر است',
+    pin:'کد امنیتی',
+    digitLabel:(label, index, length)=>`${label}، رقم ${index} از ${length}`,
   },
   "en":{
     invalidValue:"The entered national code is invalid",
+    pin:"PIN",
+    digitLabel:(label, index, length)=>`${label}, digit ${index} of ${length}`,
   }
 });
