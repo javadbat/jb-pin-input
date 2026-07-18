@@ -1,5 +1,5 @@
 jb-pin-input.aurora-style {
-  --jb-pin-input-inputs-wrapper-width: 16rem;
+  --jb-pin-input-inputs-wrapper-width: 14rem;
   --jb-pin-input-inputs-gap: 0.55rem;
   --jb-pin-input-wrapper-border-width: 1px;
   --jb-pin-input-wrapper-border-color: var(--jb-border-color);
@@ -7,9 +7,11 @@ jb-pin-input.aurora-style {
   --jb-pin-input-wrapper-border-radius: var(--jb-radius);
   --jb-pin-input-bottom-line-color: var(--jb-surface-hover);
   --jb-pin-input-bottom-line-color-active: var(--jb-primary);
-  --jb-pin-input-pin-height: 2.875rem;
+  --jb-pin-input-pin-height: 2.5rem;
+  --jb-pin-input-pin-font-size: 1.125rem;
+  --jb-pin-input-pin-font-weight: 600;
   --jb-pin-input-pin-color: var(--jb-text-primary);
   --jb-pin-input-message-color: var(--jb-text-secondary);
   --jb-pin-input-message-color-error: var(--jb-red);
-  filter: drop-shadow(0 0.5rem 1rem oklch(0% 0 0 / 0.18));
+  filter: drop-shadow(0 0.375rem 0.75rem oklch(0% 0 0 / 0.16));
 }

@@ -1,14 +1,16 @@
 jb-pin-input.candy-style {
-  --jb-pin-input-inputs-wrapper-width: 16rem;
+  --jb-pin-input-inputs-wrapper-width: 14rem;
   --jb-pin-input-inputs-gap: 0.55rem;
   --jb-pin-input-wrapper-border-width: 1px;
   --jb-pin-input-wrapper-border-color: var(--jb-border-color);
   --jb-pin-input-wrapper-border-color-active: var(--jb-primary);
   --jb-pin-input-wrapper-border-radius: var(--jb-radius-sm);
   --jb-pin-input-bottom-line-display: none;
-  --jb-pin-input-pin-height: 2.875rem;
+  --jb-pin-input-pin-height: 2.5rem;
+  --jb-pin-input-pin-font-size: 1.125rem;
+  --jb-pin-input-pin-font-weight: 600;
   --jb-pin-input-pin-color: var(--jb-primary-pressed);
   --jb-pin-input-message-color: var(--jb-text-secondary);
   --jb-pin-input-message-color-error: var(--jb-red);
-  --jb-pin-input-wrapper-box-shadow: 0 0 0 0.25rem oklch(72% 0.18 340 / 0.14);
+  --jb-pin-input-wrapper-box-shadow: 0 0 0 0.1875rem oklch(72% 0.18 340 / 0.14);
 }
