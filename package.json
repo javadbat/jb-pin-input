@@ -17,7 +17,7 @@
     "otp code input",
     "otp code input web component"
   ],
-  "version": "1.13.0",
+  "version": "1.14.0",
   "bugs": "https://github.com/javadbat/jb-pin-input/issues",
   "license": "MIT",
   "files": [
@@ -48,10 +48,10 @@
 		"url": "git@github.com:javadbat/jb-pin-input.git"
   },
   "dependencies": {
-    "jb-validation": ">=0.4.1",
-    "jb-core": ">=0.29.0"
+    "jb-validation": ">=1.0.0",
+    "jb-core": ">=0.30.0"
   },
   "devDependencies": {
-    "jb-form":">=0.11.0"
+    "jb-form":">=0.12.0"
   }
 }
