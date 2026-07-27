@@ -114,6 +114,14 @@
             },
             {
               "kind": "field",
+              "name": "initialValue",
+              "description": "Default and reset value. It initializes value until the live value is explicitly set.",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
               "name": "charLength",
               "description": "Number of PIN cells.",
               "type": {

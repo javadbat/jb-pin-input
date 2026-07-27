@@ -78,6 +78,7 @@ import 'jb-pin-input';
 | name | type | readonly | description |
 | --- | --- | --- | --- |
 | `value` | `string` | no | Canonical PIN value. Empty cells are represented by `-`. |
+| `initialValue` | `string` | no | Default and reset value. It initializes `value` until the live value is explicitly set. |
 | `charLength` | `number` | no | Number of PIN cells. See the [charLength demo](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbpininput-charlength--docs). |
 | `emptyChar` | `'-'` | yes | Character used in `.value` for empty cells. |
 | `inputMode` | `string` | no | Input mode forwarded to each internal input. |

@@ -52,6 +52,94 @@ export const Normal: Story = {
   }
 };
 
+export const InitialValue: Story = {
+  render: (args) => {
+    const formRef = useRef<HTMLFormElement>(null);
+    return (
+      <form ref={formRef}>
+        <JBPinInput {...args} />
+        <JBButton type="button" onClick={() => formRef.current?.reset()}>Reset</JBButton>
+      </form>
+    );
+  },
+  args: {
+    label: 'initial value',
+    initialValue: '123456',
+  },
+  play: async ({ canvasElement, args }) => {
+    const pinInput = getPinInput(canvasElement);
+    const inputs = getPinCells(pinInput);
+    const resetButton = getJBButton(canvasElement, 'Reset');
+
+    await waitFor(() => {
+      expect(pinInput.initialValue).toBe(args.initialValue);
+      expect(pinInput.value).toBe(args.initialValue);
+      expect(pinInput.isDirty).toBe(false);
+    });
+
+    inputs[0].focus();
+    await userEvent.keyboard('654321');
+
+    await waitFor(() => {
+      expect(pinInput.value).toBe('654321');
+      expect(pinInput.isDirty).toBe(true);
+    });
+
+    pinInput.initialValue = '111111';
+
+    expect(pinInput.initialValue).toBe('111111');
+    expect(pinInput.value).toBe('654321');
+    expect(pinInput.isDirty).toBe(true);
+
+    await userEvent.click(getJBButtonNativeButton(resetButton));
+
+    await waitFor(() => {
+      expect(pinInput.value).toBe('111111');
+      expect(pinInput.initialValue).toBe(pinInput.value);
+      expect(pinInput.isDirty).toBe(false);
+    });
+
+    pinInput.initialValue = '222222';
+
+    await waitFor(() => {
+      expect(pinInput.value).toBe('222222');
+      expect(pinInput.isDirty).toBe(false);
+    });
+  },
+};
+
+export const InitialValueDoesNotOverrideValue: Story = {
+  args: {
+    initialValue: '123456',
+    value: '654321',
+  },
+  play: async ({ canvasElement }) => {
+    const pinInput = getPinInput(canvasElement);
+
+    await waitFor(() => {
+      expect(pinInput.initialValue).toBe('123456');
+      expect(pinInput.value).toBe('654321');
+      expect(pinInput.isDirty).toBe(true);
+    });
+  },
+};
+
+export const ExplicitNullValueDoesNotFallBackToInitialValue: Story = {
+  args: {
+    initialValue: '123456',
+    value: null,
+  },
+  play: async ({ canvasElement }) => {
+    const pinInput = getPinInput(canvasElement);
+
+    await waitFor(() => {
+      expect(pinInput.initialValue).toBe('123456');
+      expect(pinInput.value).toBe('------');
+      expect(pinInput.isDirty).toBe(true);
+    });
+  },
+};
+
 export const AutoFocus: Story = {
   args: {
     label: 'autofocus',

@@ -14,6 +14,7 @@ export * from './types.js';
 export class JBPinInputWebComponent extends HTMLElement implements WithValidation<ValidationValue>, JBFormInputStandards<string> {
   elements!: Elements;
   #internals?: ElementInternals;
+  #isDirty = false;
   #acceptPersianNumber = true;
   #hasVisibleError = false;
   #isInvalid = false;
@@ -57,13 +58,8 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   #pendingValue: string | null = null;
   set value(value: string) {
-    const sValue = this.#standardValue(`${value ?? ""}`);
-    if (this.elements.inputs.length === 0) {
-      this.#pendingValue = sValue;
-      return;
-    }
-    this.#setValue(sValue);
-    this.#pendingValue = null;
+    this.#isDirty = true;
+    this.#setValue(value);
   }
   get inputMode() {
     return this.getAttribute("inputmode") || "numeric";
@@ -101,10 +97,16 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     return this.#standardValue(value);
   }
   #setValue(value: string) {
+    const standardValue = this.#standardValue(`${value ?? ""}`);
+    if (this.elements.inputs.length === 0) {
+      this.#pendingValue = standardValue;
+      return;
+    }
     this.elements.inputs.forEach((input, index) => {
-      input.value = this.#getValidCellValue(value[index]);
+      input.value = this.#getValidCellValue(standardValue[index]);
     });
     this.#setFormValue();
+    this.#pendingValue = this.isConnected ? null : standardValue;
   }
   #setFormValue(value = this.value) {
     if (this.#internals && typeof this.#internals.setFormValue === "function") {
@@ -120,6 +122,11 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     if (Number.isInteger(numericValue) && numericValue > 0) {
       this.#charLength = numericValue;
       this.#initInputsDom();
+      if (!this.#isDirty) {
+        this.#setValue(this.initialValue);
+      } else {
+        this.#setFormValue();
+      }
     }
   }
 
@@ -136,9 +143,22 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     return this.#validation;
   }
 
-  initialValue = "";
+  #initialValue = "";
+  /**
+   * Default and reset value. It initializes `value` until the live value is explicitly set.
+   */
+  get initialValue(): string {
+    return this.#normalizeValue(this.#initialValue);
+  }
+  set initialValue(value: string | null) {
+    this.#initialValue = this.#standardValue(`${value ?? ""}`);
+    if (!this.#isDirty) {
+      this.#setValue(this.initialValue);
+    }
+  }
   formResetCallback() {
-    this.value = this.initialValue;
+    this.#isDirty = false;
+    this.#setValue(this.initialValue);
     this.#validation.reset();
     this.#internals?.setValidity({}, '');
   }
@@ -198,7 +218,9 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     if (this.hasAttribute("value")) {
       this.value = this.getAttribute("value") || "";
     } else if (this.#pendingValue !== null) {
-      this.value = this.#pendingValue;
+      this.#setValue(this.#pendingValue);
+    } else if (!this.#isDirty) {
+      this.#setValue(this.initialValue);
     } else {
       this.#setFormValue();
     }
@@ -267,6 +289,13 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   }
   #getDigits(value: string) {
     return [...this.#standardValue(value)].filter((char) => /^[0-9]$/.test(char));
+  }
+  #normalizeValue(value: string) {
+    const standardValue = this.#standardValue(value);
+    return Array.from(
+      { length: this.charLength },
+      (_, index) => this.#getValidCellValue(standardValue[index]) || this.emptyChar,
+    ).join("");
   }
   #setValueFromIndex(index: number, value: string) {
     const digits = this.#getDigits(value);
@@ -401,7 +430,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
       //first we looking for full pin code match
       //if we find all digits in pasted value
       filteredValue = regexResult.groups.pin;
-      this.#setValue(filteredValue);
+      this.value = filteredValue;
       //change input foucs to the last pin based on pasted value length
       if (this.value.length > 0) {
         (this.elements!).inputs[this.charLength - 1].focus();
@@ -474,6 +503,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     }
   }
   #onInput(e: InputEvent) {
+    this.#isDirty = true;
     const elem = e.target;
     const currentPinIndex = parseInt((elem as HTMLInputElement).parentElement!.dataset.pinIndex!, 10);
     let nextIndex = currentPinIndex;
