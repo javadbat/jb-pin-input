@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [1.15.0] - 2026-07-30
 
 ### Added
 
@@ -11,6 +11,11 @@
 
 - Added `initialValue` as the default and reset PIN; it seeds `value` only until the live value is explicitly set.
 - Updated the React wrapper so an omitted `value` does not overwrite `initialValue`, while explicit `null` still clears the live value.
+
+### Fixed
+
+- fix name assignment property
+
 
 ## [1.14.0] - 2026-07-19
 
