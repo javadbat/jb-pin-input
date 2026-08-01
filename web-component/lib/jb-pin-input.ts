@@ -6,7 +6,7 @@ import type { JBFormInputStandards } from 'jb-form';
 import { registerDefaultVariables } from 'jb-core/theme';
 import { renderHTML } from './render';
 import { getRequiredMessage, i18n } from 'jb-core/i18n';
-import { createInputEvent, createKeyboardEvent, faToEnDigits } from 'jb-core';
+import { createInputEvent, createKeyboardEvent, faToEnDigits, parseBooleanAttribute } from 'jb-core';
 import { dictionary } from './i18n';
 
 export * from './types.js';
@@ -246,7 +246,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
   onAttributeChange(name: string, value: string | null) {
     switch (name) {
       case 'autofocus':
-        if (value === '' || value === 'true') {
+        if (parseBooleanAttribute(value)) {
           if ((this.elements!).inputs[0]) {
             (this.elements!).inputs[0].focus();
           }
@@ -258,13 +258,13 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
         }
         break;
       case 'disabled':
-        this.disabled = value === '' || value === 'true';
+        this.disabled = parseBooleanAttribute(value);
         break;
       case 'inputmode':
         this.#setInputsInputMode(value || "numeric");
         break;
       case 'required':
-        this.required = value === '' || value === 'true';
+        this.required = parseBooleanAttribute(value);
         break;
       case 'value':
         this.value = value ?? "";
@@ -338,7 +338,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     this.#setMessageA11y();
     // auto focus if it set to be auto focused
     const autofocus = this.getAttribute('autofocus');
-    if ((autofocus === '' || autofocus === 'true') && (this.elements!).inputs[0]) {
+    if (parseBooleanAttribute(autofocus) && (this.elements!).inputs[0]) {
       (this.elements!).inputs[0].focus();
     }
   }
@@ -654,7 +654,7 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
 */
   get isAutoValidationDisabled(): boolean {
     //currently we only support disable-validation in attribute and only in initiate time but later we can add support for change of this 
-    return !!(this.getAttribute('disable-auto-validation') === '' || this.getAttribute('disable-auto-validation') === 'true');
+    return parseBooleanAttribute(this.getAttribute('disable-auto-validation'));
   }
   #checkValidity(showError: boolean) {
     if (!this.isAutoValidationDisabled) {
