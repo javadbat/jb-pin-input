@@ -15,9 +15,7 @@ React wrapper for [`jb-pin-input`](https://github.com/javadbat/jb-pin-input). It
 
 ## Demo
 
-- [CodeSandbox preview](https://3f63dj.csb.app/samples/jb-pin-input)
-- [CodeSandbox editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBPinInput.tsx)
-- [Storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput)
+Try the [component examples](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--overview), or open the [CodeSandbox preview](https://3f63dj.csb.app/samples/jb-pin-input) and [editor](https://codesandbox.io/p/sandbox/jb-design-system-3f63dj?file=%2Fsrc%2Fsamples%2FJBPinInput.tsx).
 
 ## Installation
 
@@ -33,7 +31,7 @@ import { JBPinInput } from 'jb-pin-input/react';
 
 ## When to use
 
-Use `JBPinInput` for OTP, verification code, PIN, and short numeric code entry.
+Use `JBPinInput` for OTP, verification code, PIN, and short numeric code entry. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal)
 
 Use `JBPasswordInput` for secret text that should be masked as a password. Use `JBInput` for normal single-field text entry.
 
@@ -41,17 +39,17 @@ Use `JBPasswordInput` for secret text that should be masked as a password. Use `
 
 | prop | type | description |
 | --- | --- | --- |
-| `value` | `string \| number` | Controlled PIN value. Empty cells are represented by `-` in the underlying web component value. |
-| `charLength` | `number` | Number of PIN cells. |
+| `value` | `string \| number` | Controlled PIN value. Empty cells are represented by `-` in the underlying web component value. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal) |
+| `charLength` | `number` | Number of PIN cells. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--char-length) |
 | `name` | `string` | Form field name. |
 | `label` | `string` | Accessible label used for the PIN group and each internal cell. |
 | `message` | `string` | Helper text shown below the PIN cells when no validation error is visible. |
-| `required` | `boolean` | Enables required validation. |
-| `disabled` | `boolean` | Disables all PIN cells. |
-| `autofocus` | `boolean` | Focuses the first PIN cell after initialization. |
-| `inputmode` | `string` | Input mode forwarded to each internal input. Defaults to `numeric`. |
-| `error` | `string` | External validation error message. |
-| `validationList` | `ValidationItem<string>[]` | Custom validation rules from `jb-validation`. |
+| `required` | `boolean` | Enables required validation. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--required) |
+| `disabled` | `boolean` | Disables all PIN cells. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--disabled) |
+| `autofocus` | `boolean` | Focuses the first PIN cell after initialization. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--auto-focus) |
+| `inputmode` | `string` | Input mode forwarded to each internal input. Defaults to `numeric`. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--auto-focus) |
+| `error` | `string` | External validation error message. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--with-error) |
+| `validationList` | `ValidationItem<string>[]` | Custom validation rules from `jb-validation`. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--with-validation) |
 
 ## Events
 
@@ -60,7 +58,7 @@ Use `JBPasswordInput` for secret text that should be masked as a password. Use `
 | `onBeforeInput` | `beforeinput` | Called before a cell receives input. |
 | `onInput` | `input` | Called after a PIN cell changes. |
 | `onChange` | `change` | Called on blur when the PIN value changed during focus. |
-| `onComplete` | `complete` | Called after the last cell is filled and validation passes. |
+| `onComplete` | `complete` | Called after the last cell is filled and validation passes. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--complete-event) |
 | `onEnter` | `enter` | Called when Enter is pressed. |
 | `onKeyDown` | `keydown` | Re-dispatched from the active inner input. |
 | `onKeyUp` | `keyup` | Re-dispatched from the active inner input. |
@@ -68,6 +66,8 @@ Use `JBPasswordInput` for secret text that should be masked as a password. Use `
 | `onBlur` | `blur` | Native blur event on the component host. |
 
 ## Controlled value
+
+The [normal interaction demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal) shows cell focus movement, numeric filtering, and smart paste.
 
 ```jsx
 const [value, setValue] = useState('');
@@ -81,13 +81,15 @@ const [value, setValue] = useState('');
 
 ## Character length
 
+The [character-length demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--char-length) changes the number of cells at runtime.
+
 ```jsx
 <JBPinInput charLength={5} />;
 ```
 
 ## Value
 
-Read `event.target.value` for the canonical English-digit PIN value. Empty internal cells are represented by `-` in the underlying web-component value.
+Read `event.target.value` for the canonical English-digit PIN value. Empty internal cells are represented by `-` in the underlying web-component value. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal)
 
 ## Configure behavior
 
@@ -114,6 +116,8 @@ Read `event.target.value` for the canonical English-digit PIN value. Empty inter
 
 ## Complete event
 
+Use `onComplete` when all cells are filled and validation passes. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--complete-event)
+
 ```jsx
 <JBPinInput
   charLength={6}
@@ -125,13 +129,15 @@ Read `event.target.value` for the canonical English-digit PIN value. Empty inter
 
 ## Smart paste
 
-The underlying web component distributes pasted text across cells and normalizes Persian and Arabic digits to English digits.
+The underlying web component distributes pasted text across cells and normalizes Persian and Arabic digits to English digits. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal)
 
 ## Autofocus
 
-Use `autofocus` when the first cell should focus after initialization.
+Use `autofocus` when the first cell should focus after initialization. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--auto-focus)
 
 ## Validation
+
+The [custom validation](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--with-validation), [checksum](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--checksum-validation), [async](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--async-validation), and [manual validation](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--manual-validation) demos cover the available validation flows.
 
 ```jsx
 <JBPinInput
@@ -147,7 +153,7 @@ Use `autofocus` when the first cell should focus after initialization.
 
 ## Styling
 
-The React component uses the same CSS variables as the web component.
+The React component uses the same CSS variables as the web component. See the shared [web-component styling guidance](../README.md#css-parts-and-variables) and [style gallery](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput-style--gallery).
 
 ```css
 .otp-field {
@@ -167,11 +173,11 @@ Use the same CSS parts and variables as the web component. The `Styling` section
 
 ## Accessibility notes
 
-Use `label` or `aria-label` to provide the accessible name for the PIN group. Add visible label text in the surrounding UI when the field purpose is not clear.
+Use `label` or `aria-label` to provide the accessible name for the PIN group. Add visible label text in the surrounding UI when the field purpose is not clear. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal)
 
 ## Shared Documentation
 
-For web-component behavior, form association, validation, events, and CSS variables, see [`jb-pin-input`](https://github.com/javadbat/jb-pin-input).
+For web-component behavior, form association, validation, events, and CSS variables, see the shared [`jb-pin-input` documentation](../README.md).
 
 ## Related Docs
 

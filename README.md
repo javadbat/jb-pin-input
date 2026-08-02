@@ -17,20 +17,20 @@
 
 ## When to use
 
-Use `jb-pin-input` for OTP, verification code, PIN, and short numeric code entry.
+Use `jb-pin-input` for OTP, verification code, PIN, and short numeric code entry. [See the interactive examples](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--overview).
 
 Use [`jb-password-input`](https://github.com/javadbat/jb-password-input) for secret text that should be masked as a password. Use [`jb-input`](https://github.com/javadbat/jb-input) for normal single-field text entry.
 
 ## Demo
 
-- [CodePen](https://codepen.io/javadbat/pen/zYPEqNJ)
-- [GitHub Pages](https://javadbat.github.io/jb-pin-input)
-- [Storybook](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput)
+[Try the interactive examples](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--overview), [open the CodePen](https://codepen.io/javadbat/pen/zYPEqNJ), or visit the [GitHub Pages demo](https://javadbat.github.io/jb-pin-input).
 
 
 ## Using With JS Frameworks
 
 <a href="https://github.com/javadbat/jb-pin-input/tree/main/react" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/React.js-jb--pin--input%2Freact-000.svg?logo=react&logoColor=%2361DAFB" height="30" /></a>
+
+See the [React API and examples](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbpininput-react-readme--docs).
 
 Other integrations: <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#angular" target="_blank" rel="noopener noreferrer">Angular</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#vue" target="_blank" rel="noopener noreferrer">Vue</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#nuxt" target="_blank" rel="noopener noreferrer">Nuxt</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#svelte" target="_blank" rel="noopener noreferrer">Svelte</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#sveltekit" target="_blank" rel="noopener noreferrer">SvelteKit</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#solidjs" target="_blank" rel="noopener noreferrer">SolidJS</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#lit" target="_blank" rel="noopener noreferrer">Lit</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#nextjs" target="_blank" rel="noopener noreferrer">Next.js</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#astro" target="_blank" rel="noopener noreferrer">Astro</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#blazor" target="_blank" rel="noopener noreferrer">Blazor</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#server-rendered-templates" target="_blank" rel="noopener noreferrer">Server-rendered templates</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#wordpress" target="_blank" rel="noopener noreferrer">WordPress</a> · <a href="https://javadbat.github.io/design-system/?path=/docs/getting-started-framework-integration--docs#alpinejs-and-htmx" target="_blank" rel="noopener noreferrer">Alpine.js and HTMX</a>
 
@@ -60,30 +60,30 @@ import 'jb-pin-input';
 
 | name | type | default | description |
 | --- | --- | --- | --- |
-| `value` | `string` | `""` | Initial or reflected PIN value. Missing cells are represented by `-` in `.value`. |
-| `char-length` | `number` | `6` | Number of PIN cells. |
+| `value` | `string` | `""` | Initial or reflected PIN value. Missing cells are represented by `-` in `.value`. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal) |
+| `char-length` | `number` | `6` | Number of PIN cells. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--char-length) |
 | `name` | `string` | `""` | Form field name. |
 | `label` | `string` | `""` | Accessible label used for the PIN group and each internal cell. |
 | `accessible-label` | `string` | `""` | Accessible label fallback when you do not want to use `label`. |
-| `required` | `boolean` | `false` | Enables required validation. Empty attribute and `"true"` mean true. |
-| `disabled` | `boolean` | `false` | Disables all inner PIN inputs. Empty attribute and `"true"` mean true. |
-| `autofocus` | `boolean` | `false` | Focuses the first input after initialization. Empty attribute and `"true"` mean true. |
-| `inputmode` | `string` | `numeric` | Input mode forwarded to each internal input. |
-| `message` | `string` | `""` | Helper text shown below the PIN cells when no validation error is visible. |
-| `error` | `string` | `""` | External validation error message. |
+| `required` | `boolean` | `false` | Enables required validation. Empty attribute and `"true"` mean true. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--required) |
+| `disabled` | `boolean` | `false` | Disables all inner PIN inputs. Empty attribute and `"true"` mean true. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--disabled) |
+| `autofocus` | `boolean` | `false` | Focuses the first input after initialization. Empty attribute and `"true"` mean true. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--auto-focus) |
+| `inputmode` | `string` | `numeric` | Input mode forwarded to each internal input. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--auto-focus) |
+| `message` | `string` | `""` | Helper text shown below the PIN cells when no validation error is visible. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal) |
+| `error` | `string` | `""` | External validation error message. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--with-error) |
 | `disable-auto-validation` | `boolean` | `false` | Disables automatic validation on blur when set to an empty attribute or `"true"`. |
 
 ### Properties
 
 | name | type | readonly | description |
 | --- | --- | --- | --- |
-| `value` | `string` | no | Canonical PIN value. Empty cells are represented by `-`. |
-| `initialValue` | `string` | no | Default and reset value. It initializes `value` until the live value is explicitly set. |
-| `charLength` | `number` | no | Number of PIN cells. See the [charLength demo](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbpininput-charlength--docs). |
+| `value` | `string` | no | Canonical PIN value. Empty cells are represented by `-`. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal) |
+| `initialValue` | `string` | no | Default and reset value. It initializes `value` until the live value is explicitly set. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--initial-value) |
+| `charLength` | `number` | no | Number of PIN cells. See the [charLength demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--char-length). |
 | `emptyChar` | `'-'` | yes | Character used in `.value` for empty cells. |
 | `inputMode` | `string` | no | Input mode forwarded to each internal input. |
-| `disabled` | `boolean` | no | Enables or disables all inner inputs. |
-| `required` | `boolean` | no | Enables required validation. |
+| `disabled` | `boolean` | no | Enables or disables all inner inputs. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--disabled) |
+| `required` | `boolean` | no | Enables required validation. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--required) |
 | `validation` | `ValidationHelper<string>` | yes | Validation helper from `jb-validation`; set `validation.list` for custom rules. See the [validation demo](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbpininput-validation--docs). |
 | `form` | `HTMLFormElement \| null` | yes | Associated form from `ElementInternals`. |
 | `name` | `string` | yes | Form field name from the `name` attribute. |
@@ -94,10 +94,10 @@ import 'jb-pin-input';
 
 | name | returns | description |
 | --- | --- | --- |
-| `checkValidity()` | `boolean` | Runs validation without showing the error message. Dispatches `invalid` when invalid. |
-| `reportValidity()` | `boolean` | Runs validation and shows the first error message. Dispatches `invalid` when invalid. |
-| `focus()` | `void` | Focuses the first empty cell, or the last cell when all cells are filled. |
-| `clearValidationError()` | `void` | Clears the visible validation error and restores `message`. |
+| `checkValidity()` | `boolean` | Runs validation without showing the error message. Dispatches `invalid` when invalid. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--with-validation) |
+| `reportValidity()` | `boolean` | Runs validation and shows the first error message. Dispatches `invalid` when invalid. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--manual-validation) |
+| `focus()` | `void` | Focuses the first empty cell, or the last cell when all cells are filled. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--auto-focus) |
+| `clearValidationError()` | `void` | Clears the visible validation error and restores `message`. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--with-error) |
 
 ### Events
 
@@ -112,10 +112,12 @@ import 'jb-pin-input';
 | `keyup` | Re-dispatched from the active inner input. |
 | `keypress` | Re-dispatched from the active inner input. |
 | `enter` | Dispatched when Enter is pressed. |
-| `complete` | Dispatched after the last cell is filled and validation passes. |
+| `complete` | Dispatched after the last cell is filled and validation passes. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--complete-event) |
 | `invalid` | Dispatched when `checkValidity()` or `reportValidity()` fails. |
 
 ## Value
+
+The [normal input demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal) shows canonical values, cell focus movement, and smart paste.
 
 The default length is 6. Empty cells are represented by `-` in `.value`.
 
@@ -134,6 +136,8 @@ The component accepts Persian and Arabic digits and stores English digits.
 
 ## Character length
 
+The [character-length demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--char-length) changes the number of cells at runtime.
+
 ```js
 const pinInput = document.querySelector('jb-pin-input');
 
@@ -146,9 +150,13 @@ pinInput.charLength = 5;
 
 ## Smart paste
 
+The [normal interaction demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal) extracts a PIN from surrounding pasted text.
+
 When pasted text contains a full PIN with the configured length, the component extracts that PIN. If no full match exists, it extracts the first partial digit sequence and fills from the current cell.
 
 ## Validation
+
+See the [custom validation](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--with-validation), [checksum](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--checksum-validation), [async](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--async-validation), and [manual validation](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--manual-validation) demos.
 
 Use `required` for the common required rule. It is valid only when all cells are filled.
 
@@ -180,13 +188,15 @@ const isVisibleValid = pinInput.reportValidity();
 
 ## Autofocus
 
+The [autofocus demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--auto-focus) focuses the first cell after initialization.
+
 ```html
 <jb-pin-input autofocus></jb-pin-input>
 ```
 
 ## CSS parts and variables
 
-See the [Storybook styling demos](https://javadbat.github.io/design-system/?path=/docs/components-form-elements-jbpininput-styling--docs) for examples using CSS variables and `::part(...)`.
+See the [style gallery](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput-style--gallery) for CSS variables and `::part(...)` examples.
 
 | part | description |
 | --- | --- |
@@ -243,7 +253,7 @@ jb-pin-input::part(input-line-0) {
 
 ## Accessibility notes
 
-- The component is form-associated and submits `.value` as its form value.
+- The component is form-associated and submits `.value` as its form value. [Accessibility demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--normal)
 - The component uses multiple internal inputs with `inputmode="numeric"` by default. Each internal cell receives an accessible name in the form `Verification code, digit 1 of 6`.
 - Set `label`, `accessible-label`, or `aria-label` on `<jb-pin-input>` so assistive technologies receive a useful name. The `label` attribute is not rendered visually, so add a visible label in your app layout when needed.
 - The first internal input uses `autocomplete="one-time-code"` for OTP autofill support.

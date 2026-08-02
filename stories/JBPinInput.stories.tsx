@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import type { JBPinInputWebComponent } from 'jb-pin-input';
 import { JBButton } from 'jb-button/react';
 import { JBPinInput } from 'jb-pin-input/react';
 import { JBPinInputStyleTest } from './samples/JBPinInputStyleTest';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, waitFor } from 'storybook/test';
+import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import {
   dispatchPaste,
   getJBButton,
@@ -154,6 +154,44 @@ export const AutoFocus: Story = {
       expect(pinInput.shadowRoot?.activeElement).toBe(inputs[0]);
     });
   }
+};
+
+export const Disabled: Story = {
+  args: {
+    label: 'disabled PIN',
+    value: '123456',
+    disabled: true,
+  },
+  play: async ({ canvasElement }) => {
+    const pinInput = getPinInput(canvasElement);
+
+    await waitFor(() => {
+      expect(pinInput.disabled).toBe(true);
+      expect(getPinCells(pinInput).every((input) => input.disabled)).toBe(true);
+      expect(pinInput.value).toBe('123456');
+    });
+  },
+};
+
+export const CompleteEvent: Story = {
+  args: {
+    label: 'complete event',
+    charLength: 4,
+    required: true,
+    onComplete: fn(),
+  },
+  play: async ({ canvasElement, args }) => {
+    const pinInput = getPinInput(canvasElement);
+    const firstInput = getPinCells(pinInput)[0];
+
+    firstInput.focus();
+    await userEvent.keyboard('1234');
+
+    await waitFor(() => {
+      expect(pinInput.value).toBe('1234');
+      expect(args.onComplete).toHaveBeenCalled();
+    });
+  },
 };
 
 export const charLength: Story = {
