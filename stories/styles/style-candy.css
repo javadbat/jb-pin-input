@@ -10,7 +10,7 @@ jb-pin-input.candy-style {
   --jb-pin-input-pin-font-size: 1.125rem;
   --jb-pin-input-pin-font-weight: 600;
   --jb-pin-input-pin-color: var(--jb-primary-pressed);
-  --jb-pin-input-message-color: var(--jb-text-secondary);
+  --jb-pin-input-message-color: var(--jb-content-secondary);
   --jb-pin-input-message-color-error: var(--jb-red);
   --jb-pin-input-wrapper-box-shadow: 0 0 0 0.1875rem oklch(72% 0.18 340 / 0.14);
 }

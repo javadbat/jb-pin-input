@@ -9,9 +9,9 @@ jb-pin-input.ant-design-style {
   --jb-pin-input-bottom-line-display: none;
   --jb-pin-input-pin-height: 2rem;
   --jb-pin-input-pin-font-size: 1rem;
-  --jb-pin-input-pin-color: var(--jb-text-primary);
+  --jb-pin-input-pin-color: var(--jb-content-primary);
   --jb-pin-input-pin-font-weight: 400;
   --jb-pin-input-message-font-size: 0.75rem;
-  --jb-pin-input-message-color: var(--jb-text-secondary);
+  --jb-pin-input-message-color: var(--jb-content-secondary);
   --jb-pin-input-message-color-error: var(--jb-red);
 }

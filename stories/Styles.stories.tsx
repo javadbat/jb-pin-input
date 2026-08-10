@@ -77,7 +77,7 @@ export const Gallery: Story = {
             gap: "0.75rem",
             minWidth: 0,
             padding: "1rem",
-            background: "var(--jb-surface)",
+            background: "var(--jb-surface-primary)",
             border: "1px solid var(--jb-border-color)",
             borderRadius: "var(--jb-radius)",
             boxShadow: "0 0.75rem 1.75rem oklch(0% 0 0 / 0.08)",
@@ -86,7 +86,7 @@ export const Gallery: Story = {
         >
           <div style={{
             width: "100%",
-            color: "var(--jb-text-primary)",
+            color: "var(--jb-content-primary)",
             fontSize: "0.875rem",
             fontWeight: 700,
             lineHeight: 1.4,

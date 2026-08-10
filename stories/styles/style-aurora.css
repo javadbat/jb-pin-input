@@ -10,8 +10,8 @@ jb-pin-input.aurora-style {
   --jb-pin-input-pin-height: 2.5rem;
   --jb-pin-input-pin-font-size: 1.125rem;
   --jb-pin-input-pin-font-weight: 600;
-  --jb-pin-input-pin-color: var(--jb-text-primary);
-  --jb-pin-input-message-color: var(--jb-text-secondary);
+  --jb-pin-input-pin-color: var(--jb-content-primary);
+  --jb-pin-input-message-color: var(--jb-content-secondary);
   --jb-pin-input-message-color-error: var(--jb-red);
   filter: drop-shadow(0 0.375rem 0.75rem oklch(0% 0 0 / 0.16));
 }
