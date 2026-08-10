@@ -17,10 +17,10 @@
   --message-margin: var(--jb-pin-input-message-margin,0);
   /* Theme/Color */
   --wrapper-border-color:var(--jb-pin-input-wrapper-border-color, var(--jb-neutral));
-  --pin-color:var(--jb-pin-input-pin-color, var(--jb-text-primary));
+  --pin-color:var(--jb-pin-input-pin-color, var(--jb-content-primary));
   --bottom-line-color:var(--jb-pin-input-bottom-line-color, var(--jb-neutral-8));
   --wrapper-border-color-active:var(--jb-pin-input-wrapper-border-color-active, var(--jb-primary));
   --bottom-line-color-active:var(--jb-pin-input-bottom-line-color-active, var(--jb-primary));
-  --message-color:var(--jb-pin-input-message-color, var(--jb-text-secondary));
+  --message-color:var(--jb-pin-input-message-color, var(--jb-content-secondary));
   --message-color-error:var(--jb-pin-input-message-color-error, var(--jb-red));
 }
