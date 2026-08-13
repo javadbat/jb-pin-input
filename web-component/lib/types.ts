@@ -1,4 +1,4 @@
-import type{ JBPinInputWebComponent } from "./jb-pin-input";
+import type { JBPinInputWebComponent } from "./jb-pin-input.js";
 import type {EventTypeWithTarget} from 'jb-core';
 
 export type Elements = {
