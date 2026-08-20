@@ -754,3 +754,9 @@ export class JBPinInputWebComponent extends JBBaseComponent implements WithValid
   }
 }
 defineWebComponent('jb-pin-input', JBPinInputWebComponent);
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "jb-pin-input": JBPinInputWebComponent;
+  }
+}
