@@ -1,3 +1,4 @@
+import { defineWebComponent, JBBaseComponent, createInputEvent, createKeyboardEvent, faToEnDigits, parseBooleanAttribute } from "jb-core";
 import CSS from './jb-pin-input.css';
 import VariablesCSS from './variables.css';
 import { type ValidationItem, type ValidationResult, type WithValidation, ValidationHelper, type ShowValidationErrorParameters } from 'jb-validation';
@@ -6,12 +7,11 @@ import type { JBFormInputStandards } from 'jb-form';
 import { registerDefaultVariables } from 'jb-core/theme';
 import { renderHTML } from './render';
 import { getRequiredMessage, i18n } from 'jb-core/i18n';
-import { createInputEvent, createKeyboardEvent, faToEnDigits, parseBooleanAttribute } from 'jb-core';
 import { dictionary } from './i18n';
 
 export * from './types.js';
 
-export class JBPinInputWebComponent extends HTMLElement implements WithValidation<ValidationValue>, JBFormInputStandards<string> {
+export class JBPinInputWebComponent extends JBBaseComponent implements WithValidation<ValidationValue>, JBFormInputStandards<string> {
   elements!: Elements;
   #internals?: ElementInternals;
   #isDirty = false;
@@ -753,7 +753,4 @@ export class JBPinInputWebComponent extends HTMLElement implements WithValidatio
     }
   }
 }
-const myElementNotExists = !customElements.get('jb-pin-input');
-if (myElementNotExists) {
-  window.customElements.define('jb-pin-input', JBPinInputWebComponent);
-}
+defineWebComponent('jb-pin-input', JBPinInputWebComponent);
