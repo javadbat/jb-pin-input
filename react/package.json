@@ -33,7 +33,7 @@
   "types": "./dist/JBPinInput.d.ts",
   "repository": {
 		"type": "git",
-		"url": "git@github.com:javadbat/jb-pin-input-react.git"
+		"url": "https://github.com/javadbat/jb-pin-input-react.git"
   },
   "dependencies": {
     "jb-pin-input": "^1.5.0"
