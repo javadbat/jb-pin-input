@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0] - 2026-09-03
+
+### Added
+
+- Added the standard public `reset()` method; native form reset delegates to the same behavior.
+
+### Changed
+
+- Standardized private DOM event handlers on the `#on<Target><Event>()` naming convention.
+- Standardized private empty-value and form synchronization helpers as `#clearValue()` and `#updateFormValue()`.
+
 ## [1.16.0]
 
 ### Changed

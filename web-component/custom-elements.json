@@ -217,6 +217,10 @@
           ],
           "methods": [
             {
+              "name": "reset",
+              "description": "Restores initialValue and clears displayed validation."
+            },
+            {
               "name": "checkValidity",
               "description": "Runs validation without showing the error message. Dispatches invalid when invalid.",
               "return": {

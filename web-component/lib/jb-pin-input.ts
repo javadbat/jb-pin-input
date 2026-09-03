@@ -59,7 +59,7 @@ export class JBPinInputWebComponent extends JBBaseComponent implements WithValid
   #pendingValue: string | null = null;
   set value(value: string) {
     this.#isDirty = true;
-    this.#setValue(value);
+    value == null ? this.#clearValue() : this.#setValue(value);
   }
   get inputMode() {
     return this.getAttribute("inputmode") || "numeric";
@@ -105,10 +105,10 @@ export class JBPinInputWebComponent extends JBBaseComponent implements WithValid
     this.elements.inputs.forEach((input, index) => {
       input.value = this.#getValidCellValue(standardValue[index]);
     });
-    this.#setFormValue();
+    this.#updateFormValue();
     this.#pendingValue = this.isConnected ? null : standardValue;
   }
-  #setFormValue(value = this.value) {
+  #updateFormValue(value = this.value) {
     if (this.#internals && typeof this.#internals.setFormValue === "function") {
       this.#internals.setFormValue(value);
     }
@@ -125,7 +125,7 @@ export class JBPinInputWebComponent extends JBBaseComponent implements WithValid
       if (!this.#isDirty) {
         this.#setValue(this.initialValue);
       } else {
-        this.#setFormValue();
+        this.#updateFormValue();
       }
     }
   }
@@ -156,11 +156,17 @@ export class JBPinInputWebComponent extends JBBaseComponent implements WithValid
       this.#setValue(this.initialValue);
     }
   }
-  formResetCallback() {
+  reset() {
     this.#isDirty = false;
     this.#setValue(this.initialValue);
     this.#validation.reset();
     this.#internals?.setValidity({}, '');
+  }
+  #clearValue() {
+    this.#setValue("");
+  }
+  formResetCallback() {
+    this.reset();
   }
   formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
@@ -232,7 +238,7 @@ export class JBPinInputWebComponent extends JBBaseComponent implements WithValid
     } else if (!this.#isDirty) {
       this.#setValue(this.initialValue);
     } else {
-      this.#setFormValue();
+      this.#updateFormValue();
     }
     this.registerEventListener();
   }
@@ -405,7 +411,7 @@ export class JBPinInputWebComponent extends JBBaseComponent implements WithValid
     inputDom.part.add("pin-input", `pin-input-${index}`)
     inputDom.addEventListener('keydown', this.#onInputKeyDown.bind(this));
     inputDom.addEventListener('keypress', this.#onInputKeyPress.bind(this));
-    inputDom.addEventListener('keyup', this.#onInputKeyup.bind(this));
+    inputDom.addEventListener('keyup', this.#onInputKeyUp.bind(this));
     inputDom.addEventListener('beforeinput', this.#onBeforeInput.bind(this));
     inputDom.addEventListener('blur', this.#onInputBlur.bind(this));
     inputDom.addEventListener('focus', this.#onInputFocus.bind(this));
@@ -536,7 +542,7 @@ export class JBPinInputWebComponent extends JBBaseComponent implements WithValid
       this.#weFocus = true;
       nextInput.focus();
     }
-    this.#setFormValue();
+    this.#updateFormValue();
     this.#dispatchOnInputEvent(e);
     this.#checkValidity(false)?.then((validityRes) => {
       if (e.inputType !== "deleteContentBackward" && isLastIndex && validityRes.isAllValid) {
@@ -589,7 +595,7 @@ export class JBPinInputWebComponent extends JBBaseComponent implements WithValid
    * 
    * @param {KeyboardEvent} e 
    */
-  #onInputKeyup(e: KeyboardEvent) {
+  #onInputKeyUp(e: KeyboardEvent) {
     //change focus 
     const elem = e.target as HTMLInputElement;
     const currentPinIndex = Number(elem.parentElement!.dataset.pinIndex!);
@@ -738,6 +744,9 @@ export class JBPinInputWebComponent extends JBBaseComponent implements WithValid
   }
   get validationMessage() {
     return this.#internals?.validationMessage ?? null;
+  }
+  get validity() {
+    return this.#internals?.validity;
   }
   /**
    * focus on first empty input

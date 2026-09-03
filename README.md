@@ -96,6 +96,7 @@ import 'jb-pin-input';
 | --- | --- | --- |
 | `checkValidity()` | `boolean` | Runs validation without showing the error message. Dispatches `invalid` when invalid. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--with-validation) |
 | `reportValidity()` | `boolean` | Runs validation and shows the first error message. Dispatches `invalid` when invalid. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--manual-validation) |
+| `reset()` | `void` | Restores `initialValue` and clears displayed validation. |
 | `focus()` | `void` | Focuses the first empty cell, or the last cell when all cells are filled. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--auto-focus) |
 | `clearValidationError()` | `void` | Clears the visible validation error and restores `message`. [Demo](https://javadbat.github.io/design-system/?path=/story/components-form-elements-jbpininput--with-error) |
 
