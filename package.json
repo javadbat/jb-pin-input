@@ -49,9 +49,9 @@
   },
   "dependencies": {
     "jb-validation": "^1.0.0",
-    "jb-core": "^0.36.0"
+    "jb-core": "^0.37.0"
   },
   "devDependencies": {
-    "jb-form":"0.13.0"
+    "jb-form":"00.14.0"
   }
 }
